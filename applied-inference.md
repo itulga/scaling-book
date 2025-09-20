@@ -1,64 +1,70 @@
+—
+Энэхүү орчуулга нь MIT лицензийн дагуу эх бүтээлээс хөрвүүлэв.
+Эх сурвалж: Austin et al., "How to Scale Your Model" (https://jax-ml.github.io/scaling-book/)
+Орч.: Mongolian (mn)
+—
+
 ---
 layout: distill
-title: "Serving LLaMA 3-70B on TPUs"
+title: "LLaMA 3-70B-г TPU дээр ажиллуулах"
 # permalink: /main/
-description: "Let's take a close look at how we'd serve LLaMA 3-70B models on TPU v5e. How expensive are different models to serve at roofline? How large are their KV caches? What batch sizes should we use? How are the parameters and activations sharded during inference? Let's work through some back-of-the-envelope estimates for latency and throughput in production."
+description: "Бид LLaMA 3-70B загваруудыг TPU v5e дээр хэрхэн ажиллуулахыг нарийвчлан үзье. Янз бүрийн загваруудыг дээд хүчин чадлаар ажиллуулахад ямар зардалтай вэ? Тэдний KV кэш ямар хэмжээтэй вэ? Бид ямар batch size ашиглах ёстой вэ? Инференс хийх үед параметр болон активациуд хэрхэн хуваагддаг вэ? Үйлдвэрлэлд latency болон throughput-ийн ойролцоогоор тооцоог хамтдаа хийцгээе."
 date: 2025-02-04
 future: true
 htmlwidgets: true
 hidden: false
 
-section_number: 8
+хэсгийн_дугаар: 8
 
 previous_section_url: "../inference"
-previous_section_name: "Part 7: Inference"
+previous_section_name: "7-р хэсэг: Дүгнэлт"
 
 next_section_url: ../profiling
-next_section_name: "Part 9: Profiling"
+next_section_name: "9-р хэсэг: Профайлинг"
 
 giscus_comments: true
 
 authors:
-  - name: Jacob Austin
+  - name: Жэйкоб Остин
     url: "https://www.jacobaustin.org/"
     affiliations:
       name: Google DeepMind
-  - name: Sholto Douglas
+  - name: Шолто Дуглас
     url: "https://x.com/_sholtodouglas"
-  - name: Roy Frostig
+  - name: Рой Фростиг
     url: "https://cs.stanford.edu/~rfrostig/"
-  - name: Anselm Levskaya
+  - name: Ансельм Левская
     url: "https://anselmlevskaya.com/"
-  - name: Charlie Chen
+  - name: Чарли Чен
     url: "https://x.com/charliexychen"
-  - name: Sharad Vikram
+  - name: Шарад Викрам
     url: "https://sharadvikram.com/"
-  - name: Federico Lebron
+  - name: Федерико Леброн
     url: "https://fedelebron.com/"
-  - name: Peter Choy
+  - name: Питер Чой
     url: "https://x.com/pchoy95"
-  - name: Vinay Ramasesh
+  - name: Винай Рамасеш
     url: "https://x.com/vinayramasesh"
-  - name: Albert Webson
+  - name: Альберт Вебсон
     url: "https://representation.ai/"
-  - name: Reiner Pope<sup>*</sup>
+  - name: Рейнер Попе<sup>*</sup>
     url: https://x.com/reinerpope
 
-# Add a table of contents to your post.
-#   - make sure that TOC names match the actual section names
-#     for hyperlinks within the post to work correctly.
-#   - please use this format rather than manually creating a markdown table of contents.
+# Өөрийн бичлэгт агуулгын жагсаалт нэмэх.
+#   - TOC (агуулгын жагсаалт) дахь нэрүүд нь тухайн хэсгийн нэртэй яг таарч байх ёстой.
+#     Ингэснээр бичлэг доторх холбоосууд зөв ажиллана.
+#   - Доорх форматыг ашиглана уу, markdown-аар агуулгын жагсаалтыг гараар хийхээс зайлсхий.
 toc:
-  - name: "What's the LLaMA Serving Story?"
+  - name: "LLaMA-г хэрхэн ажиллуулдаг вэ?"
   - subsections:
-    - name: "Thinking about throughput"
-    - name: "What about prefill?"
-  - name: "Visualizing the Latency Throughput Tradeoff"
-  - name: "Worked Problems"
+    - name: "Дамжуулалтын хурдыг бодох"
+    - name: "Prefill гэж юу вэ?"
+  - name: "Хугацаа ба дамжуулалтын тэнцвэрийг дүрслэх"
+  - name: "Бодлогын жишээнүүд"
 
-# Below is an example of injecting additional post-specific styles.
-# This is used in the 'Layouts' section of this post.
-# If you use this post as a template, delete this _styles block.
+# Доор нэмэлт постод зориулсан тусгай стиль хэрхэн оруулах жишээ байна.
+# Энэ нь энэ постын 'Layouts' хэсэгт ашиглагддаг.
+# Хэрвээ та энэ постыг загвар болгон ашиглах бол энэ _styles блокийг устгаарай.
 _styles: >
   .fake-img {
     background: #bbb;
@@ -76,13 +82,13 @@ _styles: >
   }
 ---
 
-*This section will look at what it takes to serve LLaMA-3 and how efficiently it can be done. As in the previous "applied" section, try to work out the answers on your own with a pen and paper before looking them up!*
+*Энэ хэсэгт LLaMA-3-г хэрхэн ажиллуулах талаар болон үүнийг хэр үр дүнтэй хийж болохыг авч үзнэ. Өмнөх "хэрэглээний" хэсгийн адил, хариултыг харахаасаа өмнө цаас, балтайгаа өөрөө бодож үзээрэй!*
 
-## What's the LLaMA Serving Story?
+## LLaMA-г хэрхэн ажиллуулдаг вэ?
 
-Let's remind ourselves what LLaMA 3-70B looks like (see [Section 6](../applied-training) for reference):
+Өөрсдийгөө сануулахын тулд LLaMA 3-70B ямар харагддагийг харцгаая ([6-р хэсэг](../applied-training)-ийг үзнэ үү):
 
-| **hyperparam**              | **value** |
+| **hyperparam**              | **утга** |
 | --------------------------- | :-------: |
 | $$n_\text{layers}$$ (L)     |    80     |
 | $$d_\text{model}$$ (D)      |   8,192   |
@@ -272,35 +278,35 @@ This is kind of straightforward. Since we have a median decode length of 4096 to
 
 {% details Answer %}
 
-This is kind of a fun question. Let $P$ be the number of prefill servers and $G$ be the number of generate servers. So generally speaking, this is a pipeline problem where we feed sequences in at a rate of `P / prefill_latency` and consume them at a rate of `B * G / (generate_latency * median_decode_length)`. We had calculated `910ms` per prefill step and `19ms` per decode step at batch size 43 (let's call that 32). Therefore we need `P / 0.91 = 32 * G / (0.019 * 512)` or `P = 3G`, i.e. we need about 3 times more prefill servers than generation servers!
+This is kind of a fun question. Let $P$ be the number of prefill servers and $G$ нь generate серверийн тоо гэж үзье. Ерөнхийдөө энэ нь pipeline асуудал бөгөөд бид дарааллыг `P / prefill_latency` хурдтайгаар оруулж, `B * G / (generate_latency * median_decode_length)` хурдтайгаар хэрэглэдэг. Бид `910ms`-г prefill алхам бүрт, `19ms`-г decode алхам бүрт batch хэмжээ 43 (үүнийг 32 гэж нэрлэе) үед тооцсон. Тиймээс бидэнд `P / 0.91 = 32 * G / (0.019 * 512)` эсвэл `P = 3G` хэрэгтэй, өөрөөр хэлбэл prefill сервер нь generation серверээс 3 дахин их хэрэгтэй!
 
 {% enddetails %}
 
-## Visualizing the Latency Throughput Tradeoff
+## Хүлээлгийн хугацаа ба дамжуулалтын хурдны харьцуулалтыг дүрслэх
 
-Sticking with LLaMA 70B for a second, let's actually look at the latency and throughput for different batch sizes during generation. As we showed in the previous section for PaLM models, this gives us a Pareto frontier for throughput/latency. Let's assume 16-way tensor parallelism since that's a reasonable bound on what we can use while staying compute-bound in the MLP blocks. We'll use a TPU v5e 4x4 topology here. **The slider controls the sequence length so you can see the effect of larger KV caches.**
+LLaMA 70B дээр түр зогсоё, одоо үүсгэх үед өөр өөр batch size-тай үед latency болон throughput хэрхэн өөрчлөгдөж байгааг харцгаая. Өмнөх хэсэгт PaLM загвар дээр үзүүлсэн шиг, энэ нь throughput/latency-ийн Pareto frontier-ийг өгдөг. Бид 16-way tensor parallelism гэж үзье, энэ нь MLP blocks дотор тооцооллын хязгаартай байх үед ашиглаж болох боломжийн хэмжээ юм. Энд бид TPU v5e 4x4 topology ашиглана. **Slider нь sequence length-ийг удирддаг тул та том KV cache-уудын нөлөөг харж болно.**
 
 <div class="l-page">
   <iframe src="{{ 'assets/plotly/pareto.html' | relative_url }}" frameborder='0' scrolling='no' height="400px" width="100%"></iframe>
 </div>
 
-* **See how dramatic the tradeoff is between cost and latency.** At the cost of doubling per-token latency, we can achieve a roughly 100x reduction in per-token cost. Also, our latency can range anywhere from 5.5ms with low batch size to 20 ms with very large batches.
-* Note how at 2k context the throughput effectively plateaus at around 1 token / ms / chip when it hits the BS 120 roofline (120 here because we do int8 weights but bf16 FLOPs). As the sequence length increases, however, we can no longer fit this batch size in memory, so we never hit the point of full saturation.
-* Note how much higher the latency is at large batch sizes for the same throughput, since KV loading becomes dominant (instead of parameter loading).
+* **Зардал ба хүлээлгийн хугацааны (latency) хооронд ямар их ялгаа гарч байгааг харна уу.** Хэрвээ бид нэг токений хүлээлгийн хугацааг хоёр дахин их болговол, нэг токений зардлыг ойролцоогоор 100 дахин багасгаж чадна. Мөн бидний хүлээлгийн хугацаа бага batch size-тай үед 5.5 миллисекундээс эхлээд, маш их batch size-тай үед 20 миллисекунд хүртэл хэлбэлздэг.
+* 2k context дээр throughput нь ойролцоогоор 1 token / ms / chip дээр тогтдогийг анзаараарай. Энэ нь BS 120 roofline-д хүрсэнтэй холбоотой (энд 120 гэдэг нь бид int8 жин (weights) ашигладаг, харин FLOPs нь bf16 байдагтай холбоотой). Гэхдээ sequence-ийн урт ихсэх тусам бид энэ batch size-ийг санах ойд багтааж чадахгүй болдог тул бүрэн дүүрэн ашиглалтад хүрэхгүй.
+* Ижил throughput-тай үед batch size их байх тусам latency хэр их ихэсдэгийг анзаараарай. Учир нь энэ үед KV ачааллах (loading) нь давамгайлж эхэлдэг (parameter ачаалалтаас илүү болдог).
 
-We can understand this better by breaking down the sources of cost and latency into param loading time, KV loading time, and FLOPs time. The red sector is the region in which we expect to be compute-bound in our MLP blocks.
+Бид үүнийг илүү сайн ойлгохын тулд зардал болон хүлээлгийн эх үүсвэрүүдийг дараах хэсгүүдэд хувааж болно: param ачаалах хугацаа, KV ачаалах хугацаа, болон FLOPs хугацаа. Улаан хэсэг нь бидний MLP блокуудад тооцоолол дээр тулгуурласан байхыг хүлээж байгаа бүс юм.
 
 <div class="l-page">
   <iframe src="{{ 'assets/plotly/latency_breakdown_log.html' | relative_url }}" frameborder='0' scrolling='no' height="400px" width="100%"></iframe>
 </div>
 
-This tells quite a story. You can see that initially, parameter loading represents the vast majority of the latency, until the batch size becomes large enough that FLOPs and KV loading become more significant. Notably, at all sequence lengths greater than 2048, we spend more time on KV cache loading than we do on FLOPs! **So while we can improve our hardware utilization by increasing batch size, at long context lengths KV loading always dominates the total step time.**
+Энэ нь их зүйлийг өгүүлж байна. Эхэндээ параметр ачаалах нь ихэнх саатлыг үүсгэдэгийг харж болно. Гэхдээ batch size томроход FLOPs болон KV ачаалах нь илүү чухал болдог. Ялангуяа, sequence length нь 2048-аас их үед бид KV cache ачаалахад FLOPs-оос илүү их хугацаа зарцуулдаг! **Тиймээс бид batch size-аа нэмэх замаар hardware ашиглалтаа сайжруулж болох ч, context урт байх үед KV ачаалах нь нийт алхмын хугацааг давамгайлдаг.**
 
-<p markdown=1 class="takeaway">**Takeaway:** for LLaMA 3-70B, we are strongly KV cache memory bandwidth-bound (and HBM-bound) in almost all of these configurations, highlighting just how important reducing KV cache size is for generation throughput. Also note just how dramatic the latency/throughput tradeoff remains here.</p>
+<p markdown=1 class="takeaway">**Гол санаа:** LLaMA 3-70B-д бид бараг бүх тохиргоонд KV кэш санах ойн дамжуулах хурд (мөн HBM)-д ихээхэн хязгаарлагдаж байна. Энэ нь KV кэш-ийн хэмжээг багасгах нь үүсгэх хурдыг нэмэгдүүлэхэд ямар чухал болохыг харуулж байна. Мөн энд хоцролт ба дамжуулах хурдны солилцоо ямар их хэвээр байгааг анхаарна уу.</p>
 
-{% details The code for this is quite simple. %}
+{% details Үүний код нь маш энгийн. %}
 
-Here's the code for computing these rooflines:
+Эдгээр roofline-уудыг тооцоолох код энд байна:
 
 ```py
 import numpy as np
@@ -346,18 +352,18 @@ latency = 1000 * (mlp_time + attn_time)
 throughput = batch_sizes / (latency * num_chips)
 ```
 
-Note how we very explicitly break out latency into two sources: KV loading and param loading, and how the latency is either bound by FLOPs or comms, whichever is bigger.
+Бид хоцролтыг хоёр эх үүсвэрт маш тодорхой хувааж байгааг анхаарна уу: KV ачааллах ба param ачааллах. Мөн хоцролт нь FLOPs эсвэл comms-оор хязгаарлагддаг, аль нь их байна тэр нь шийднэ.
 
 {% enddetails %}
 
-## Worked Problems
+## Ажилласан бодлогууд
 
-Here are a few worked problems. Some of these repeat things that are worked above, but might be pedagogically useful.
+Энд хэд хэдэн бодлогын шийдэл байна. Эдгээрийн зарим нь дээр ажилласан зүйлсийг давтаж байгаа ч, сургалтын үүднээс хэрэгтэй байж магадгүй.
 
-**Question 1:** How many FLOPs does each forward pass for LLaMA 3-405B use per-token? Assuming we're FLOPs bound, what is a lower bound on a single forward pass on N chips on TPU v5e? What if we're comms bound? *Ignore the fact that the model does not fit on a single chip.*
+**Асуулт 1:** LLaMA 3-405B загварын нэг удаагийн урагш дамжуулалт (forward pass) бүр токен тутамд хэдэн FLOPs ашигладаг вэ? Хэрвээ бид FLOPs-оор хязгаарлагдсан бол TPU v5e дээр N чип ашиглахад нэг удаагийн урагш дамжуулалтын хамгийн бага хугацаа хэд байх вэ? Хэрвээ бид харилцаа (comms)-аар хязгаарлагдсан бол яах вэ? *Загвар нэг чип дээр багтахгүй гэдгийг үл тооцно уу.*
 
-**Question 2:** Assume we want to serve LLaMA 3-8B with BS240 using int8 weights and int8 KV caches. How many bytes are used by (a) model parameters (b) KV caches and (c) peak working activations (roughly)? What's the smallest topology we can run this on?
+**Асуулт 2:** Бид LLaMA 3-8B-г BS240 ашиглан int8 жин болон int8 KV кэштэйгээр ажиллуулах гэж байгаа гэж бодъё. (a) Моделийн параметрүүдэд (b) KV кэшүүдэд болон (c) хамгийн их идэвхжүүлэлтэд (ойролцоогоор) хэдэн байт ашиглагдах вэ? Үүнийг ажиллуулах хамгийн жижиг топологи ямар байх вэ?
 
-**Question 3:** How would you serve LLaMA 3-405B on TPU v5e? Assume int8 weights and bfloat16 FLOPs. Let's say we have a firm limit of 15ms / token, what's the highest throughput configuration we could achieve? What is the theoretical minimum step time?
+**Асуулт 3:** Та LLaMA 3-405B-г TPU v5e дээр хэрхэн ажиллуулах вэ? int8 жин, bfloat16 FLOPs гэж үзье. Бидэнд 15ms / токен гэсэн хатуу хязгаар байгаа бол хамгийн өндөр throughput тохиргоо юу байх вэ? Онолын хамгийн бага алхамын хугацаа хэд вэ?
 
-<h3 markdown=1 class="next-section">That's all for Part 8! For Part 9, with a deep dive into XLA and TPU profiling, click [here](../profiling).</h3>
+<h3 markdown=1 class="next-section">8-р хэсэг дууслаа! 9-р хэсэгт XLA ба TPU profiling-ийн талаар дэлгэрэнгүй үзэх бол [энд](../profiling) дарна уу.</h3>

@@ -1,8 +1,14 @@
+—
+Энэхүү орчуулга нь MIT лицензийн дагуу эх бүтээлээс хөрвүүлэв.
+Эх сурвалж: Austin et al., "How to Scale Your Model" (https://jax-ml.github.io/scaling-book/)
+Орч.: Mongolian (mn)
+—
+
 ---
 layout: distill
-title: "All About Transformer Inference"
+title: "Трансформерийн Инференсийн Тухай Бүх Зүйл"
 # permalink: /main/
-description: "Performing inference on a Transformer can be very different from training. Partly this is because inference adds a new factor to consider: latency. In this section, we will go all the way from sampling a single new token from a model to efficiently scaling a large Transformer across many slices of accelerators as part of an inference engine."
+description: "Трансформер дээр инференс хийх нь сургалтаас ихээхэн ялгаатай байж болно. Үүний нэг шалтгаан нь инференс хийхэд шинэ хүчин зүйл нэмэгддэг: саатал (latency). Энэ хэсэгт бид моделээс нэг шинэ токен сонгохоос эхлээд олон акселераторын хэсгүүдэд том трансформерийг үр дүнтэй хуваарилах хүртэл, инференсийн системд хэрхэн ажилладагийг тайлбарлана."
 date: 2025-02-04
 future: true
 htmlwidgets: true
@@ -11,71 +17,67 @@ hidden: false
 section_number: 7
 
 previous_section_url: "../applied-training"
-previous_section_name: "Part 6: Training LLaMA"
+previous_section_name: "6-р хэсэг: LLaMA-г сургалт"
 
 next_section_url: ../applied-inference
-next_section_name: "Part 8: Serving LLaMA"
+next_section_name: "8-р хэсэг: LLaMA-г ажиллуулах"
 
-bibliography: main.bib
+ном зүй: main.bib
 
 giscus_comments: true
 
 authors:
-  - name: Jacob Austin
+  - name: Жейкоб Остин
     url: "https://www.jacobaustin.org/"
     affiliations:
       name: Google DeepMind
-  - name: Sholto Douglas
+  - name: Шолто Дуглас
     url: "https://x.com/_sholtodouglas"
-  - name: Roy Frostig
+  - name: Рой Фростиг
     url: "https://cs.stanford.edu/~rfrostig/"
-  - name: Anselm Levskaya
+  - name: Ансельм Левская
     url: "https://anselmlevskaya.com/"
-  - name: Charlie Chen
+  - name: Чарли Чен
     url: "https://x.com/charliexychen"
-  - name: Sharad Vikram
+  - name: Шарад Викрам
     url: "https://sharadvikram.com/"
-  - name: Federico Lebron
+  - name: Федерико Леброн
     url: "https://fedelebron.com/"
-  - name: Peter Choy
+  - name: Питер Чой
     url: "https://x.com/pchoy95"
-  - name: Vinay Ramasesh
+  - name: Винай Рамасеш
     url: "https://x.com/vinayramasesh"
-  - name: Albert Webson
+  - name: Альберт Вебсон
     url: "https://representation.ai/"
-  - name: Reiner Pope<sup>*</sup>
+  - name: Рейнер Попе<sup>*</sup>
     url: https://x.com/reinerpope
 
-# Add a table of contents to your post.
-#   - make sure that TOC names match the actual section names
-#     for hyperlinks within the post to work correctly.
-#   - please use this format rather than manually creating a markdown table of contents.
 toc:
-  - name: "The Basics of Transformer Inference"
+  - name: "Трансформер таамаглалын үндэс"
   - subsections:
-    - name: "What do we actually want to optimize?"
-    - name: "Linear operations: what bottlenecks us?"
-    - name: "What about attention?"
-    - name: "Theoretical estimates for LLM latency and throughput"
-    - name: "What about memory?"
-    - name: "Modeling throughput and latency for LLaMA 2-13B"
-  - name: "Tricks for Improving Generation Throughput and Latency"
-  - name: "Distributing Inference Over Multiple Accelerators"
+    - name: "Бид яг юуг оновчтой болгохыг хүсэж байна вэ?"
+    - name: "Шугаман үйлдлүүд: юу биднийг удаашруулдаг вэ?"
+    - name: "Анхаарал гэж юу вэ?"
+    - name: "LLM-ийн хоцролт ба дамжуулалтын онолын тооцоолол"
+    - name: "Санах ой ямар вэ?"
+    - name: "LLaMA 2-13B-ийн дамжуулалт ба хоцролтыг загварчлах нь"
+  - name: "Гаралтын дамжуулалт ба хоцролтыг сайжруулах аргууд"
+  - name: "Таамаглалыг олон хурдатгалч дээр хуваарилах"
   - subsections:
-    - name: "Prefill"
-    - name: "Generation"
-    - name: "Sharding the KV cache"
-  - name: "Designing an Effective Inference Engine"
+    - name: "Урьдчилж дүүргэх"
+    - name: "Генераци"
+    - name: "KV cache-ийг хуваах"
+  - name: "Үр дүнтэй таамаглалын хөдөлгүүр зохиох"
   - subsections:
-    - name: "Continuous batching"
-    - name: "Prefix caching"
-    - name: "Let's look at an implementation: JetStream"
-  - name: "Worked Problems"
-  - name: "Appendix"
+    - name: "Тасралтгүй багцлах"
+    - name: "Урьдчилсан кэшлэх"
+    - name: "Жишээ хэрэгжүүлэлт: JetStream-г харцгаая"
+  - name: "Бодлогын бодолт"
+  - name: "Нэмэлт"
 
-# Below is an example of injecting additional post-specific styles.
-# This is used in the 'Layouts' section of this post.
-# If you use this post as a template, delete this _styles block.
+# Доор нэмэлт постод зориулсан тусгай загваруудыг оруулсан жишээ байна.
+# Энэ нь энэ постын 'Layouts' хэсэгт ашиглагддаг.
+# Хэрвээ та энэ постыг загвар болгон ашиглах бол энэ _styles блокийг устгаарай.
 _styles: >
   .fake-img {
     background: #bbb;
@@ -93,11 +95,11 @@ _styles: >
   }
 ---
 
-## The Basics of Transformer Inference
+## Трансформерийн дүгнэлтийн үндэс
 
-So you've trained a Transformer, and you want to use it to generate some new sequences. _At the end of the day, benchmark scores going up and loss curves going down are only proxies for whether something interesting is going to happen once the rubber hits the road!_<d-footnote>Historically, you can do a surprising amount of research on Transformers without ever touching inference — LLM loss, multiple choice benchmarks can be run efficiently without a proper KV cache or generation loop implementation. This meant, especially in research codebases, there's often a lot of low hanging fruits in the inference codepath.</d-footnote>
+Таны Transformer сургасан бол одоо үүнийг ашиглаж шинэ дараалал үүсгэхийг хүсэж байна. _Өдрийн төгсгөлд, шалгуурын оноо өсөх болон алдааны муруй буурах нь зөвхөн сонирхолтой зүйл болох эсэхийг таамаглах үзүүлэлтүүд юм. Жинхэнэ хэрэглээнд юу болохыг зөвхөн эдгээрээр мэдэх боломжгүй!_<d-footnote>Түүхэн талаасаа, та Transformer дээр гайхалтай их судалгаа хийж чадна, огт inference буюу таамаглал хийхгүйгээр — LLM loss, олон сонголтот шалгуурын тестүүдийг KV cache эсвэл generation loop хэрэгжүүлэхгүйгээр үр дүнтэй гүйцэтгэж болно. Энэ нь, ялангуяа судалгааны кодын сангуудад, inference буюу таамаглалын кодын хэсэгт ихэвчлэн амархан шийдэж болох асуудлууд байсаар байдаг гэсэн үг.</d-footnote>
 
-Sampling is conceptually simple. We put a sequence in and our favorite Transformer will spit out $$\log p(\text{next token}_i \vert \text{previous tokens})$$, i.e. log-probabilities for all possible next tokens. We can sample from this distribution and obtain a new token. Append this token and repeat this process and we obtain a sequence of tokens which is a continuation of the prompt.
+Sampling нь ойлгоход хялбар ойлголт юм. Бид дарааллыг оруулж, бидний дуртай Transformer нь $$\log p(\text{next token}_i \vert \text{previous tokens})$$, i.e. log-probabilities for all possible next tokens. We can sample from this distribution and obtain a new token. Append this token and repeat this process and we obtain a sequence of tokens which is a continuation of the prompt.
 
 {% include figure.liquid path="assets/img/naive-inference.png" class="img-fluid" caption="<b>Figure:</b> naive sampling from a Transformer. The blue logits give us a distribution over the next token that we can sample from. Note that each step re-processes the entire prefix, leading to a $\Theta(n^2)$ runtime for the algorithm." %}
 
@@ -688,8 +690,8 @@ For normal autoregressive sampling the token/s is the same as the step time. We 
 
 {% include figure.liquid path="assets/img/spec-sampling3.png" class="img-fluid" caption="<b>Figure:</b> this figure shows the per-step latency and speculation success rate for Chinchilla (a 70B model from DeepMind) with a 4B parameter drafter (small model). For XSum (a natural language dataset), the ideal amount of speculation is about 3-4 tokens ahead, while HumanEval (a coding dataset) is more predictable and sees wins from more aggressive speculation." %}
 
-**How does this work for non-greedy decoding?** This is a bit more complicated, but essentially boils down to a Metropolis-Hastings inspired algorithm where have $$P_{\text{draft model}}(\text{chosen token})$$ and $$P_{\text{target model}}(\text{chosen token})$$ derived from the logits, and reject the chosen token probabilistically if the ratio of these probabilities is smaller than some threshold.
+**How does this work for non-greedy decoding?** This is a bit more complicated, but essentially boils down to a Metropolis-Hastings inspired algorithm where have $$P_{\text{draft model}}(\text{chosen token})$$ and $$P_{\text{target model}}(\text{chosen token})$$ гэсэн үр дүнг гаргана. Энэ үр дүн нь logits-оос гардаг бөгөөд сонгосон token-ыг магадлалын харьцаа тодорхой босгоос бага байвал магадлалын аргаар татгалзана.
 
-These [two](https://arxiv.org/abs/2211.17192) [papers](https://arxiv.org/abs/2302.01318) derived this concurrently and have good examples of how this works in practice.
+Эдгээр [хоёр](https://arxiv.org/abs/2211.17192) [судалгаа](https://arxiv.org/abs/2302.01318) үүнийг нэгэн зэрэг гаргаж авсан бөгөөд энэ нь практикт хэрхэн ажилладаг талаар сайн жишээтэй.
 
-<p markdown=1 class="takeaway">**Takeaway:** Speculative sampling is yet another powerful lever for trading throughput for better per token latency. However, in the scenario where batch size is limited (e.g. small hardware footprint or large KV caches), it becomes a win-win.</p>
+<p markdown=1 class="takeaway">**Гол санаа:** Speculative sampling нь нэг токен дээр илүү хурдан хариу авахын тулд throughput-ийг солих бас нэгэн хүчтэй арга юм. Гэхдээ batch-ийн хэмжээ хязгаартай үед (жишээ нь, жижиг hardware эсвэл том KV cache-тай бол), энэ нь хоёр талдаа ашигтай болдог.</p>

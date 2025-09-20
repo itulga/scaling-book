@@ -1,78 +1,80 @@
+—
+Энэхүү орчуулга нь MIT лицензийн дагуу эх бүтээлээс хөрвүүлэв.
+Эх сурвалж: Austin et al., "How to Scale Your Model" (https://jax-ml.github.io/scaling-book/)
+Орч.: Mongolian (mn)
+—
+
 ---
 layout: distill
-title: "How to Think About GPUs"
-description: "We love TPUs at Google, but GPUs are great too. This chapter takes a deep dive into the world of GPUs – how each chip works, how they’re networked together, and what that means for LLMs, especially compared to TPUs. While there are a multitude of GPU architectures from NVIDIA, AMD, Intel, and others, here we will focus on NVIDIA GPUs. This section builds on <a href='https://jax-ml.github.io/scaling-book/tpus/'>Chapter 2</a> and <a href='https://jax-ml.github.io/scaling-book/training'>Chapter 5</a>, so you are encouraged to read them first."
+title: "GPU-г хэрхэн ойлгох вэ"
+description: "Бид Google-д TPU-д дуртай, гэхдээ GPU ч бас маш сайн. Энэ бүлэгт GPU-гийн ертөнц рүү гүнзгий орж үзнэ – чип бүр хэрхэн ажилладаг, тэдгээрийг хэрхэн сүлжээнд холбодог, энэ нь LLM-д ямар утгатай вэ, ялангуяа TPU-тай харьцуулахад. NVIDIA, AMD, Intel болон бусад олон төрлийн GPU архитектур байдаг ч энд бид зөвхөн NVIDIA GPU-д төвлөрнө. Энэ хэсэг нь <a href='https://jax-ml.github.io/scaling-book/tpus/'>2-р бүлэг</a> болон <a href='https://jax-ml.github.io/scaling-book/training'>5-р бүлэг</a>-д тулгуурласан тул эхлээд тэдгээрийг уншихыг зөвлөж байна."
 date: 2025-08-18
 future: true
 htmlwidgets: true
 hidden: false
 
-section_number: 12
+хэсгийн_дугаар: 12
 
 previous_section_url: "../conclusion"
-previous_section_name: "Part 11: Conclusion"
+previous_section_name: "11-р хэсэг: Дүгнэлт"
 
 next_section_url:
-next_section_name: "The End"
+next_section_name: "Төгсгөл"
 
-bibliography: main.bib
+ном зүй: main.bib
 
-giscus_comments: true
+giscus_comments: үнэн
 
 authors:
-  - name: Jacob Austin<sup>†</sup>
+  - name: Жэйкоб Остин<sup>†</sup>
     url: "https://www.jacobaustin.org/"
     affiliations:
       name: <sup>†</sup>Google DeepMind
-  - name: Swapnil Patil<sup>†</sup>
+  - name: Свапнил Патил<sup>†</sup>
     url: "https://www.linkedin.com/in/swapnil-patil-5b47a068"
-  - name:  Adam Paszke<sup>†</sup>
+  - name: Адам Паскэ<sup>†</sup>
     url: https://x.com/apaszke
-  - name: Reiner Pope<sup>*</sup>
+  - name: Рейнер Попе<sup>*</sup>
     url: https://x.com/reinerpope
     affiliations:
       name: <sup>*</sup>MatX
 
-# Add a table of contents to your post.
-#   - make sure that TOC names match the actual section names
-#     for hyperlinks within the post to work correctly.
-#   - please use this format rather than manually creating a markdown table of contents.
 toc:
-  - name: What Is a GPU?
+  - name: GPU гэж юу вэ?
   - subsections:
-    - name: Memory
-    - name: "Summary of GPU specs"
-    - name: GPUs vs. TPUs at the chip level
-    - name: "Quiz 1: GPU hardware"
-  - name: Networking
+    - name: Санах ой
+    - name: "GPU-ийн техникийн үзүүлэлтийн хураангуй"
+    - name: GPU ба TPU-ийн ялгаа (чип түвшинд)
+    - name: "Асуулт 1: GPU техник хангамж"
+  - name: Сүлжээ (Networking)
   - subsections:
-    - name: At the node level
-    - name: "Quiz 2: GPU nodes"
-    - name: Beyond the node level
-    - name: "Quiz 3: Beyond the node level"
-  - name: How Do Collectives Work on GPUs?
+    - name: Нэг нод (node) дээр
+    - name: "Асуулт 2: GPU-нодууд"
+    - name: Нодын түвшнээс цааш
+    - name: "Асуулт 3: Нодын түвшнээс цааш"
+  - name: GPU дээр Collective-ууд хэрхэн ажилладаг вэ?
   - subsections:
-    - name: Intra-node collectives
-    - name: Cross-node collectives
-    - name: "Quiz 4: Collectives"
-  - name: "Rooflines for LLM Scaling on GPUs"
+    - name: Нэг нод доторх collective-ууд
+    - name: Нодууд хоорондын collective-ууд
+    - name: "Асуулт 4: Collective-ууд"
+  - name: "GPU дээр LLM масштаблах Roofline-ууд"
   - subsections:
-    - name: "Data Parallelism"
-    - name: "Tensor Parallelism"
-    - name: "Expert Parallelism"
-    - name: "Pipeline Parallelism"
-    - name: "Examples"
-    - name: "TLDR of LLM scaling on GPUs"
-    - name: "Quiz 5: LLM rooflines"
-  - name: "Acknowledgements and Further Reading"
-  - name: "Appendix"
+    - name: "Өгөгдлийн параллелизм"
+    - name: "Тэнцэр (Tensor) параллелизм"
+    - name: "Мэргэжилтний (Expert) параллелизм"
+    - name: "Дамжуулах (Pipeline) параллелизм"
+    - name: "Жишээнүүд"
+    - name: "GPU дээр LLM масштаблахын товч агуулга"
+    - name: "Асуулт 5: LLM roofline-ууд"
+  - name: "Талархал ба Дэлгэрэнгүй унших материал"
+  - name: "Хавсралт"
   - subsections:
-    - name: "Appendix A: How does this change with GB200?"
-    - name: "Appendix B: More networking details"
+    - name: "Хавсралт A: GB200-той бол юу өөрчлөгдөх вэ?"
+    - name: "Хавсралт B: Сүлжээний дэлгэрэнгүй"
 
-# Below is an example of injecting additional post-specific styles.
-# This is used in the 'Layouts' section of this post.
-# If you use this post as a template, delete this _styles block.
+# Доор нэмэлт постод зориулсан тусгай стиль хэрхэн оруулах жишээ байна.
+# Энэ нь энэ постын 'Layouts' хэсэгт ашиглагддаг.
+# Хэрвээ та энэ постыг загвар болгон ашиглах бол энэ _styles блокийг устгаарай.
 _styles: >
   .fake-img {
     background: #bbb;
@@ -90,92 +92,92 @@ _styles: >
   }
 ---
 
-## What Is a GPU?
+## GPU гэж юу вэ?
 
-A modern ML GPU (e.g. H100, B200) is basically a bunch of compute cores that specialize in matrix multiplication (called **Streaming Multiprocessors** or **SMs**) connected to a stick of fast memory (called **HBM**). Here’s a diagram:
+Орчин үеийн ML GPU (жишээ нь H100, B200) нь үндсэндээ матриц үржүүлэхэд (Matrix Multiplication) зориулсан олон тооны тооцооллын цөмүүдээс (эдгээрийг **Streaming Multiprocessors** буюу **SMs** гэж нэрлэдэг) бүрддэг бөгөөд эдгээр нь хурдан санах ойтой (үүнийг **HBM** гэж нэрлэдэг) холбогдсон байдаг. Энд нэг зураг байна:
 
-{% include figure.liquid path="assets/gpu/gpu-diagram.png" class="img-fluid" link="true" caption="<b>Figure:</b> a diagram showing the abstract layout of an H100 or B200 GPU. An H100 has 132 SMs while a B200 has 148. We use the term 'Warp Scheduler' somewhat broadly to describe a set of 32 CUDA SIMD cores <i>and</i> the scheduler that dispatches work to them. Note how much this looks like a TPU!" %}
+{% include figure.liquid path="assets/gpu/gpu-diagram.png" class="img-fluid" link="true" caption="<b>Зураг:</b> H100 эсвэл B200 GPU-ийн ерөнхий бүтэцтэй диаграмм. H100 нь 132 SM-тэй, харин B200 нь 148 SM-тэй. Бид 'Warp Scheduler' гэдэг нэр томьёог өргөн утгаар нь хэрэглэж байгаа бөгөөд энэ нь 32 CUDA SIMD цөм <i>ба</i> тэдэнд ажил хуваарилдаг scheduler-г хэлж байна. Энэ нь TPU-тэй хэр адилхан харагдаж байгааг анхаарна уу!" %}
 
-Each SM, like a TPU's Tensor Core, has a dedicated matrix multiplication core (unfortunately also called a **Tensor Core**<d-footnote>The GPU Tensor Core is the matrix multiplication sub-unit of the SM, while the TPU TensorCore is the umbrella unit that contains the MXU, VPU, and other components.</d-footnote>), a vector arithmetic unit (called a **Warp Scheduler**<d-footnote>NVIDIA doesn't have a good name for this, so we use it only as the best of several bad options. The Warp Scheduler is primarily the unit that dispatches work to a set of CUDA cores, but we use it here to describe the control unit and the set of cores it controls.</d-footnote>), and a fast on-chip cache (called **SMEM**). Unlike a TPU, which has at most 2 independent "Tensor Cores", a modern GPU has more than 100 SMs (132 on an H100). Each of these SMs is much less powerful than a TPU Tensor Core but the system overall is more flexible. Each SM is more or less totally independent, so a GPU can do hundreds of separate tasks at once.<d-footnote>Although SMs are independent, they are often forced to coordinate for peak performance because they all share a capacity-limited L2 cache.</d-footnote>
+Тус бүр SM нь TPU-ийн Tensor Core шиг зориулалтын матриц үржүүлэх цөмтэй (харамсалтай нь мөн **Tensor Core** гэж нэрлэдэг<d-footnote>GPU Tensor Core нь SM-ийн матриц үржүүлэх дэд нэгж бөгөөд TPU TensorCore нь MXU, VPU болон бусад бүрэлдэхүүн хэсгүүдийг агуулсан нэгж юм.</d-footnote>), вектор тооцооллын нэгжтэй (энэ нь **Warp Scheduler** гэж нэрлэгддэг<d-footnote>NVIDIA-д үүнийг сайн нэрлэсэн нэр байхгүй тул бид хамгийн боломжит муу сонголтоор нь хэрэглэж байна. Warp Scheduler нь голчлон ажил үүргийг хэд хэдэн CUDA цөмд хуваарилагч нэгж боловч бид энд удирдлагын нэгж болон түүний хянадаг цөмүүдийн багцыг илэрхийлэхэд хэрэглэж байна.</d-footnote>), мөн хурдан дотоод санах ойтой (энэ нь **SMEM** гэж нэрлэгддэг). TPU-ээс ялгаатай нь, хамгийн ихдээ 2 тусдаа "Tensor Core"-той байдаг бол, орчин үеийн GPU нь 100-аас дээш SM-тай (H100 дээр 132 ширхэг). Эдгээр SM тус бүр нь TPU-ийн Tensor Core-оос хүч багатай ч систем бүхэлдээ илүү уян хатан байдаг. SM бүр бараг бүрэн бие даасан тул GPU нь нэгэн зэрэг хэдэн зуун тусдаа үүрэг гүйцэтгэж чадна.<d-footnote>SM-ууд бие даасан боловч, ихэнхдээ хамгийн өндөр гүйцэтгэлд хүрэхийн тулд хамтран ажиллах шаардлагатай байдаг. Учир нь тэд бүгд багтаамж хязгаартай L2 кэш санах ойг хуваалцдаг.</d-footnote>
 
-Let's take a more detailed view of an H100 SM:
+H100 SM-ийн илүү дэлгэрэнгүйг харцгаая:
 
-{% include figure.liquid path="assets/gpu/blackwell-sm.png" class="img-small" link="true" caption="<b>Figure:</b> a diagram of an H100 SM (<a href='https://wccftech.com/nvidia-hopper-gh100-gpu-official-5nm-process-worlds-fastest-hpc-chip-80-billion-transistors-hbm3-memory/'>source</a>) showing the 4 <i>subpartitions</i>, each containing a Tensor Core, Warp Scheduler, Register File, and sets of CUDA Cores of different precisions. The 'L1 Data Cache' near the bottom is the 256kB SMEM unit. A B200 looks similar, but adds a substantial amount of Tensor Memory (TMEM) for feeding the bulky Tensor Cores." %}
+{% include figure.liquid path="assets/gpu/blackwell-sm.png" class="img-small" link="true" caption="<b>Зураг:</b> H100 SM-ийн диаграмм (<a href='https://wccftech.com/nvidia-hopper-gh100-gpu-official-5nm-process-worlds-fastest-hpc-chip-80-billion-transistors-hbm3-memory/'>эх сурвалж</a>). Энэ нь 4 <i>дэд хэсэг</i>-ийг харуулж байна. Тус бүр нь Tensor Core, Warp Scheduler, Register File болон өөр өөр нарийвчлалтай CUDA Cores-уудтай. Доор байрлах 'L1 Data Cache' нь 256kB SMEM нэгж юм. B200 нь үүнтэй төстэй харагддаг, гэхдээ Tensor Core-уудыг хангахын тулд илүү их Tensor Memory (TMEM)-ийг нэмсэн." %}
 
-Each SM is broken up into 4 identical quadrants, which NVIDIA calls **SM subpartitions**, each containing a Tensor Core, 16k 32-bit registers, and a SIMD/SIMT vector arithmetic unit called a Warp Scheduler, whose lanes (ALUs) NVIDIA calls **CUDA Cores**. The core component of each partition is arguably the Tensor Core, which performs matrix multiplications and makes up the vast majority of its FLOPs/s, but it’s not the only component worth noting.
+Тус бүр SM нь 4 ижил хэсэгт хуваагддаг бөгөөд NVIDIA эдгээрийг **SM дэд хэсэг** гэж нэрлэдэг. Дэд хэсэг бүрт нэг Tensor Core, 16к 32-бит бүртгэгч, мөн SIMD/SIMT вектор тооцооллын нэгж буюу Warp Scheduler байдаг. Энэ нэгжийн шугамуудыг (ALU) NVIDIA нь **CUDA Cores** гэж нэрлэдэг. Дэд хэсэг бүрийн гол бүрэлдэхүүн хэсэг нь Tensor Core бөгөөд энэ нь матриц үржвэрийг гүйцэтгэдэг ба FLOPs/s-ийн ихэнх хувийг бүрдүүлдэг. Гэхдээ энэ нь цорын ганц чухал бүрэлдэхүүн хэсэг биш юм.
 
-* **CUDA Cores:** each subpartition contains a set of ALUs called CUDA Cores that do SIMD/SIMT vector arithmetic. Each ALU can generally do 1 arithmetic op each cycle, e.g. f32.add.<d-footnote>Newer GPUs support FMA (Fused-Multiply Add) instructions which technically do two FLOPs each cycle, a fact NVIDIA uses ruthelessly to double their reported specs.</d-footnote> Each subpartition contains 32 fp32 cores (and a smaller number of int32 and fp64 cores) that all execute the same instruction in each cycle. Like the TPU's VPU, CUDA cores are responsible for ReLUs, pointwise vector operations, and reductions (sums).<d-footnote>Historically, before the introduction of the Tensor Core, the CUDA cores were the main component of the GPU and were used for rendering, including ray-triangle intersections and shading. On today's gaming GPUs, they still do a bulk of the rendering work, while TensorCores are used for up-sampling (DLSS), which allows the GPU to render at a lower resolution (fewer pixels = less work) and upsample using ML.</d-footnote>
+* **CUDA цөмүүд:** тус бүрийн дэд хэсэг нь ALU-уудын багц болох CUDA цөмүүдтэй бөгөөд эдгээр нь SIMD/SIMT вектор арифметик үйлдэл хийдэг. ALU бүр ихэвчлэн нэг циклд нэг арифметик үйлдэл хийж чадна, жишээ нь f32.add.<d-footnote>Шинэ GPU-ууд FMA (Fused-Multiply Add) зааврыг дэмждэг бөгөөд энэ нь нэг циклд хоёр FLOP хийдэг. NVIDIA энэ боломжийг ашиглан үзүүлэлтээ хоёр дахин ихээр зарладаг.</d-footnote> Дэд хэсэг бүр 32 fp32 цөмтэй (мөн цөөн тооны int32 ба fp64 цөмтэй) бөгөөд бүгд нэг циклд ижил заавар гүйцэтгэдэг. TPU-ийн VPU шиг, CUDA цөмүүд нь ReLU, pointwise вектор үйлдэл, мөн бууруулалт (нийлбэр) хийх үүрэгтэй.<d-footnote>Түүхийн хувьд, Tensor Core-оос өмнө CUDA цөмүүд нь GPU-ийн гол бүрэлдэхүүн хэсэг байсан бөгөөд дүрслэл хийхэд ашиглагддаг байсан, үүнд цацраг-гурав өнцөгт огтлолцол болон сүүдэрлэлт орно. Өнөөгийн тоглоомын GPU-ууд дээр эдгээр цөмүүд нь ихэнх дүрслэлийн ажлыг хийдэг хэвээр байна, харин TensorCore-ууд нь up-sampling (DLSS) хийхэд ашиглагддаг. Энэ нь GPU-д бага нягтаршилтайгаар дүрслэл хийх (бага пиксел = бага ажил) боломж олгож, ML ашиглан дүрслэлийг томруулдаг.</d-footnote>
 
-* **Tensor Core (TC):** each subpartition has its own Tensor Core, which is a dedicated matrix multiplication unit like a TPU MXU. The Tensor Core represents the vast majority of the GPUs FLOPs/s (e.g. on an H100, we have 990 bf16 TC TFLOP/s compared to just 66 TFLOPs/s from the CUDA cores).
-  * [990 bf16 TFLOPs/s](https://www.nvidia.com/en-us/data-center/h100/) with 132 SM running at 1.76GHz means each H100 TC can do `7.5e12 / 1.76e9 / 4 ~ 1024` bf16 FLOPs/cycle, roughly an 8x8x8 matmul.<d-footnote>NVIDIA doesn’t share many TC hardware details, so this is more a guess than definite fact – certainly, it doesn’t speak to how the TC is implemented. We know that a V100 can perform 256 FLOPs/TC/cycle. An A100 can do 512, H100 can do 1024, and while the B200 details aren’t published, it seems likely it’s about 2048 FLOPs/TC/cycle, since `2250e12 / (148 * 4 * 1.86e9)` is about 2048. Some more details are confirmed <a href='https://forums.developer.nvidia.com/t/how-to-calculate-the-tensor-core-fp16-performance-of-h100/244727'>here</a>.</d-footnote>
-  * Like TPUs, GPUs can do lower precision matmuls at higher throughput (e.g. H100 has 2x fp8 FLOPs/s vs. fp16). Low-precision training or serving can be significantly faster.
-  * Each GPU generation since Volta has increased the TC size over the previous generation ([good article on this](https://semianalysis.com/2025/06/23/nvidia-tensor-core-evolution-from-volta-to-blackwell/)). With B200 the TC has gotten so large it can no longer fit its inputs in SMEM, so B200s introduce a new memory space called TMEM.<d-footnote>In Ampere, the Tensor Core could be fed from a single warp, while in Hopper it requires a full SM (warpgroup) and in Blackwell it’s fed from 2 SMs. The matmuls have also become so large in Blackwell that the arguments (specifically, the accumulator) no longer fit into register memory/SMEM, so Blackwell adds TMEM to account for this.</d-footnote>
+* **Tensor Core (TC):** тус бүрийн дэд хэсэг өөрийн Tensor Core-тэй байдаг, энэ нь матриц үржүүлэх зориулалттай тусгай нэгж бөгөөд TPU MXU шиг ажилладаг. Tensor Core нь GPU-ийн FLOPs/s-ийн ихэнх хувийг эзэлдэг (жишээ нь H100 дээр 990 bf16 TC TFLOP/s байдаг бол зөвхөн CUDA core-оос 66 TFLOPs/s байдаг).
+  * [990 bf16 TFLOPs/s](https://www.nvidia.com/en-us/data-center/h100/) нь 132 SM 1.76GHz дээр ажиллахад, нэг H100 TC нь `7.5e12 / 1.76e9 / 4 ~ 1024` bf16 FLOPs/cycle хийж чадна, энэ нь ойролцоогоор 8x8x8 матриц үржүүлэлт юм.<d-footnote>NVIDIA компани TC-ийн техник хангамжийн нарийн мэдээллийг ихэвчлэн хуваалцдаггүй тул энэ нь зөвхөн таамаглал бөгөөд баттай үнэн биш – яг TC хэрхэн хийгдсэн тухай биш юм. Бид мэдэж байгаа нь V100 нь 256 FLOPs/TC/cycle хийж чаддаг. A100 нь 512, H100 нь 1024, B200-ийн мэдээлэл албан ёсоор гараагүй ч магадгүй 2048 FLOPs/TC/cycle байх боломжтой, учир нь `2250e12 / (148 * 4 * 1.86e9)` нь 2048 орчим байна. Илүү дэлгэрэнгүй мэдээллийг <a href='https://forums.developer.nvidia.com/t/how-to-calculate-the-tensor-core-fp16-performance-of-h100/244727'>энд</a> харж болно.</d-footnote>
+  * TPU шиг, GPU нь бага нарийвчлалтай матриц үржүүлэлтийг илүү хурдан хийж чадна (жишээ нь H100 нь fp8 FLOPs/s нь fp16-гаас 2 дахин их). Бага нарийвчлалтай сургалт эсвэл үйлчилгээ илүү хурдан байж болно.
+  * Volta-гаас хойших бүх GPU үе бүр өмнөх үеэсээ TC-ийн хэмжээг нэмэгдүүлсэн ([энэ талаар сайн нийтлэл](https://semianalysis.com/2025/06/23/nvidia-tensor-core-evolution-from-volta-to-blackwell/)). B200 дээр TC маш том болсон тул оролтууд нь SMEM-д багтахаа больсон, тиймээс B200 нь TMEM гэдэг шинэ санах ойн орон зайг нэвтрүүлсэн.<d-footnote>Ampere дээр Tensor Core-г нэг warp-оос өгч болдог байсан бол Hopper дээр бүтэн SM (warpgroup) хэрэгтэй болсон, харин Blackwell дээр 2 SM-ээс өгдөг болсон. Blackwell дээр матриц үржүүлэлтийн хэмжээ маш том болсон тул аргументууд (ялангуяа accumulator) нь register memory/SMEM-д багтахаа больсон, тиймээс Blackwell нь TMEM-г нэмсэн.</d-footnote>
 
-**CUDA cores are more flexible than a TPU's VPU:** GPU CUDA cores (since V100) use what is called a SIMT (*Single Instruction Multiple Threads*) programming model, compared to the TPU's SIMD (*Single Instruction Multiple Data*) model. Like ALUs in a TPU's VPU, CUDA cores within a subpartition must execute the same operation in each cycle (e.g. if one core is adding two floats, then every other CUDA core in the subpartition must also do so). Unlike the VPU, however, each CUDA core (or "thread" in the CUDA programming model) has its own instruction pointer and can be _programmed_ independently. When two threads in the same warp are instructed to perform different operations, you effectively do _both_ operations, masking out the cores that don't need to perform the divergent operation.
+**CUDA цөмүүд TPU-ийн VPU-ээс илүү уян хатан:** GPU-ийн CUDA цөмүүд (V100-с хойш) SIMT (*Single Instruction Multiple Threads*) программчлалын загвар ашигладаг, харин TPU нь SIMD (*Single Instruction Multiple Data*) загвар ашигладаг. TPU-ийн VPU дахь ALU-ууд шиг, нэг subpartition доторх бүх CUDA цөмүүд нэгэн зэрэг ижил үйлдэл хийх ёстой (жишээ нь, хэрвээ нэг цөм хоёр float нэмэж байвал, тухайн subpartition доторх бусад бүх CUDA цөмүүд бас нэмэх үйлдэл хийх ёстой). Гэхдээ VPU-ээс ялгаатай нь, тус бүрийн CUDA цөм (эсвэл CUDA программчлалын загварт "thread" гэж нэрлэдэг) өөрийн гэсэн instruction pointer-тай бөгөөд тусдаа _программчлагдах_ боломжтой. Хэрвээ нэг warp доторх хоёр thread өөр өөр үйлдэл хийхээр заавар авбал, та үнэндээ _хоёр_ үйлдлийг хоёуланг нь хийж, шаардлагагүй цөмүүдийг масклаж, зөвхөн хэрэгтэй цөмүүдийг ажиллуулдаг.
 
-{% include figure.liquid path="assets/gpu/warp-divergence.png" class="img-fluid" caption="<b>Figure:</b> an example of warp divergence within a set of threads (<a href='https://images.nvidia.com/content/volta-architecture/pdf/volta-architecture-whitepaper.pdf'>source</a>). White spaces indicate stalls of at least some fraction of the physical CUDA cores" %}
+{% include figure.liquid path="assets/gpu/warp-divergence.png" class="img-fluid" caption="<b>Зураг:</b> Thread-үүдийн багц дотор warp divergence-ийн жишээ (<a href='https://images.nvidia.com/content/volta-architecture/pdf/volta-architecture-whitepaper.pdf'>эх сурвалж</a>). Цагаан зайнууд нь зарим физик CUDA цөмүүд зогсолт хийж байгааг харуулна." %}
 
-This enables flexible programming at the thread level, but at the cost of silently degrading performance if warps diverge too often. Threads can also be more flexible in what memory they can access; while the VPU can only operate on contiguous blocks of memory, CUDA cores can access individual floats in shared registers and maintain per-thread state.
+Энэ нь thread түвшинд уян хатан програмчлал хийх боломжийг олгодог, гэхдээ хэрвээ warps хэтэрхий олон удаа салвал гүйцэтгэл чимээгүйгээр мууддаг. Threads нь бас ямар санах ойд хандаж болох талаар илүү уян хатан байдаг; VPU нь зөвхөн дараалсан санах ойн блокууд дээр ажиллаж чаддаг бол, CUDA cores нь shared registers доторх тус тусын float-д хандаж, thread бүрийн төлөвийг хадгалж чаддаг.
 
-**CUDA core scheduling is also more flexible:** SMs run a bit like multi-threaded CPUs, in the sense that they can "schedule" many programs (**warps**) concurrently (up to 64 per SM) but each _Warp Scheduler_ only ever executes a single program in each clock cycle.<d-footnote>Warps scheduled on a given SM are called "resident".</d-footnote> The Warp Scheduler automatically switches between active warps to hide I/O operations like memory loads. TPUs are generally single threaded by comparison.
+**CUDA цөмийн төлөвлөлт илүү уян хатан байдаг:** SM-ууд олон утаслагдсан CPU шиг ажилладаг, өөрөөр хэлбэл тэд олон програмуудыг (**warps**) зэрэг (нэг SM дээр 64 хүртэл) "төлөвлөж" чадна, гэхдээ _Warp Scheduler_ нь зөвхөн нэг програмыг нэг цагийн мөчлөгт гүйцэтгэдэг.<d-footnote>Тухайн SM дээр төлөвлөгдсөн warps-ыг "оршин суугч" гэж нэрлэдэг.</d-footnote> Warp Scheduler нь идэвхтэй warps хооронд автоматаар шилжиж, санах ойн ачаалал зэрэг I/O үйлдлүүдийг нууж өгдөг. TPU-уудтай харьцуулахад ихэвчлэн нэг утаслагдсан байдаг.
 
-### Memory
+### Санах ой
 
-Beyond the compute units, GPUs have a hierarchy of memories, the largest being HBM (the main GPU memory), and then a series of smaller caches (L2, L1/SMEM, TMEM, register memory).
+Тооцооллын нэгжүүдээс гадна, GPU-д санах ойн шатлал байдаг. Хамгийн том нь HBM (гол GPU санах ой), дараа нь жижиг санах ойн кэшүүд (L2, L1/SMEM, TMEM, бүртгэлийн санах ой) байна.
 
-* **Registers:** Each subpartition has its own register file containing 16,384 32-bit words on H100/B200 (`4 * 16384 * 4 = 256kiB` per SM) accessible by the CUDA cores.
-  * Each CUDA core can only access up to 256 registers at a time, so although we can schedule up to 64 "resident warps" per SM, you can only fit 8 (`256 * 1024 / (4 * 32 * 256)`) at a time if each thread uses 256 registers.
+* **Регистрүүд:** Тус бүрийн дэд хэсэг өөрийн гэсэн регистрийн файлтай бөгөөд H100/B200 дээр 16,384 ширхэг 32-бит үгтэй байдаг (`4 * 16384 * 4 = 256kiB` нэг SM бүрт) бөгөөд эдгээрийг CUDA цөмүүд ашиглаж болно.
+  * Тус бүрийн CUDA цөм нэг удаад 256 регистр л ашиглаж чадна. Тиймээс бид нэг SM дээр 64 "оршин байгаа warp"-ыг төлөвлөж болох ч, хэрвээ нэг thread бүр 256 регистр ашиглавал нэг удаад зөвхөн 8 (`256 * 1024 / (4 * 32 * 256)`) багтааж чадна.
 
-* **SMEM (L1 Cache):** each SM has its own 256kB on-chip cache called SMEM, which can either be programmer controlled as "shared memory" or used by the hardware as an on-chip cache. SMEM is used for storing activations and inputs to TC matmuls.
+* **SMEM (L1 Cache):** тус бүр SM өөрийн 256кБ хэмжээтэй чипэн дээрх кэштэй бөгөөд үүнийг SMEM гэж нэрлэдэг. Энэ нь программистын удирдлагаар "shared memory" буюу хуваалцсан санах ой болж эсвэл техник хангамжаар чипэн дээрх кэш болж ашиглагдаж болно. SMEM нь идэвхжүүлэлт болон TC matmuls-д орох оролтуудыг хадгалахад ашиглагддаг.
 
-* **L2 Cache:** all SMs share<d-footnote>Technically, the L2 cache is split in two, so half the SMs can access 25MB a piece on an H100. There is a link connecting the two halves, but at lower bandwidth.</d-footnote> a relatively large ~50MB L2 cache used to reduce main memory accesses.
-  * This is similar in size to a TPU’s VMEM but it’s **much** slower and isn’t programmer controlled. This leads to a bit of "spooky action at a distance" where the programmer needs to modify memory access patterns to ensure the L2 cache is well used.<d-footnote>The fact that the L2 cache is shared across all SMs effectively forces the programmer to run the SMs in a fairly coordinated way anyway, despite the fact that, in principle, they are independent units.</d-footnote>
-  * NVIDIA does not publish the L2 bandwidth for their chips, but it’s been [measured](https://chipsandcheese.com/p/nvidias-h100-funny-l2-and-tons-of-bandwidth) to be about 5.5TB/s. Thus is roughly 1.6x the HBM bandwidth but it's full-duplex, so the effective bidirectional bandwidth is closer to 3x. By comparison, a TPU’s VMEM is 2x larger *and* has much more bandwidth (around 40TB/s).
+* **L2 Cache:** бүх SM-ууд хуваалцдаг<d-footnote>Техникийн хувьд, L2 cache хоёр хэсэгт хуваагддаг, тиймээс H100 дээр хагас SM-ууд тус бүр 25MB-д хандаж чадна. Хоёр хэсгийг холбосон холбоос байдаг ч энэ нь бага хурдтай.</d-footnote> харьцангуй том ~50MB L2 cache бөгөөд энэ нь үндсэн санах ойд хандахыг багасгахад хэрэглэгддэг.
+  * Энэ нь хэмжээний хувьд TPU-ийн VMEM-тэй төстэй боловч **илүү** удаан бөгөөд программист удирдаж чадахгүй. Энэ нь "хол зайд байгаа нууцлаг үйлдэл" шиг байдал үүсгэдэг. Программист L2 cache-ийг сайн ашиглахын тулд санах ойн хандалтын хэв маягийг өөрчлөх хэрэгтэй болдог.<d-footnote>L2 cache бүх SM-ууд дээр хуваалцагддаг тул программист SM-уудыг зохицуулалттай ажиллуулах шаардлагатай болдог. Үнэндээ эдгээр нь бие даасан нэгжүүд боловч.</d-footnote>
+  * NVIDIA компани өөрийн чипүүдийн L2 cache-ийн дамжуулах хурдыг нийтэлдэггүй, гэхдээ [судалгаагаар](https://chipsandcheese.com/p/nvidias-h100-funny-l2-and-tons-of-bandwidth) ойролцоогоор 5.5TB/с гэж хэмжигдсэн. Энэ нь HBM-ийн дамжуулах хурднаас 1.6 дахин их боловч энэ нь хоёр чиглэлд (full-duplex) ажилладаг тул бодит хоёр талын дамжуулах хурд нь 3 дахин их байдаг. Харьцуулбал, TPU-ийн VMEM нь 2 дахин том *мөн* илүү их дамжуулах хурдтай (ойролцоогоор 40TB/с).
 
-* **HBM:** the main GPU memory, used for storing model weights, gradients, activations, etc.
-  * The HBM size has increased a lot from 32GB in Volta to 192GB in Blackwell (B200).
-  * The bandwidth from HBM to the CUDA Tensor Core is called HBM bandwidth or memory bandwidth, and is about 3.35TB/s on H100 and 9TB/s on B200.
+* **HBM:** GPU-ийн үндсэн санах ой, энэ нь model-ийн weights, gradients, activations гэх мэт зүйлсийг хадгалдаг.
+  * HBM-ийн хэмжээ Volta дээр 32GB байсан бол Blackwell (B200) дээр 192GB болж ихэссэн.
+  * HBM-ээс CUDA Tensor Core руу дамжих хурдыг HBM bandwidth эсвэл memory bandwidth гэж нэрлэдэг, энэ нь H100 дээр ойролцоогоор 3.35TB/s, B200 дээр 9TB/s байдаг.
 
-### Summary of GPU specs
+### GPU-ийн үзүүлэлтийн хураангуй
 
-Here is a summary of GPU specs for recent models. The number of SMs, clock speed, and FLOPs differ somewhat between variants of a given GPU. Here are memory capacity numbers:
+Энд сүүлийн үеийн GPU-уудын техникийн үзүүлэлтийн товч танилцуулга байна. Нэг GPU-ийн хувилбаруудын SM-ийн тоо, цагийн хурд (clock speed), FLOPs нь бага зэрэг ялгаатай байдаг. Энд санах ойн багтаамжийн тоонууд байна:
 
-|  GPU  | Generation |   Clock Speed   | SMs/chip | SMEM capacity/SM | L2 capacity/chip | HBM capacity/chip |
-| :---: | :--------: | :-------------: | :------: | :--------------: | :--------------: | :---------------: |
-| V100  |   Volta    | 1.25GHz/1.38HGz |    80    |       96kB       |       6MB        |       32GB        |
-| A100  |   Ampere   | 1.10GHz/1.41GHz |   108    |      192kB       |       40MB       |       80GB        |
-| H100  |   Hopper   | 1.59GHz/1.98GHz |   132    |      256kB       |       50MB       |       80GB        |
-| H200  |   Hopper   | 1.59GHz/1.98GHz |   132    |      256kB       |       50MB       |       141GB       |
-| B200  | Blackwell  |        ?        |   148    |      256kB       |      126MB       |       192GB       |
+|  GPU  | Үе шат (Generation) |   Цагийн хурд (Clock Speed)   | SMs/чип | SMEM багтаамж/SM | L2 багтаамж/чип | HBM багтаамж/чип |
+| :---: | :----------------: | :--------------------------: | :-----: | :---------------: | :--------------: | :----------------: |
+| V100  |   Volta            | 1.25GHz/1.38HGz              |    80   |       96kB        |       6MB        |       32GB         |
+| A100  |   Ampere           | 1.10GHz/1.41GHz              |   108   |      192kB        |      40MB        |       80GB         |
+| H100  |   Hopper           | 1.59GHz/1.98GHz              |   132   |      256kB        |      50MB        |       80GB         |
+| H200  |   Hopper           | 1.59GHz/1.98GHz              |   132   |      256kB        |      50MB        |      141GB         |
+| B200  | Blackwell          |        ?                     |   148   |      256kB        |     126MB        |      192GB         |
 
-All generations have 256kB of register memory per SM. Blackwell adds 256kB of TMEM per SM as well. Here are the FLOPs and bandwidth numbers for each chip:
+Бүх үеийнхэнд SM бүрт 256кB register санах ой байдаг. Blackwell нь SM бүрт 256кB TMEM нэмсэн. Энд чип бүрийн FLOPs болон дамжуулах зурвасын тоонууд байна:
 
-|  GPU  | Generation | HBM BW/chip | FLOPs/s/chip (bf16/fp16) | FLOPs/s/chip (fp8/int8) | FLOPs/s/chip (fp4) |
-| :---: | :--------: | :---------: | :----------------------: | :---------------------: | :----------------: |
-| V100  |   Volta    |   9.0e11    |            —             |            —            |         —          |
-| A100  |   Ampere   |   2.0e12    |          3.1e14          |         6.2e14          |         —          |
-| H100  |   Hopper   |   3.4e12    |          9.9e14          |         2.0e15          |         —          |
-| H200  |   Hopper   |   4.8e12    |          9.9e14          |         2.0e15          |         —          |
-| B200  | Blackwell  |   8.0e12    |          2.3e15          |         4.5e15          |       9.0e15       |
+|  GPU  | Үе шат | HBM BW/чип | FLOPs/сек/чип (bf16/fp16) | FLOPs/сек/чип (fp8/int8) | FLOPs/сек/чип (fp4) |
+| :---: | :-----: | :--------: | :-----------------------: | :----------------------: | :-----------------: |
+| V100  |  Volta  |   9.0e11   |            —              |            —             |         —           |
+| A100  | Ampere  |   2.0e12   |          3.1e14           |         6.2e14           |         —           |
+| H100  | Hopper  |   3.4e12   |          9.9e14           |         2.0e15           |         —           |
+| H200  | Hopper  |   4.8e12   |          9.9e14           |         2.0e15           |         —           |
+| B200  | Blackwell | 8.0e12    |          2.3e15           |         4.5e15           |       9.0e15        |
 
-We exclude B100 since it wasn't mass-produced.<d-footnote>While NVIDIA made a B100 generation, they were only briefly sold and produced, allegedly due to design flaws that prevented them from running close to their claimed specifications. They struggled to achieve peak FLOPs without throttling due to heat and power concerns.</d-footnote> Some specs depend slightly on the precise version of the GPU, since NVIDIA GPUs aren’t as standard as TPUs.
+Бид B100-г оруулахгүй, учир нь энэ нь их хэмжээгээр үйлдвэрлэгдээгүй.<d-footnote>NVIDIA B100 үеийг бүтээсэн боловч тэдгээрийг маш богино хугацаанд зарж, үйлдвэрлэсэн. Үүний шалтгаан нь зарим эх сурвалжаар загварын алдаа байсан бөгөөд энэ нь тэднийг зарласан үзүүлэлтэд ойртож ажиллах боломжгүй болгосон. Хэт халалт болон цахилгаан зарцуулалтын асуудлаас болж хамгийн их FLOPs-д хүрч чадаагүй, хурд нь багассан.</d-footnote> Зарим үзүүлэлт нь GPU-ийн яг ямар хувилбараас хамаарч бага зэрэг өөр байж болно, учир нь NVIDIA GPU-ууд TPU шиг стандарт биш.
 
-Here’s a helpful cheat sheet comparing GPU and TPU components:
+Энд GPU ба TPU бүрэлдэхүүн хэсгүүдийг харьцуулсан хэрэгтэй cheat sheet байна:
 
-|              GPU              |     TPU     |              What is it?              |
-| :---------------------------: | :---------: | :-----------------------------------: |
-| Streaming Multiprocessor (SM) | Tensor Core | Core "cell" that contains other units |
-|        Warp Scheduler         |     VPU     |      SIMD vector arithmetic unit      |
-|           CUDA Core           |   VPU ALU   |               SIMD ALU                |
-|        SMEM (L1 Cache)        |    VMEM     |       Fast on-chip cache memory       |
-|          Tensor Core          |     MXU     |      Matrix multiplication unit       |
-|        HBM (aka GMEM)         |     HBM     |  High bandwidth high capacity memory  |
+|              GPU              |     TPU     |               Энэ юу вэ?               |
+| :---------------------------: | :---------: | :------------------------------------: |
+| Streaming Multiprocessor (SM) | Tensor Core | Бусад нэгжүүдийг агуулсан үндсэн "эс"  |
+|        Warp Scheduler         |     VPU     |      SIMD вектор тооцооллын нэгж      |
+|           CUDA Core           |   VPU ALU   |               SIMD ALU                 |
+|        SMEM (L1 Cache)        |    VMEM     |       Чипэн доторх хурдан кэш санах ой  |
+|          Tensor Core          |     MXU     |      Матриц үржүүлэх нэгж              |
+|        HBM (aka GMEM)         |     HBM     |  Өндөр хурдтай, их багтаамжтай санах ой |
 
-### GPUs vs. TPUs at the chip level
+### GPU-ууд ба TPU-ууд чипийн түвшинд
 
-GPUs started out rendering video games, but since deep learning took off in the 2010s, they've started acting more and more like dedicated matrix multiplication machines – in other words, more like TPUs.<d-footnote>Before the deep learning boom, GPUs ("Graphics Processing Units") did, well, graphics – mostly for video games. Video games represent objects with millions of little triangles, and the game renders (or "rasterizes") these triangles into a 2D image that gets displayed on a screen 30-60 times a second (this frequency is called the framerate). Rasterization involves projecting these triangles into the coordinate frame of the camera and calculating which triangles overlap which pixels, billions of times a second. As you can imagine, this is very expensive, and it’s just the beginning. You then have to color each pixel by combining the colors of possibly several semi-opaque triangles that intersect the ray. GPUs were designed to do these operations extremely fast, with an eye towards versatility; you need to run many different GPU workloads (called "shaders") at the same time, with no single operation dominating. As a result, consumer graphics-focused GPUs can do matrix multiplication, but it’s not their primary function.</d-footnote> To an extent, this history explains why modern GPUs look the way they do. They weren't designed purely for LLMs or ML models but as general-purpose accelerators, and the hardware aims for level of "generality" that can be both a blessing and a curse. GPUs much more often "just work" when applied to new tasks and lean far less on a good compiler than TPUs do. But this also makes them much harder to reason about or get roofline performance out of, since so many compiler features can cause bottlenecks.
+GPU-ууд анх видео тоглоомын дүрсийг зурж эхэлсэн, гэхдээ 2010-аад оноос гүнзгий сургалт (deep learning) их хөгжсөнөөс хойш тэд илүү их матриц үржүүлэх зориулалттай машин шиг ажиллаж эхэлсэн – өөрөөр хэлбэл, TPU шиг болсон.<d-footnote>Гүнзгий сургалтын өсөлтөөс өмнө GPU ("Graphics Processing Units") нь зөвхөн дүрс зурдаг байсан – ихэвчлэн видео тоглоомд хэрэглэдэг. Видео тоглоомд объектуудыг сая сая жижиг гурвалжнаар дүрсэлдэг, тоглоом эдгээр гурвалжнуудыг 2D зураг болгон хувиргаж (эсвэл "растеризаци" хийж) дэлгэц дээр секундэд 30-60 удаа харуулдаг (энэ давтамжийг фреймрейт гэдэг). Растеризаци гэдэг нь эдгээр гурвалжнуудыг камерын координатын системд шилжүүлж, аль гурвалжин аль пикселтэй давхцаж байгааг тооцоолохыг хэлнэ, энэ нь секундэд тэрбум тэрбумаар тооцоологддог. Та төсөөлж байгаачлан, энэ нь маш их зардалтай, бас зөвхөн эхлэл нь. Дараа нь та тус бүр пикселийг өнгөөр будах хэрэгтэй, магадгүй хэд хэдэн хагас тунгалаг гурвалжингуудын өнгийг нийлүүлж будах шаардлагатай. GPU-ууд ийм үйлдлүүдийг маш хурдан хийхээр бүтээгдсэн, бас олон төрлийн ажил ("shader" гэж нэрлэдэг) зэрэг гүйцэтгэх хэрэгтэй болдог, нэг ч үйлдэл давамгайлдаггүй. Үүний үр дүнд, хэрэглэгчдэд зориулсан график GPU-ууд матриц үржүүлэлт хийж чаддаг ч энэ нь тэдний үндсэн үүрэг биш юм.</d-footnote> Энэ түүх нь орчин үеийн GPU-ууд яагаад ийм харагддагийг тодорхой хэмжээгээр тайлбарлаж өгдөг. Тэд зөвхөн LLM эсвэл ML загварт зориулагдаагүй, харин ерөнхий зориулалтын хурдасгуур болгон бүтээгдсэн, мөн техник хангамж нь "ерөнхий" байхыг зорьдог нь заримдаа ашигтай, заримдаа асуудалтай болдог. GPU ихэвчлэн шинэ даалгаварт "шууд ажилладаг" бөгөөд TPU-тай харьцуулахад сайн компайлераас бага хамаардаг. Гэхдээ энэ нь тэднийг ойлгоход илүү хэцүү, эсвэл хамгийн сайн гүйцэтгэл гаргахад төвөгтэй болгодог, учир нь олон компайлерийн боломжууд саатал үүсгэж болдог.
 
-**GPUs are more modular.** TPUs have 1-2 big Tensor Cores, while GPUs have hundreds of small SMs. Likewise, each Tensor Core has 4 big VPU with 1024 ALUs each, while GPUs have an H100 has 132 * 4 = 528 small independent SIMD units. Here is a 1:1 comparison of GPUs to TPU that highlights this point:
+**GPU-ууд илүү модульчлагдсан байдаг.** TPU-д 1-2 том Tensor Core байдаг бол GPU-д хэдэн зуун жижиг SM байдаг. Мөн адил, тус бүр Tensor Core нь 4 том VPU-тэй бөгөөд тус бүр 1024 ALU-тай, харин GPU-ууд (жишээ нь H100) нь 132 * 4 = 528 жижиг, бие даасан SIMD нэгжтэй. Энэ санааг тодруулахын тулд GPU ба TPU-г 1:1 харьцуулсан хүснэгт энд байна:
 
 |              GPU              |           TPU            | H100 # | TPU v5p # |
 | :---------------------------: | :----------------------: | :----: | :-------: |
@@ -185,73 +187,73 @@ GPUs started out rendering video games, but since deep learning took off in the 
 |           Registers           | Vector Registers (VRegs) |  32MB  |   256kB   |
 |          Tensor Core          |           MXU            |  528   |     8     |
 
-This difference in modularity on the one hand makes TPUs much cheaper to build and simpler to understand, but it also puts more burden on the compiler to do the right thing. Because TPUs have a single thread of control and only support vectorized VPU-wide instructions, the compiler needs to manually pipeline all memory loads and MXU/VPU work to avoid stalls. A GPU programmer can just launch dozens of different kernels, each running on a totally independent SM. On the other hand, those kernels might get horrible performance because they are thrashing the L2 cache or failing to coalesce memory loads; because the hardware controls so much of the runtime, it becomes hard to reason about what’s going on behind the scenes. As a result, TPUs can often get closer to peak roofline performance with less work.
+Энэ модуляр байдлын ялгаа нь нэг талаас TPU-г хийхэд илүү хямд, ойлгоход хялбар болгодог. Гэхдээ энэ нь compiler-д зөв зүйл хийхэд илүү их ачаалал өгдөг. TPU нь нэг л удирдлагын thread-тэй бөгөөд зөвхөн vector-чилсэн VPU-wide заавар дэмждэг тул compiler нь бүх санах ойн ачаалал болон MXU/VPU ажлыг гараар pipeline хийх хэрэгтэй болдог, ингэснээр саатал үүсэхээс сэргийлнэ. GPU программист олон өөр kernel-уудыг ажиллуулж чадна, эдгээр нь бүгд тусдаа SM дээр бие даан ажиллана. Нөгөө талаас, эдгээр kernel-ууд L2 cache-ийг хэт их ашиглах эсвэл санах ойн ачааллыг нэгтгэж чадахгүйгээс болж гүйцэтгэл муу байж магадгүй; hardware нь runtime-ийн ихэнх хэсгийг удирддаг учраас, дотоодод яг юу болж байгааг ойлгоход хэцүү болдог. Үүний үр дүнд, TPU нь ихэнхдээ дээд roofline гүйцэтгэлд бага ажил хийж хүрч чаддаг.
 
-**Historically, individual GPUs are more powerful (and more expensive) than a comparable TPU:** A single H200 has close to 2x the FLOPs/s of a TPU v5p and 1.5x the HBM. At the same time, the sticker price on Google Cloud is around \\$10/hour for an H200 compared to \\$4/hour for a TPU v5p. TPUs generally rely more on networking multiple chips together than GPUs.
+**Түүхэн талаасаа, нэг бүрийн GPU нь ижил төрлийн TPU-гаас илүү хүчтэй (мөн илүү үнэтэй) байдаг:** Нэг H200 нь TPU v5p-ээс бараг 2 дахин их FLOPs/s, мөн 1.5 дахин их HBM-тэй. Үүний зэрэгцээ, Google Cloud дээрх үнэ нь TPU v5p-д ойролцоогоор \\$10/hour for an H200 compared to \\$4/цаг байдаг. TPU-ууд нь ихэвчлэн олон чипийг сүлжээгээр холбох дээр илүү их найдаж ажилладаг бол GPU-ууд тийм биш.
 
-**TPUs have a lot more fast cache memory.** TPUs also have a lot more VMEM than GPUs have SMEM (+TMEM), and this memory can be used for storing weights and activations in a way that lets them be loaded and used extremely fast. This can make them faster for LLM inference if you can consistently store or prefetch model weights into VMEM.
+**TPU-д илүү хурдан кэш санах ой их байдаг.** TPU-д VMEM илүү их байдаг, харин GPU-д SMEM (+TMEM) байдаг. Энэ санах ойг жингүүд болон идэвхжүүлэлтийг хадгалахад ашиглаж болно. Ингэснээр эдгээрийг маш хурдан ачааллаж, ашиглах боломжтой болдог. Хэрвээ та VMEM-д моделийн жингүүдийг тогтмол хадгалах эсвэл урьдчилан ачаалж чадвал, энэ нь LLM inference-ийг илүү хурдан болгодог.
 
-### Quiz 1: GPU hardware
+### Шалгалт 1: GPU техник хангамж
 
-Here are some problems to work through that test some of the content above. Answers are provided, but it’s probably a good idea to try to answer the questions before looking, pen and paper in hand.
+Энд дээрх агуулгыг шалгах зарим дасгал байна. Хариултуудыг өгсөн байгаа, гэхдээ асуултуудыг эхлээд өөрөө хариулахыг хичээвэл сайн. Үзэг цаас бэлэн байлгаарай.
 
-**Question 1 [CUDA cores]:** How many fp32 CUDA cores (ALUs) does an H100 have? B200? How does this compare to the number of independent ALUs in a TPU v5p?
+**Асуулт 1 [CUDA цөмүүд]:** H100-д хэдэн fp32 CUDA цөм (ALU) байдаг вэ? B200-д хэд вэ? Энэ нь TPU v5p-ийн бие даасан ALU-уудын тоотой хэрхэн харьцдаг вэ?
 
-{% details Click here for the answer. %}
+{% details Хариуг харахын тулд энд дарна уу. %}
 
-**Answer:** An H100 has 132 SMs with 4 subpartitions each containing 32 fp32 CUDA cores, so we `132 * 4 * 32 = 16896` CUDA cores. A B200 has has `148` SMs, so a total of `18944`. A TPU v5p has 2 TensorCores (usually connected via Megacore), each with a VPU with (8, 128) lanes and 4 independent ALUs per lane, so `2 * 4 * 8 * 128 = 8192` ALUs. This is roughly half the number of vector lanes of an H100, running at roughly the same frequency.
-
-{% enddetails %}
-
-**Question 2 [Vector FLOPs calculation]**: A single H100 has 132 SMs and runs at a clock speed of 1.59GHz (up to 1.98GHz boost). Assume it can do one vector op per cycle per ALU. How many vector fp32 FLOPs can be done per second? With boost? How does this compare to matmul FLOPs?
-
-{% details Click here for the answer. %}
-
-**Answer:** `132 * 4 * 32 * 1.59e9 = 26.9TFLOPs/s`. With boost its 33.5 TFLOPs/s. This is half what’s reported in the [spec sheet](https://www.nvidia.com/en-us/data-center/h100/) because technically we can do an FMA (fused-multiply-add) in one cycle which counts as two FLOPs, but this isn't useful in most cases. We can do 990 bfloat16 matmul TFLOPs/s, so ignoring FMAs, Tensor Cores do around 30x more FLOPs/s.
+**Хариулт:** H100 нь 132 SM-тэй бөгөөд тус бүр нь 4 дэд хэсэгтэй, дэд хэсэг бүрт 32 fp32 CUDA цөмтэй, тэгэхээр бидэнд `132 * 4 * 32 = 16896` CUDA цөм байна. B200 нь `148` SM-тэй, тэгэхээр нийт `18944`. TPU v5p нь 2 TensorCore-той (ихэвчлэн Megacore-оор холбогдсон), тус бүр нь VPU-тай бөгөөд (8, 128) сувгуудтай, сувгийн бүрт 4 тусдаа ALU-тай, тэгэхээр `2 * 4 * 8 * 128 = 8192` ALU байна. Энэ нь H100-ийн вектор сувгийн тооны ойролцоогоор тал хувьтай, ойролцоо давтамжтай ажилладаг.
 
 {% enddetails %}
 
-**Question 3 [GPU matmul intensity]:** What is the peak fp16 matmul intensity on an H100? A B200? What about fp8? *By intensity we mean the ratio of matmul FLOPs/s to memory bandwidth.*
+**Асуулт 2 [Вектор FLOPs тооцоолол]**: Нэг H100 нь 132 SM-тэй бөгөөд 1.59GHz цагийн хурдтай ажилладаг (1.98GHz хүртэл boost хийж болно). Нэг ALU бүр цикл тутамд нэг вектор үйлдэл хийж чадна гэж үзье. Нэг секундэд хэдэн вектор fp32 FLOPs хийж чадах вэ? Boost-тай үед хэд вэ? Энэ нь матриц үржүүлэх (matmul) FLOPs-тай харьцуулахад ямар вэ?
 
-{% details Click here for the answer. %}
+{% details Хариуг харахын тулд энд дарна уу. %}
 
-**Answer:** For an H100, we have a peak 990e12 fp16 FLOPs and 3.35e12 bytes / s of bandwidth. So the critical intensity is `990e12 / 3.35e12 = 295`, fairly similar to the 240 in a TPU. For B200 its `2250e12 / 8e12 = 281`, very similar. This means, similar to TPUs, that we need a batch size of around 280 to be compute-bound in a matmul.
-
-For both H100 and B200 we have exactly 2x fp8 FLOPs, so the peak intensity also doubles to 590 and 562 respectively, although in some sense it stays constant if we take into account the fact that our weights will likely be loaded in fp8 as well.
+**Хариулт:** `132 * 4 * 32 * 1.59e9 = 26.9TFLOPs/s`. Boost ашиглавал энэ нь 33.5 TFLOPs/s байна. Энэ нь [spec sheet](https://www.nvidia.com/en-us/data-center/h100/)-д бичсэнээс хоёр дахин бага байна, учир нь техникийн хувьд бид нэг циклд FMA (fused-multiply-add) хийж чадна, энэ нь хоёр FLOPs гэж тооцогдоно, гэхдээ ихэнх тохиолдолд энэ нь хэрэгтэй биш. Бид 990 bfloat16 matmul TFLOPs/s хийж чадна, тэгэхээр FMA-г тооцохгүй бол Tensor Cores нь ойролцоогоор 30 дахин их FLOPs/s хийдэг.
 
 {% enddetails %}
 
-**Question 4 [Matmul runtime]:** Using the answer to Question 3, how long would you expect an `fp16[64, 4096] * fp16[4096, 8192]` matmul to take on a single B200? How about `fp16[512, 4096] * fp16[4096, 8192]`?
+**Асуулт 3 [GPU matmul intensity]:** H100 дээр fp16 matmul-ийн дээд хүч чадал (intensity) хэд вэ? B200 дээр хэд вэ? fp8 дээр хэд вэ? *Intensity гэдэг нь matmul FLOPs/секунд-ийг санах ойн дамжуулалтын өргөн зурвасын харьцаагаар хэмждэг.*
 
-{% details Click here for the answer. %}
+{% details Хариуг харахын тулд энд дарна уу. %}
 
-From the above, we know we'll be communication-bound below a batch size of 281 tokens. Thus the first is purely bandwidth bound. We read or write $2BD + 2DF + 2BF$ bytes (`2*64*4096 + 2*4096*8192 + 2*64*8192=69e6`) with `8e12` bytes/s of bandwidth, so it will take about `69e6 / 8e12 = 8.6us`. In practice we likely get a fraction of the total bandwidth, so it may take closer to 10-12us. When we increase the batch size, we're fully compute-bound, so we expect `T=2*512*4096*8192/2.3e15=15us`. We again only expect a fraction of the total FLOPs, so we may see closer to 20us.
+**Хариулт:** H100-д бидэнд оргил 990e12 fp16 FLOPs болон 3.35e12 байт / секундын дамжуулалтын өргөн байна. Тиймээс чухал интенсив нь `990e12 / 3.35e12 = 295`, TPU-гийн 240-тай ойролцоо байна. B200-д энэ нь `2250e12 / 8e12 = 281`, мөн адилхан байна. Энэ нь TPU-тай төстэйгээр, матмул дээр тооцооллын хязгаарт хүрэхийн тулд ойролцоогоор 280 багц хэмжээ хэрэгтэй гэсэн үг юм.
 
-{% enddetails %}
-
-**Question 5 [L1 cache capacity]:** What is the total L1/SMEM capacity for an H100? What about register memory? How does this compare to TPU VMEM capacity?
-
-{% details Click here for the answer. %}
-
-**Answer:** We have 256kB SMEM and 256kB of register memory per SM, so about 33MB (`132 * 256kB`) of each. Together, this gives us a total of about 66MB. This is about half the 120MB of a modern TPU’s VMEM, although a TPU only has 256kB of register memory total! TPU VMEM latency is lower than SMEM latency, which is one reason why register memory on TPUs is not that crucial (spills and fills to VMEM are cheap).
+H100 болон B200-д хоёуланд нь яг 2x fp8 FLOPs байгаа, тиймээс хамгийн их intensity нь мөн хоёр дахин нэмэгдэж 590 болон 562 болж байна. Гэхдээ нэг талаасаа энэ нь тогтвортой хэвээр байна гэж хэлж болно, учир нь бидний weights ихэнхдээ fp8 хэлбэрээр ачаалагдах магадлалтай.
 
 {% enddetails %}
 
-**Question 6 [Calculating B200 clock frequency]:** NVIDIA reports [here](https://resources.nvidia.com/en-us-blackwell-architecture) that a B200 can perform 80TFLOPs/s of vector fp32 compute. Given that each CUDA core can perform 2 FLOPs/cycle in a FMA (fused multiply add) op, estimate the peak clock cycle.
+**Асуулт 4 [Matmul runtime]:** 3-р асуултын хариуг ашиглан, нэг B200 дээр `fp16[64, 4096] * fp16[4096, 8192]` матмул хийхэд хэр удаан хугацаа зарцуулах вэ? Харин `fp16[512, 4096] * fp16[4096, 8192]` дээр бол яах вэ?
 
-{% details Click here for the answer. %}
+{% details Хариуг харахын тулд энд дарна уу. %}
 
-**Answer:** We know we have 148 * 4 * 32 = 18944 CUDA cores, so we can do `18944 * 2 = 37888 FLOPs / cycle`. Therefore `80e12 / 37888 = 2.1GHz`, a high but reasonable peak clock speed. B200s are generally liquid cooled, so the higher clock cycle is more reasonable.
+Дээрхээс харахад, бид 281 токенээс бага batch size-тай үед харилцааны хязгаарлалттай байна. Тиймээс эхний тохиолдолд зөвхөн bandwidth-ийн хязгаарлалттай байна. Бид $2BD + 2DF + 2BF$ байт (`2*64*4096 + 2*4096*8192 + 2*64*8192=69e6`)-ийг `8e12` байт/секунд bandwidth-тайгаар уншиж эсвэл бичдэг, тэгэхээр энэ нь ойролцоогоор `69e6 / 8e12 = 8.6us` хугацаа шаардана. Бодит амьдрал дээр бид нийт bandwidth-ийн зөвхөн нэг хэсгийг л авдаг тул энэ нь 10-12 микросекунд (us) орчим үргэлжилж магадгүй. Batch size-ийг нэмэхэд бид бүрэн compute-bound буюу тооцооллын хязгаарлалттай болдог, тиймээс бид `T=2*512*4096*8192/2.3e15=15us` гэж хүлээнэ. Мөн бид нийт FLOPs-ийн зөвхөн нэг хэсгийг л ашиглах тул энэ нь 20 микросекунд (us) орчим байж магадгүй.
 
 {% enddetails %}
 
-**Question 7 [Estimating H100 add runtime]:** Using the figures above, calculate how long it ought to take to add two `fp32[N]` vectors together on a single H100. Calculate both $T_\text{math}$ and $T_\text{comms}$. What is the arithmetic intensity of this operation? If you can get access, try running this operation in PyTorch or JAX as well for `N = 1024` and `N=1024 * 1024 * 1024`. How does this compare?
+**Асуулт 5 [L1 cache багтаамж]:** H100-д нийт L1/SMEM багтаамж хэд вэ? Register memory хэд вэ? Энэ нь TPU VMEM багтаамжтай хэрхэн харьцдаг вэ?
 
-{% details Click here for the answer. %}
+{% details Хариуг харахын тулд энд дарна уу. %}
 
-**Answer:** Firstly, adding two `fp32[N]` vectors performs N FLOPs and requires `4 * N * 2` bytes to be loaded and 4 * N bytes to be written back, for a total of `3 * 4 * N = 12N`. Computing their ratio, we have `total FLOPs / total bytes = N / 12N = 1 / 12`, which is pretty abysmal.
+**Хариулт:** Бидэнд нэг SM бүрт 256kB SMEM болон 256kB register санах ой бий, тэгэхээр тус бүр ойролцоогоор 33MB (`132 * 256kB`) байна. Хоёуланг нь нийлүүлбэл нийтдээ ойролцоогоор 66MB болно. Энэ нь орчин үеийн TPU-гийн VMEM-ийн 120MB-ийн тал хувьтай тэнцэнэ, гэхдээ TPU-д нийтдээ зөвхөн 256kB register санах ой байдаг! TPU VMEM-ийн хүлээлгийн хугацаа (latency) нь SMEM-ийнхээс бага байдаг, энэ нь TPU дээр register санах ой тийм ч чухал биш байдаг нэг шалтгаан юм (VMEM рүү өгөгдөл шилжүүлэх нь хямдхан).
 
-As we calculated above, we can do roughly 33.5 TFLOPs/s boost, ignoring FMA. This is only if all CUDA cores are used. For `N = 1024`, we can only use *at most* 1024 CUDA cores or 8 SMs, which will take longer (roughly 16x longer assuming we’re compute-bound). We also have a memory bandwidth of 3.35e12 bytes/s. Thus our peak hardware intensity is `33.5e12 / 3.35e12 = 10`.<d-footnote>It’s notable that this intensity stays constant across recent GPU generations. For H100s it’s 33.5 / 3.5 and for B200 it’s 80 / 8. Why this is isn’t clear, but it’s an interesting observation.</d-footnote> So we’re going to be horribly comms bound. Thus our runtime is just
+{% enddetails %}
+
+**Асуулт 6 [B200 цагийн давтамжийг тооцоолох]:** NVIDIA [энд](https://resources.nvidia.com/en-us-blackwell-architecture) мэдээлснээр B200 нь вектор fp32 тооцоололд 80TFLOPs/секунд гүйцэтгэж чадна. Хэрвээ тус бүр CUDA цөм нь FMA (fused multiply add) үйлдэлд 1 циклд 2 FLOPs хийж чаддаг бол, дээд талын цагийн давтамжийг тооцоолоорой.
+
+{% details Хариуг харахын тулд энд дарна уу. %}
+
+**Хариулт:** Бидэнд 148 * 4 * 32 = 18944 CUDA цөм байгаа гэдгийг мэднэ, тиймээс бид `18944 * 2 = 37888 FLOPs / cycle` хийж чадна. Тиймээс `80e12 / 37888 = 2.1GHz`, энэ нь өндөр боловч боломжийн дээд давтамж юм. B200-ууд ихэвчлэн шингэн хөргөлттэй байдаг тул өндөр давтамж илүү боломжийн юм.
+
+{% enddetails %}
+
+**Асуулт 7 [H100 дээр нэмэх ажиллагааны хугацааг тооцоолох]:** Дээрх зураглалуудыг ашиглан, хоёр `fp32[N]` векторыг нэг H100 дээр нэмэхэд хэр хугацаа шаардагдахыг тооцоолно уу. $T_\text{math}$ болон $T_\text{comms}$-г хоёуланг нь тооцоолно уу. Энэ үйлдлийн arithmetic intensity хэд вэ? Хэрвээ боломжтой бол, энэ үйлдлийг PyTorch эсвэл JAX дээр ажиллуулж `N = 1024` болон `N=1024 * 1024 * 1024`-г шалгаарай. Үр дүн нь хэрхэн ялгаатай байна вэ?
+
+{% details Хариуг харахын тулд энд дарна уу. %}
+
+**Хариулт:** Эхлээд, хоёр `fp32[N]` вектор нэмэхэд N FLOPs хийгдэнэ ба `4 * N * 2` байт уншигдаж, 4 * N байт буцаан бичигдэнэ, нийтдээ `3 * 4 * N = 12N` болно. Тэдний харьцааг тооцвол `total FLOPs / total bytes = N / 12N = 1 / 12` гарна, энэ нь нэлээд муу үр дүнтэй байна.
+
+Бид дээр тооцоолсончлон, бид ойролцоогоор 33.5 TFLOPs/секунд хурдтай ажиллах боломжтой, FMA-г тооцохгүйгээр. Энэ нь зөвхөн бүх CUDA цөмүүдийг ашигласан тохиолдолд л боломжтой. `N = 1024` хувьд бид хамгийн ихдээ 1024 CUDA цөм буюу 8 SM-г ашиглаж чадна, энэ нь илүү удаан (ойролцоогоор 16 дахин удаан, хэрвээ бид тооцоололд хязгаарлагдсан бол) болно. Мөн бид 3.35e12 байт/секунд санах ойн зурвасын өргөнтэй. Тиймээс бидний хамгийн их техник хангамжийн эрчим нь `33.5e12 / 3.35e12 = 10` байна.<d-footnote>Энэ эрчим нь сүүлийн үеийн GPU-уудын хувьд тогтвортой байдаг нь анхаарал татахуйц. H100-ийн хувьд энэ нь 33.5 / 3.5, B200-ийн хувьд 80 / 8 байна. Яагаад ийм байгаа нь тодорхой биш ч сонирхолтой ажиглалт юм.</d-footnote> Тиймээс бид маш их холбооны хязгаарлалтад орно. Тиймээс бидний ажиллах хугацаа нь зүгээр л
 
 $$T = \max(T_\text{comms}, T_\text{math}) = \frac{12 \cdot N}{\text{3.35e12}} = \frac{N}{\text{2.8e11}}$$
 
@@ -871,4 +873,4 @@ Here’s AllGather bandwidth as well:
 
 Here we can compare the approximation $\min(K / Z) * (Z - 1) / Z$ to the true value of $(1 - ((Z - 1) / Z) ** K) * (Z - 1) / Z$. They’re similar except for small values of $Z$.
 
-{% include figure.liquid path="assets/gpu/all-to-all-approx.png" class="img-fluid" caption="<b>Figure:</b> a comparison of the approximate and true cost of a ragged AllToAll as the number of shards increases." %}
+{% include figure.liquid path="assets/gpu/all-to-all-approx.png" class="img-fluid" caption="<b>Зураг:</b> Ragged AllToAll-ийн ойролцоо болон жинхэнэ зардлыг хэсгүүдийн тоо нэмэгдэхэд харьцуулсан байдал." %}

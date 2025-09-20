@@ -1,67 +1,73 @@
+—
+Энэхүү орчуулга нь MIT лицензийн дагуу эх бүтээлээс хөрвүүлэв.
+Эх сурвалж: Austin et al., "How to Scale Your Model" (https://jax-ml.github.io/scaling-book/)
+Орч.: Mongolian (mn)
+—
+
 ---
 layout: distill
-title: "All About Rooflines"
+title: "Дээврийн шугамын тухай бүгд"
 # permalink: /main/
-description: "When we run algorithms on hardware, we're bounded by three things: how fast our computer can do math (OPs/second), the bandwidth available for moving data around (bytes/second), and the total memory available to store data (bytes). These “roofline” constraints let us upper and lower bound the time of a given computation."
+description: "Бид алгоритмийг техник хангамж дээр ажиллуулах үед гурван зүйлээр хязгаарлагддаг: компьютер маань тооцоолол хийх хурд (OPs/секунд), өгөгдөл дамжуулах зурвасын өргөн (байт/секунд), мөн өгөгдөл хадгалах нийт санах ойн хэмжээ (байт). Эдгээр “дээврийн шугамын” хязгаарлалт нь бидэнд тодорхой тооцооллын хугацааг дээд ба доод хязгаартай болгодог."
 date: 2025-02-04
 future: true
 htmlwidgets: true
 hidden: false
 
-section_number: 1
+хэсгийн_дугаар: 1
 
 previous_section_url: ".."
-previous_section_name: "Part 0: Introduction"
+previous_section_name: "0-р хэсэг: Танилцуулга"
 
 next_section_url: ../tpus
-next_section_name: "Part 2: TPUs"
+next_section_name: "Хэсэг 2: TPU-ууд"
 
-bibliography: main.bib
+ном зүй: main.bib
 
-giscus_comments: true
+giscus_comments: үнэн
 
 authors:
-  - name: Jacob Austin
+  - name: Жэйкоб Остин
     url: "https://www.jacobaustin.org/"
     affiliations:
       name: Google DeepMind
-  - name: Sholto Douglas
+  - name: Шолто Дуглас
     url: "https://x.com/_sholtodouglas"
-  - name: Roy Frostig
+  - name: Рой Фростиг
     url: "https://cs.stanford.edu/~rfrostig/"
-  - name: Anselm Levskaya
+  - name: Ансельм Левская
     url: "https://anselmlevskaya.com/"
-  - name: Charlie Chen
+  - name: Чарли Чен
     url: "https://x.com/charliexychen"
-  - name: Sharad Vikram
+  - name: Шарад Викрам
     url: "https://sharadvikram.com/"
-  - name: Federico Lebron
+  - name: Федерико Леброн
     url: "https://fedelebron.com/"
-  - name: Peter Choy
+  - name: Питер Чой
     url: "https://x.com/pchoy95"
-  - name: Vinay Ramasesh
+  - name: Винай Рамасеш
     url: "https://x.com/vinayramasesh"
-  - name: Albert Webson
+  - name: Альберт Вебсон
     url: "https://representation.ai/"
-  - name: Reiner Pope<sup>*</sup>
+  - name: Райнер Попе<sup>*</sup>
     url: https://x.com/reinerpope
 
-# Add a table of contents to your post.
-#   - make sure that TOC names match the actual section names
-#     for hyperlinks within the post to work correctly.
-#   - please use this format rather than manually creating a markdown table of contents.
+# Өөрийн бичлэгт агуулгын жагсаалт нэмэх.
+#   - Агуулгын жагсаалтын нэрүүд нь тухайн хэсгийн нэртэй яг таарч байх ёстой,
+#     ингэснээр бичлэг доторх холбоосууд зөв ажиллана.
+#   - Гар аргаар markdown агуулгын жагсаалт хийхийн оронд энэ форматыг ашиглана уу.
 toc:
 
-  - name: Where Does the Time Go?
+  - name: Цаг хаашаа алга болдог вэ?
   - subsections:
-    - name: "Visualizing rooflines"
-    - name: "Matrix multiplication"
-    - name: "Network communication rooflines"
-  - name: A Few Problems to Work
+    - name: "Roofline-г харагдуулах"
+    - name: "Матриц үржүүлэх"
+    - name: "Сүлжээний харилцааны roofline"
+  - name: Хийх хэдэн бодлого
 
-# Below is an example of injecting additional post-specific styles.
-# This is used in the 'Layouts' section of this post.
-# If you use this post as a template, delete this _styles block.
+# Доор нэмэлт бичлэгт зориулсан тусгай загваруудыг хэрхэн оруулах жишээ байна.
+# Энэ нь энэ бичлэгийн 'Layouts' хэсэгт ашиглагддаг.
+# Хэрвээ та энэ бичлэгийг загвар болгон ашиглах бол энэ _styles блокийг устгаарай.
 _styles: >
   .fake-img {
     background: #bbb;
@@ -79,11 +85,11 @@ _styles: >
   }
 ---
 
-## Where Does the Time Go?
+## Цаг хаашаа алга болдог вэ?
 
-Let's start with an extremely simple question: *why does an algorithm take 50ms instead of 50s or 5ms*? What is actually happening within the model that takes substantial time and how long should we expect it to take?
+Маш энгийн асуултаас эхэлье: *яагаад алгоритм 50 миллисекунд (ms) зарцуулдаг вэ, харин 50 секунд (s) эсвэл 5 миллисекунд биш вэ*? Загварын дотор яг юу болж байна вэ, яагаад их хугацаа шаардагдаж байна вэ, мөн бид хэр удаан хугацаа зарцуулахыг хүлээх ёстой вэ?
 
-**Computation:** A deep learning model is effectively a bunch of matrix multiplications, each composed of floating-point multiplication and addition ‘operations' (FLOPs). Our accelerator speed determines how long these take to compute:
+**Бодолт:** Гүнзгий сургалтын загвар нь үндсэндээ олон матриц үржүүлэлтээс бүрдэнэ. Эдгээр нь хөвөгч цэгийн үржүүлэлт болон нэмэх ‘үйлдэл’ (FLOPs)-ээс бүрддэг. Манай хурдасгуурын хурд эдгээрийг тооцоолох хугацааг тодорхойлдог:
 
 $$\begin{equation}
 T_\text{math} = \frac{\text{Computation FLOPs}}{\text{Accelerator FLOPs/s}}
@@ -267,8 +273,8 @@ Let's start by looking at the total FLOPs and comms.
 
 {% details Click here for the answer. %}
 
-From the spec sheet, we see that the reported bfloat16 FLOPs value is `1.979e15` FLOPs/s with an asterisk noting "with sparsity". The true value is half this without sparsity, meaning close to `1e15` FLOPs/s. The memory bandwidth is 3.35TB/s, or `3.35e12` bytes / second. Thus $B_\text{crit}$ is `1e15 / 3.35e12 = 298`, rather similar to the TPU.
+From the spec sheet, we see that the reported bfloat16 FLOPs value is `1.979e15` FLOPs/s with an asterisk noting "with sparsity". The true value is half this without sparsity, meaning close to `1e15` FLOPs/s. The memory bandwidth is 3.35TB/s, or `3.35e12` bytes / second. Thus $B_\text{crit}$ нь `1e15 / 3.35e12 = 298`, TPU-тэй их төстэй.
 
 {% enddetails %}
 
-<h3 markdown=1 class="next-section">That's it for Part 1! For Part 2, looking at how real TPUs handle FLOPs and communication, [click here](../tpus).</h3>
+<h3 markdown=1 class="next-section">Энэ бол 1-р хэсэг дууслаа! 2-р хэсэгт, бодит TPU-ууд FLOPs болон харилцааг хэрхэн зохицуулдгийг харахын тулд [энд дарна уу](../tpus).</h3>

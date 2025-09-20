@@ -1,61 +1,67 @@
+—
+Энэхүү орчуулга нь MIT лицензийн дагуу эх бүтээлээс хөрвүүлэв.
+Эх сурвалж: Austin et al., "How to Scale Your Model" (https://jax-ml.github.io/scaling-book/)
+Орч.: Mongolian (mn)
+—
+
 ---
 layout: distill
-title: "Conclusions and Further Reading"
+title: "Дүгнэлт ба Цаашдын Унших Ном"
 # permalink: /main/
-description: "Thank you for reading! Here we'll include a few more references for further study."
+description: "Уншсанд баярлалаа! Энд бид цаашид судлахад хэрэгтэй хэдэн ном, эх сурвалжийг орууллаа."
 date: 2025-02-04
 future: true
 htmlwidgets: true
 hidden: false
 
-section_number: 11
+хэсгийн_дугаар: 11
 
 previous_section_url: "../jax-stuff"
-previous_section_name: "Part 10: JAX"
+previous_section_name: "10-р хэсэг: JAX"
 
 next_section_url: "../gpus"
-next_section_name: "Part 12: GPUs"
+next_section_name: "12-р хэсэг: GPU-ууд"
 
-giscus_comments: true
+giscus_comments: үнэн
 
-authors:
-  - name: Jacob Austin
+зохиогчид:
+  - нэр: Жейкоб Остин
     url: "https://www.jacobaustin.org/"
-    affiliations:
-      name: Google DeepMind
-  - name: Sholto Douglas
+    харьяалал:
+      нэр: Google DeepMind
+  - нэр: Шолто Дуглас
     url: "https://x.com/_sholtodouglas"
-  - name: Roy Frostig
+  - нэр: Рой Фростиг
     url: "https://cs.stanford.edu/~rfrostig/"
-  - name: Anselm Levskaya
+  - нэр: Ансельм Левская
     url: "https://anselmlevskaya.com/"
-  - name: Charlie Chen
+  - нэр: Чарли Чен
     url: "https://x.com/charliexychen"
-  - name: Sharad Vikram
+  - нэр: Шарад Викрам
     url: "https://sharadvikram.com/"
-  - name: Federico Lebron
+  - нэр: Федерико Леброн
     url: "https://fedelebron.com/"
-  - name: Peter Choy
+  - нэр: Питер Чой
     url: "https://x.com/pchoy95"
-  - name: Vinay Ramasesh
+  - нэр: Винай Рамасеш
     url: "https://x.com/vinayramasesh"
-  - name: Albert Webson
+  - нэр: Альберт Вебсон
     url: "https://representation.ai/"
-  - name: Reiner Pope<sup>*</sup>
+  - нэр: Рейнер Попе<sup>*</sup>
     url: https://x.com/reinerpope
 
-# Add a table of contents to your post.
-#   - make sure that TOC names match the actual section names
-#     for hyperlinks within the post to work correctly.
-#   - please use this format rather than manually creating a markdown table of contents.
+# Өөрийн бичлэгт агуулгын жагсаалт нэмэх.
+#   - Агуулгын жагсаалтын нэрүүд нь тухайн хэсгийн нэртэй таарч байх ёстой,
+#     ингэснээр бичлэг доторх холбоосууд зөв ажиллана.
+#   - Доорх форматыг ашиглана уу, markdown агуулгын жагсаалтыг гараар бүү үүсгээрэй.
 toc:
-  - name: "Acknowledgments"
-  - name: "Further Reading"
-  - name: "Feedback"
+  - name: "Талархал"
+  - name: "Цааш унших"
+  - name: "Санал хүсэлт"
 
-# Below is an example of injecting additional post-specific styles.
-# This is used in the 'Layouts' section of this post.
-# If you use this post as a template, delete this _styles block.
+# Доор нэмэлт постод зориулсан тусгай стиль хэрхэн оруулах жишээ байна.
+# Энэ нь энэ постын 'Layouts' хэсэгт ашиглагддаг.
+# Хэрвээ та энэ постыг загвар болгон ашиглах бол энэ _styles блокийг устгаарай.
 _styles: >
   .fake-img {
     background: #bbb;
@@ -83,49 +89,43 @@ _styles: >
     margin-bottom: 0px;
   }
 ---
-**Thank you for reading this set of essays and congratulations on making it all the way to the end.** Before we conclude, a few acknowledgments:
+**Энэ эссэний цувралыг уншсанд баярлалаа, мөн төгсгөлд нь хүрсэнд тань баяр хүргэе.** Дуусахаас өмнө, хэдэн талархал:
 
-## Acknowledgments
+## Талархал
 
-This document represents a significant collective investment from many people at Google DeepMind, who we'd like to briefly acknowledge!
+Энэ баримт бичиг нь Google DeepMind-ийн олон хүний ​​хамтын чухал хөрөнгө оруулалтыг илэрхийлж байна. Бид тэднийг товчхон дурдахыг хүсэж байна!
 
-* James Bradbury, Reiner Pope, and Blake Hechtman originally derived many of the ideas in this manuscript, and were early to understanding the systems view of the Transformer.
-* Sholto Douglas wrote the first version of this doc and is responsible for kicking off the project. He is more than anyone responsible for the overall narrative of this doc.
-* Jacob Austin led the work of transforming this first version from rough notes into a more polished and comprehensive artifact. He did much of the work of editing, formatting, and releasing this document, and coordinated contributions from other authors.
-* Most of the figures and animations were made by Anselm Levskaya and Charlie Chen.
-* Charlie Chen wrote the inference section and drew many of the inference figures.
-* Roy Frostig helped with publication, editing, and many other steps of the journey.
+* Жеймс Брэдбюри, Рейнер Поп, болон Блэйк Хехтман энэ гар бичмэлийн олон санааг анх гаргаж, Transformer-ийн системийн талаарх ойлголтыг эрт олж авсан.
+* Шолто Дуглас энэ баримтын анхны хувилбарыг бичиж, төслийг эхлүүлэхэд хариуцлагатай байсан. Тэрээр энэ баримтын ерөнхий өгүүлэмжийг хамгийн ихээр хариуцсан хүн юм.
+* Жэйкоб Остин анхны хувилбарыг бүдүүн тэмдэглэлээс илүү боловсронгуй, бүрэн бүтэн баримт болгох ажлыг удирдсан. Тэрээр энэ баримтыг засах, форматлах, нийтлэх ажлын ихэнхийг хийж, бусад зохиогчдын хувь нэмрийг зохицуулсан.
+* Ихэнх зураг болон хөдөлгөөнт зургийг Ансельм Левская болон Чарли Чен хийсэн.
+* Чарли Чен inference хэсгийг бичиж, олон inference зураг зурсан.
+* Рой Фростиг нийтлэх, засварлах болон бусад олон алхамд тусалсан.
 
-We'd also like to thank many others gave critical feedback throughout the process, in particular Zak Stone, Nikhil Sethi, Caitlin Stanton, Alex Dimitriev, Sridhar Lakshmanamurthy, Albert Magyar, Diwakar Gupta, Jeff Dean, Corry Wang, Matt Johnson, Peter Hawkins, and many others. Thanks to Ruiqi Gao for help with the HTML formatting.
+Бид мөн энэ үйл явцын туршид чухал санал зөвлөгөө өгсөн олон хүмүүст талархаж байна. Тухайлбал, Zak Stone, Nikhil Sethi, Caitlin Stanton, Alex Dimitriev, Sridhar Lakshmanamurthy, Albert Magyar, Diwakar Gupta, Jeff Dean, Corry Wang, Matt Johnson, Peter Hawkins болон бусад олон хүнд баярлалаа. HTML форматлахад тусалсан Ruiqi Gao-д баярлалаа.
 
-**Thank you all!**
+**Бүгдэд нь баярлалаа!**
 
-<p markdown=1 class="announce">Before you go, you might also enjoy reading the new [Section 12](../gpus) on NVIDIA GPUs!</p>
+<p markdown=1 class="announce">Явахынхаа өмнө, та бас NVIDIA GPU-ийн тухай шинэ [12-р хэсэг](../gpus)-ийг уншихыг сонирхож магадгүй!</p>
 
-## Further Reading
+## Цааш унших
 
-There is a bunch of related writing, including the following:
+Дараахтай адил холбоотой бичвэрүүд байна:
 
-* [**TPU Deep Dive**](https://henryhmko.github.io/posts/tpu/tpu.html): a wonderful in-depth look at the TPU architecture in the spirit of this book.
-* [**Making Deep Learning Go Brrrr From First Principles**](https://horace.io/brrr_intro.html): a more GPU and PyTorch-focused tutorial on LLM rooflines and performance engineering.
-* [**Writing TPU Kernels with Pallas**](https://jax.readthedocs.io/en/latest/pallas/tpu/details.html): increasingly, TPU programming involves writing custom kernels in Pallas. This series discusses how to write kernels and many lower level TPU details that aren't mentioned here.
-* [**How to Optimize a CUDA Matmul Kernel for cuBLAS-like Performance: a Worklog**](https://siboehm.com/articles/22/CUDA-MMM): while GPU and CUDA specific, this is an excellent blog post showing how to optimize a matmul kernel in CUDA. This might be a good deep dive into how TPUs and GPUs are different.
-* [**Distributed arrays and automatic parallelization**](https://jax.readthedocs.io/en/latest/notebooks/Distributed_arrays_and_automatic_parallelization.html): this is a really nice guide to parallelism APIs in JAX and is a good way to learn how to actually implement some of the ideas we've discussed here.
-* [**Rafi Witten's High Performance LLMs 2024 Class**](https://github.com/rwitten/HighPerfLLMs2024): our former colleague Rafi gave a great course on TPU performance engineering and the slides are all on GitHub. This covers a bunch of things in more depth than we do here.
-* [**\[2211.05102\] Efficiently Scaling Transformer Inference**](https://arxiv.org/abs/2211.05102): a detailed paper on the mathematics of Transformer inference. This is the inspiration for a lot of this document.
-* [**Huggingface Ultra-Scale Playbook**](https://huggingface.co/spaces/nanotron/ultrascale-playbook): something of a GPU analog to this book, this talks more at depth about how PyTorch implements parallelism techniques and memory-saving techniques during training.
-* [**Transformer Inference Arithmetic**](https://kipp.ly/transformer-inference-arithmetic/): a blog with many of the same ideas as this book and some excellent illustrations.
-* [**Stanford CS336 Slides and Videos**](https://stanford-cs336.github.io/spring2025/index.html#coursework): a fantastic Stanford course covering many details of LLM training and serving, with some useful exercises. Assignments 1 and 2 are particularly relevant.
-* [**Stas Bekman's ML Engineering Handbook**](https://github.com/stas00/ml-engineering): a highly practical guide to ML infrastructure, covering topics not addressed in this book like how to negotiate with cloud providers, cluster management, and empirical measurements of GPU throughput.
+* [**TPU Deep Dive**](https://henryhmko.github.io/posts/tpu/tpu.html): Энэ номын агуулгатай төстэйгээр TPU архитектурын талаар маш дэлгэрэнгүй, гайхалтай тайлбарласан нийтлэл.
+* [**Making Deep Learning Go Brrrr From First Principles**](https://horace.io/brrr_intro.html): GPU болон PyTorch-д төвлөрсөн, LLM roofline болон performance engineering-ийн талаар илүү энгийн заавар.
+* [**Writing TPU Kernels with Pallas**](https://jax.readthedocs.io/en/latest/pallas/tpu/details.html): TPU програмчлал улам бүр өөрийн custom kernel-үүдийг Pallas ашиглан бичих шаардлагатай болж байна. Энэ цувралд kernel хэрхэн бичих болон энд дурдагдаагүй TPU-ийн доод түвшний олон зүйлийг тайлбарласан.
+* [**How to Optimize a CUDA Matmul Kernel for cuBLAS-like Performance: a Worklog**](https://siboehm.com/articles/22/CUDA-MMM): Энэ нийтлэл GPU болон CUDA-д зориулагдсан боловч CUDA дээр matmul kernel хэрхэн optimize хийхийг маш сайн тайлбарласан. Энэ нь TPU болон GPU хэрхэн ялгаатайг ойлгоход тусална.
+* [**Distributed arrays and automatic parallelization**](https://jax.readthedocs.io/en/latest/notebooks/Distributed_arrays_and_automatic_parallelization.html): JAX дээрх parallelism API-уудын талаар маш сайн гарын авлага бөгөөд энд ярьсан санаануудыг хэрхэн хэрэгжүүлэхийг сурахад тохиромжтой.
+* [**Rafi Witten's High Performance LLMs 2024 Class**](https://github.com/rwitten/HighPerfLLMs2024): Манай хуучин хамтрагч Rafi TPU performance engineering-ийн талаар маш сайн хичээл заасан бөгөөд бүх слайдууд GitHub дээр бий. Энэ нь эндээс илүү дэлгэрэнгүй олон зүйлийг хамарсан.
+* [**\[2211.05102\] Efficiently Scaling Transformer Inference**](https://arxiv.org/abs/2211.05102): Transformer inference-ийн математикийн талаар дэлгэрэнгүй өгүүлэл. Энэ баримт бичгийн олон санааны эх үүсвэр болсон.
+* [**Huggingface Ultra-Scale Playbook**](https://huggingface.co/spaces/nanotron/ultrascale-playbook): Энэ номын GPU хувилбар мэт бөгөөд PyTorch дээр parallelism болон санах ой хэмнэх аргуудыг сургалтын үед хэрхэн хэрэгжүүлдгийг илүү дэлгэрэнгүй тайлбарласан.
+* [**Transformer Inference Arithmetic**](https://kipp.ly/transformer-inference-arithmetic/): Энэ номтой төстэй олон санаа бүхий, сайн зураглалтай блог.
+* [**Stanford CS336 Slides and Videos**](https://stanford-cs336.github.io/spring2025/index.html#coursework): LLM сургалт болон үйлчилгээний олон нарийн зүйлийг хамарсан гайхалтай Stanford-ийн курс. 1 болон 2-р даалгавар нь онцгой ач холбогдолтой.
+* [**Stas Bekman's ML Engineering Handbook**](https://github.com/stas00/ml-engineering): ML infrastructure-ийн талаар маш практик гарын авлага. Энэ номд дурдагдаагүй, үүлэн үйлчилгээ үзүүлэгчтэй хэлэлцээр хийх, кластер удирдах, GPU throughput хэмжих зэрэг сэдвүүдийг хамарсан.
 
-There remains a lot of room for comprehensive writing in this area, so
-we hope this manuscript encourages more of it! We also believe that
-this is a fruitful area to study and research. In many cases, it can
-be done even without having many hardware accelerators on hand.
+Энэ салбарт бүрэн бичих боломж их байна, тиймээс бид энэ гар бичмэл илүү их бичихийг урамшуулна гэж найдаж байна! Мөн энэ бол судлах, шинжлэхэд үр дүнтэй салбар гэж бид итгэдэг. Олон тохиолдолд, олон hardware accelerator байхгүй байсан ч судалгаа хийж болно.
 
-## Feedback
+## Санал хүсэлт
 
-Please leave comments or questions so that we can improve this
-further. You can reach our corresponding author, Jacob Austin, at
-jaaustin [at] google [dot] com, or suggest edits by posting issues,
-pull requests, or discussions [on GitHub](https://github.com/jax-ml/scaling-book).
+Сайжруулахын тулд сэтгэгдэл эсвэл асуулт үлдээнэ үү. Манай зохиогч Жейкоб Остинтай jaaustin [at] google [dot] com хаягаар холбоо барьж болно. Мөн өөрчлөлт санал болгохыг хүсвэл асуудал үүсгэх, pull request илгээх эсвэл хэлэлцүүлэг хийх замаар [GitHub дээр](https://github.com/jax-ml/scaling-book) хандаарай.

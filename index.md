@@ -1,9 +1,15 @@
+—
+Энэхүү орчуулга нь MIT лицензийн дагуу эх бүтээлээс хөрвүүлэв.
+Эх сурвалж: Austin et al., "How to Scale Your Model" (https://jax-ml.github.io/scaling-book/)
+Орч.: Mongolian (mn)
+—
+
 ---
 layout: distill
-title: "How to Scale Your Model"
-subtitle: "A Systems View of LLMs on TPUs"
+title: "Загвараа хэрхэн томруулах вэ"
+subtitle: "TPU дээр LLM-уудыг системийн үүднээс харах нь"
 # permalink: /main/
-description: "Training LLMs often feels like alchemy, but understanding and optimizing the performance of your models doesn't have to. This book aims to demystify the science of scaling language models: how TPUs (and GPUs) work and how they communicate with each other, how LLMs run on real hardware, and how to parallelize your models during training and inference so they run efficiently at massive scale. If you've ever wondered “how expensive should this LLM be to train” or “how much memory do I need to serve this model myself” or “what's an AllGather”, we hope this will be useful to you."
+description: "LLM-уудыг сургах нь ихэнхдээ ид шид шиг санагддаг ч, загварынхаа гүйцэтгэлийг ойлгож, оновчтой болгох нь тийм ч хэцүү биш. Энэ ном нь хэлний загваруудыг томруулах шинжлэх ухааныг ойлгомжтой болгоход зориулагдсан: TPU (мөн GPU)-ууд хэрхэн ажилладаг, тэд хэрхэн хоорондоо мэдээлэл солилцдог, LLM-ууд бодит төхөөрөмж дээр хэрхэн ажилладаг, мөн сургах болон таамаглах үед загваруудаа хэрхэн зэрэгцүүлэн ажиллуулах вэ гэдгийг тайлбарлана. Ингэснээр маш их хэмжээний өгөгдөл дээр үр дүнтэй ажиллуулах боломжтой болно. Хэрвээ та “энэ LLM-ыг сургахад хэр үнэтэй байх ёстой вэ”, эсвэл “энэ загварыг өөрөө ажиллуулахад надад хэр их санах ой хэрэгтэй вэ”, эсвэл “AllGather гэж юу вэ” гэж бодож байсан бол энэ ном танд хэрэгтэй гэж найдаж байна."
 date: 2025-02-04
 future: true
 htmlwidgets: true
@@ -11,55 +17,55 @@ hidden: false
 
 giscus_comments: true
 
-section_number: 0
+хэсгийн_дугаар: 0
 
 previous_section_url: ""
-previous_section_name: "Part 0: Intro"
+previous_section_name: "0-р хэсэг: Танилцуулга"
 
 next_section_url: roofline
-next_section_name: "Part 1: Rooflines"
+next_section_name: "1-р хэсэг: Rooflines"
 
-bibliography: main.bib
+ном зүй: main.bib
 
-citation: true
+ишлэл: үнэн
 
 authors:
-  - name: Jacob Austin
+  - name: Жэйкоб Остин
     url: "https://www.jacobaustin.org/"
     affiliations:
       name: Google DeepMind
-  - name: Sholto Douglas
+  - name: Шолто Дуглас
     url: "https://x.com/_sholtodouglas"
-  - name: Roy Frostig
+  - name: Рой Фростиг
     url: "https://cs.stanford.edu/~rfrostig/"
-  - name: Anselm Levskaya
+  - name: Ансельм Левская
     url: "https://anselmlevskaya.com/"
-  - name: Charlie Chen
+  - name: Чарли Чен
     url: "https://x.com/charliexychen"
-  - name: Sharad Vikram
+  - name: Шарад Викрам
     url: "https://sharadvikram.com/"
-  - name: Federico Lebron
+  - name: Федерико Леброн
     url: "https://fedelebron.com/"
-  - name: Peter Choy
+  - name: Питер Чой
     url: "https://x.com/pchoy95"
-  - name: Vinay Ramasesh
+  - name: Винай Рамасеш
     url: "https://x.com/vinayramasesh"
-  - name: Albert Webson
+  - name: Альберт Вебсон
     url: "https://representation.ai/"
-  - name: Reiner Pope<sup>*</sup>
+  - name: Рейнер Попе<sup>*</sup>
     url: https://x.com/reinerpope
 
-# Add a table of contents to your post.
-#   - make sure that TOC names match the actual section names
-#     for hyperlinks within the post to work correctly.
-#   - please use this format rather than manually creating a markdown table of contents.
+# Өөрийн бичлэгт агуулгын жагсаалт нэмэх.
+#   - Агуулгын жагсаалтын (TOC) нэрс нь хэсгүүдийн жинхэнэ нэртэй таарч байх ёстой.
+#     Ингэснээр бичлэг доторх холбоосууд зөв ажиллана.
+#   - Доорх форматыг ашиглана уу, гараар markdown агуулгын жагсаалт хийхээс зайлсхий.
 toc:
-  - name: High-Level Outline
-  - name: Links to Sections
+  - name: Ерөнхий бүтэц
+  - name: Хэсгүүд рүү холбоосууд
 
-# Below is an example of injecting additional post-specific styles.
-# This is used in the 'Layouts' section of this post.
-# If you use this post as a template, delete this _styles block.
+# Доор нэмэлт постод зориулсан тусгай загваруудыг хэрхэн оруулах жишээ байна.
+# Энэ нь энэ постын 'Layouts' хэсэгт ашиглагддаг.
+# Хэрвээ та энэ постыг загвар болгон ашиглах бол энэ _styles блокыг устгаарай.
 _styles: >
   .fake-img {
     background: #bbb;
@@ -79,90 +85,90 @@ _styles: >
 
 {% include figure.liquid path="assets/img/dragon.png" class="img-fluid" %}
 
-Much of deep learning still boils down to a kind of black magic, but optimizing the performance of your models doesn't have to — even at huge scale! Relatively simple principles apply everywhere — from dealing with a single accelerator to tens of thousands — and understanding them lets you do many useful things:
+Гүн сургалтын ихэнх нь одоо ч нэг төрлийн "хар ид шид" шиг санагддаг ч, таны загваруудын гүйцэтгэлийг сайжруулах нь тийм биш — том хэмжээтэй байсан ч гэсэн! Харьцангуй энгийн зарчмууд хаа сайгүй үйлчилдэг — нэг accelerator-тай ажиллахад ч, арван мянгаас дээш accelerator-тай ажиллахад ч — эдгээрийг ойлговол та олон хэрэгтэй зүйл хийж чадна:
 
-- Ballpark how close parts of your model are to their theoretical optimum.
-- Make informed choices about different parallelism schemes at different scales (how you split the computation across multiple devices).
-- Estimate the cost and time required to train and run large Transformer models.
-- Design algorithms that take advantage of [specific](https://arxiv.org/abs/2205.14135) [hardware](https://arxiv.org/abs/1911.02150) [affordances](https://arxiv.org/abs/2007.00072).
-- Design hardware driven by an explicit understanding of what limits current algorithm performance.
+- Таны загварын хэсгүүд онолын хамгийн сайн үр дүндөө хэр ойр байгааг ойролцоогоор тооцоол.
+- Өөр өөр параллелизм схемүүдийг өөр өөр хэмжээст ухаалгаар сонго (тооцооллыг олон төхөөрөмж дээр хэрхэн хуваахаа шийдэх).
+- Том Transformer загваруудыг сургах болон ажиллуулахад шаардагдах зардал, хугацааг тооцоол.
+- [Тодорхой](https://arxiv.org/abs/2205.14135) [төхөөрөмжийн](https://arxiv.org/abs/1911.02150) [боломжуудыг](https://arxiv.org/abs/2007.00072) ашиглах алгоритмуудыг зохиох.
+- Одоогийн алгоритмын гүйцэтгэлийг хязгаарлаж буй зүйлсийг ойлгож, түүнд тулгуурлан төхөөрөмж зохиох.
 
-**Expected background:** We're going to assume you have a basic understanding of LLMs and the Transformer architecture but not necessarily how they operate at scale. You should know the basics of LLM training and ideally have some basic familiarity with JAX. Some useful background reading might include [this blog post](https://jalammar.github.io/illustrated-transformer/) on the Transformer architecture and [the original Transformer paper](https://arxiv.org/abs/1706.03762). Also check [this list](conclusion#further-reading) out for more useful concurrent and future reading.
+**Хүлээгдэж буй мэдлэгийн түвшин:** Бид таныг LLM-ууд болон Transformer архитектурын үндсэн ойлголттой гэж үзнэ. Гэхдээ эдгээр нь том хэмжээнд хэрхэн ажилладагийг заавал мэдэх шаардлагагүй. Та LLM сургалтын үндсийг мэддэг байх хэрэгтэй бөгөөд JAX-ийн талаар бага зэрэг мэдлэгтэй бол сайн. Ашигтай суурь мэдлэг авахын тулд [энэ блог бичлэг](https://jalammar.github.io/illustrated-transformer/)-ийг Transformer архитектурын талаар уншиж болно. Мөн [эхний Transformer өгүүлэл](https://arxiv.org/abs/1706.03762)-ийг уншаарай. Мөн илүү их хэрэгтэй, зэрэгцээ болон ирээдүйн унших материалуудыг [энэ жагсаалт](conclusion#further-reading)-аас үзээрэй.
 
-**Goals & Feedback:** By the end, you should feel comfortable estimating the best parallelism scheme for a Transformer model on a given hardware platform, and roughly how long training and inference should take. If you don't, email us or leave a comment! We'd love to know how we could make this clearer.
+**Зорилго ба санал хүсэлт:** Эцэст нь та өгөгдсөн hardware платформ дээр Transformer model-д хамгийн сайн parallelism схемийг хэрхэн тооцоолж болох талаар болон сургалт, inference хэр удаан үргэлжлэхийг ойролцоогоор мэддэг болсон байх ёстой. Хэрвээ ойлгоогүй бол бидэнд имэйл бичих эсвэл сэтгэгдэл үлдээгээрэй! Бид үүнийг хэрхэн илүү ойлгомжтой болгох талаар мэдэхийг хүсэж байна.
 
-<p markdown=1 class="announce">You might also enjoy reading the new [Section 12](gpus) on NVIDIA GPUs!</p>
+<p markdown=1 class="announce">Танд NVIDIA GPU-ийн тухай шинэ [12-р хэсэг](gpus)-ийг унших ч бас сонирхолтой байж магадгүй!</p>
 
-### Why should you care?
+### Яагаад анхаарах хэрэгтэй вэ?
 
-Three or four years ago, I don't think most ML researchers would have needed to understand any of the content in this book. But today even “small” models run so close to hardware limits that doing novel research requires you to think about efficiency at scale.<d-footnote>Historically, ML research has followed something of a tick-tock cycle between systems innovations and software improvements. Alex Krizhevsky had to write unholy CUDA code to make CNNs fast but within a couple years, libraries like Theano and TensorFlow meant you didn't have to. Maybe that will happen here too and everything in this book will be abstracted away in a few years. But scaling laws have pushed our models perpetually to the very frontier of our hardware, and it seems likely that, in the near future, doing cutting edge research will be inextricably tied to an understanding of how to efficiently scale models to large hardware topologies.</d-footnote> **A 20% win on benchmarks is irrelevant if it comes at a 20% cost to roofline efficiency.** Promising model architectures routinely fail either because they _can't_ run efficiently at scale or because no one puts in the work to make them do so.
+Гурван эсвэл дөрвөн жилийн өмнө, ихэнх ML судлаачид энэ номын агуулгыг ойлгох шаардлагагүй байсан гэж би бодож байна. Гэвч өнөө үед “жижиг” загварууд хүртэл техник хангамжийн хязгаарт маш ойр ажиллаж байгаа тул шинэ судалгаа хийхийн тулд та үр ашигтай байдлыг том хэмжээнд бодох хэрэгтэй болжээ.<d-footnote>Түүхэн талаасаа, ML судалгаа нь системийн шинэчлэл ба програм хангамжийн сайжруулалтын хооронд “tick-tock” маягийн мөчлөг дагаж ирсэн. Алекс Крижевский CNN-ийг хурдан болгохын тулд маш төвөгтэй CUDA код бичих шаардлагатай байсан ч хэдхэн жилийн дараа Theano, TensorFlow зэрэг сангууд гарч ирсэн тул ийм зүйл хийх шаардлагагүй болсон. Магадгүй энэ тал дээр ч бас ийм зүйл тохиолдож, энэ номын бүх зүйл хэдэн жилийн дараа далдлагдах байх. Гэхдээ “scaling laws” нь бидний загваруудыг техник хангамжийн хамгийн захад байнга хүргэж байгаа бөгөөд ойрын ирээдүйд шинэ судалгаа хийхэд том техник хангамжийн топологи дээр загваруудыг үр ашигтай өргөжүүлэхийг ойлгох шаардлагатай байх нь тодорхой байна.</d-footnote> **Бенчмарк дээр 20% амжилт гаргасан ч, хэрвээ энэ нь roofline efficiency-г 20% бууруулж байвал ач холбогдолгүй.** Ирээдүйтэй загварын архитектурууд ихэвчлэн бүтэлгүйтдэг. Учир нь тэдгээр нь том хэмжээнд үр ашигтай ажиллаж чаддаггүй эсвэл хэн ч тэднийг үр ашигтай болгохын тулд ажил хийдэггүй.
 
-**The goal of “model scaling” is to be able to increase the number of chips used for training or inference while achieving a proportional, linear increase in throughput.** This is known as "*strong scaling*". Although adding additional chips ("parallelism") usually decreases the computation time, it also comes at the cost of added communication between chips. When communication takes longer than computation we become "communication bound" and cannot scale strongly.<d-footnote>As your computation time decreases, you also typically face bottlenecks at the level of a single chip. Your shiny new TPU or GPU may be rated to perform 500 trillion operations-per-second, but if you aren't careful it can just as easily do a tenth of that if it's bogged down moving parameters around in memory. The interplay of per-chip computation, memory bandwidth, and total memory is critical to the scaling story.</d-footnote> If we understand our hardware well enough to anticipate where these bottlenecks will arise, we can design or reconfigure our models to avoid them.<d-footnote>Hardware designers face the inverse problem: building hardware that provides just enough compute, bandwidth, and memory for our algorithms while minimizing cost. You can imagine how stressful this "co-design" problem is: you have to bet on what algorithms will look like when the first chips actually become available, often 2 to 3 years down the road. The story of the TPU is a resounding success in this game. Matrix multiplication is a unique algorithm in the sense that it uses far more FLOPs per byte of memory than almost any other (N FLOPs per byte), and early TPUs and their systolic array architecture achieved far better perf / $ than GPUs did at the time they were built. TPUs were designed for ML workloads, and GPUs with their TensorCores are rapidly changing to fill this niche as well. But you can imagine how costly it would have been if neural networks had not taken off, or had changed in some fundamental way that TPUs (which are inherently less flexible than GPUs) could not handle.</d-footnote>
+**“Загварын өргөтгөл” (model scaling)-ын зорилго нь сургалт эсвэл таамаглалд ашиглагдах чипийн тоог нэмэгдүүлэх явдал бөгөөд ингэснээр дамжуулалтын хурд (throughput) нь шууд, шугаман өсөлттэй байх ёстой.** Үүнийг "*хүчтэй өргөтгөл*" (strong scaling) гэж нэрлэдэг. Илүү олон чип нэмэх ("параллелизм") нь ихэвчлэн тооцооллын хугацааг багасгадаг ч, энэ нь чипүүдийн хоорондын харилцааны нэмэлт зардлыг авчирдаг. Хэрвээ харилцаа холбоо нь тооцооллоос удаан болвол бид "харилцааны хязгаарлалтад" (communication bound) орж, хүчтэй өргөтгөлийг хийж чадахгүй.<d-footnote>Тооцооллын хугацаа багасах тусам, ихэвчлэн нэг чип дээр саатал үүсдэг. Таны шинэ TPU эсвэл GPU нь секундэд 500 их наяд үйлдэл хийх чадвартай гэж үнэлэгдсэн байж болох ч, хэрвээ та анхааралтай ажиллахгүй бол, санах ой дотор параметрүүдийг зөөхөд удааширвал энэ чадлынхаа аравны нэгийг л ашиглаж болно. Нэг чипийн тооцоолол, санах ойн зурвас (memory bandwidth), нийт санах ойн хэмжээний харилцан үйлчлэл нь өргөтгөлийн гол асуудал юм.</d-footnote> Хэрвээ бид техник хангамжаа сайн ойлгож, эдгээр саатал хаана үүсэхийг урьдчилан мэдэж чадвал, загвараа зохион бүтээх эсвэл дахин тохируулах замаар тэдгээрээс зайлсхийж чадна.<d-footnote>Техник хангамжийн зохион бүтээгчид эсрэг асуудалтай тулгардаг: манай алгоритмуудад хангалттай тооцоолол, зурвас, санах ой өгөх, гэхдээ зардлыг багасгах хэрэгтэй. Энэ "хамтран зохиох" (co-design) асуудал ямар их дарамттай болохыг та төсөөлж болно: анхны чипүүд гарах үед (ихэвчлэн 2-3 жилийн дараа) алгоритмууд ямар байхыг таах хэрэгтэй болдог. TPU-гийн түүх энэ тоглоомд амжилттай болсон. Матриц үржүүлэх (matrix multiplication) нь бараг бүх алгоритмаас илүү их FLOPs-ыг нэг байт санах ойд ашигладаг өвөрмөц алгоритм бөгөөд анхны TPU болон түүний systolic array архитектур нь тухайн үедээ GPU-гаас илүү гүйцэтгэл / $-ийг үзүүлсэн. TPU-г ML ажилд зориулж бүтээсэн, харин GPU-нууд TensorCore-оороо энэ салбарт хурдан өөрчлөгдөж байна. Гэхдээ хэрвээ нейрон сүлжээ амжилт олоогүй бол, эсвэл үндсэн зарчим нь өөрчлөгдсөн бол (TPU нь GPU-аас уян хатан биш), энэ нь маш их зардалтай байх байсан.</d-footnote>
 
-*Our goal in this book is to explain how TPU (and GPU) hardware works and how the Transformer architecture has evolved to perform well on current hardware. We hope this will be useful both for researchers designing new architectures and for engineers working to make the current generation of LLMs run fast.*
+*Бидний энэ номын зорилго бол TPU (мөн GPU) техник хангамж хэрхэн ажилладаг болон Transformer архитектур хэрхэн хөгжиж, одоогийн техник хангамж дээр сайн ажиллах болсон тухай тайлбарлах юм. Энэ нь шинэ архитектур зохиож буй судлаачид болон одоогийн үеийн LLM-уудыг хурдан ажиллуулахыг хүсэж буй инженерүүдэд хэрэгтэй гэж найдаж байна.*
 
-## High-Level Outline
+## Өндөр түвшний төлөвлөгөө
 
-The overall structure of this book is as follows:
+Энэ номын ерөнхий бүтэц дараах байдалтай байна:
 
-[Section 1](roofline) explains roofline analysis and what factors can limit our ability to scale (communication, computation, and memory). [Section 2](tpus) and [Section 3](sharding) talk in detail about how TPUs work, both as individual chips and — of critical importance — as an interconnected system with inter-chip links of limited bandwidth and latency. We'll answer questions like:
+[1-р хэсэг](roofline) нь roofline шинжилгээ болон бидний өргөжүүлэх чадварыг хязгаарлаж болох хүчин зүйлсийг (харилцаа, тооцоолол, санах ой) тайлбарлана. [2-р хэсэг](tpus) болон [3-р хэсэг](sharding) нь TPU хэрхэн ажилладаг талаар дэлгэрэнгүй ярилцана, тус тусдаа чипүүд болон — маш чухал — хоорондоо холбогдсон систем байдлаар, чип хоорондын холбоос нь хязгаарлагдмал зурвасын өргөн ба хүлээлгийн хугацаатай байдаг. Бид дараах асуултуудад хариулах болно:
 
-* How long should a matrix multiply of a certain size take? At what point is it bound by compute or by memory or communication bandwidth?
-* How are TPUs wired together to form training clusters? How much bandwidth does each part of the system have?
-* How long does it take to gather, scatter, or re-distribute arrays across multiple TPUs?
-* How do we efficiently multiply matrices that are distributed differently across devices?
+* Тодорхой хэмжээтэй матриц үржүүлэхэд хэр хугацаа шаардагдах вэ? Ямар үед тооцоолол, санах ой, эсвэл холбооны зурвасын өргөнд хязгаарлагдах вэ?
+* TPU-уудыг сургалтын кластер үүсгэхэд хэрхэн холбодог вэ? Системийн хэсэг бүр ямар зурвасын өргөнтэй вэ?
+* Олон TPU дээр массив цуглуулах, тараах, эсвэл дахин хуваарилахад хэр хугацаа ордог вэ?
+* Өөр өөр төхөөрөмж дээр өөрөөр хуваарилагдсан матрицуудыг хэрхэн үр дүнтэй үржүүлэх вэ?
 
-{% include figure.liquid path="assets/img/pointwise-product.gif" class="img-small" caption="<b>Figure:</b> a diagram from <a href='tpus'>Section 2</a> showing how a TPU performs an elementwise product. Depending on the size of our arrays and the bandwidth of various links, we can find ourselves compute-bound (using the full hardware compute capacity) or comms-bound (bottlenecked by memory loading)." %}
+{% include figure.liquid path="assets/img/pointwise-product.gif" class="img-small" caption="<b>Зураг:</b> <a href='tpus'>2-р хэсэг</a>-ээс авсан диаграмм. Энэ зурагт TPU хэрхэн элементүүдийн үржвэрийг (elementwise product) хийж байгааг харуулсан байна. Манай массивуудын хэмжээ болон янз бүрийн холбоосуудын дамжуулах чадлаас (bandwidth) шалтгаалаад бид тооцооллын хязгаартай (compute-bound, бүх hardware-ийн тооцооллын чадлыг ашиглаж байгаа) эсвэл холбооны хязгаартай (comms-bound, санах ойн ачааллаас болж удааширч байгаа) байж болно." %}
 
-Five years ago ML had a colorful landscape of architectures — ConvNets, LSTMs, MLPs, Transformers — but now we mostly just have the Transformer<d-cite key="transformers"></d-cite>. We strongly believe it's worth understanding every piece of the Transformer architecture: the exact sizes of every matrix, where normalization occurs, how many parameters and FLOPs<d-footnote>FLoating point OPs, basically the total number of adds and multiplies required. While many sources take FLOPs to mean "operations per second", we use FLOPs/s to indicate that explicitly.</d-footnote> are in each part. [Section 4](transformers) goes through this “Transformer math” carefully, showing how to count the parameters and FLOPs for both training and inference. This tells us how much memory our model will use, how much time we'll spend on compute or comms, and when attention will become important relative to the feed-forward blocks.
+Таван жилийн өмнө ML-д олон янзын архитектур байсан — ConvNets, LSTMs, MLPs, Transformers — харин одоо бид ихэвчлэн зөвхөн Transformer л ашигладаг<d-cite key="transformers"></d-cite>. Бид Transformer архитектурын бүх хэсгийг ойлгох нь маш чухал гэж итгэдэг: бүх матрицын яг хэмжээ, нормализаци хаана явагддаг, хэдэн параметр болон FLOPs<d-footnote>FLoating point OPs, энэ нь үндсэндээ нэмэх болон үржих үйлдлийн нийт тоо юм. Олон эх сурвалж FLOPs-ыг "секундэд үйлдэл" гэж ойлгодог ч бид FLOPs/s гэж бичихдээ үүнийг илүү тодорхой харуулдаг.</d-footnote> тус бүрт хэд байгаа вэ гэдгийг. [4-р хэсэг](transformers) энэ “Transformer-ийн математикийн” талаар нарийн тайлбарлаж, сургалт болон inference-д зориулж параметр болон FLOPs-ыг хэрхэн тоолохыг үзүүлнэ. Энэ нь бидний загвар хэр их санах ой ашиглах, тооцоолол эсвэл харилцаанд хэр их хугацаа зарцуулах, мөн attention нь feed-forward блокуудтай харьцуулахад хэзээ чухал болохыг хэлж өгнө.
 
-{% include figure.liquid path="assets/img/transformer-diagram.png" class="img-fluid" caption="<b>Figure:</b> a standard Transformer layer with each matrix multiplication (matmul) shown as a dot inside a circle. All parameters (excluding norms) are shown in purple. <a href='transformers'>Section 4</a> walks through this diagram in more detail." %}
+{% include figure.liquid path="assets/img/transformer-diagram.png" class="img-fluid" caption="<b>Зураг:</b> стандарт Transformer давхарга, матриц үржүүлэг (matmul) бүрийг дугуй дотор цэгээр харуулсан. Бүх параметрүүд (нормоос бусад) нь ягаан өнгөөр байна. <a href='transformers'>4-р хэсэг</a> энэ зургийг дэлгэрэнгүй тайлбарлана." %}
 
-[Section 5: Training](training) and [Section 7: Inference](inference) are the core of this essay, where we discuss the fundamental question: given a model of some size and some number of chips, how do I parallelize my model to stay in the “strong scaling” regime? This is a simple question with a surprisingly complicated answer. At a high level, there are 4 primary parallelism techniques used to split models over multiple chips (**data**, **tensor**, **pipeline** and **expert**), and a number of other techniques to reduce the memory requirements (**rematerialisation**, **optimizer/model sharding (aka ZeRO)**, **host offload**, **gradient accumulation**). We discuss many of these here.
+[5-р хэсэг: Сургалт](training) болон [7-р хэсэг: Дүгнэлт](inference) нь энэ эссэгийн гол хэсэг бөгөөд бид үндсэн асуултыг хэлэлцэнэ: тодорхой хэмжээтэй загвар болон тодорхой тооны чип байгаа үед, би загвараа хэрхэн “хүчтэй өргөтгөх” горимд зэрэгцүүлэн ажиллуулах вэ? Энэ нь энгийн асуулт боловч хариулт нь гайхмаар төвөгтэй байдаг. Өндөр түвшинд авч үзвэл, загварыг олон чип дээр хуваахад ашигладаг 4 үндсэн зэрэгцүүлэх арга байдаг (**өгөгдлийн**, **тензорын**, **дамжуулах шугамын**, **экспертийн**), мөн санах ойн хэрэгцээг багасгах хэд хэдэн арга бий (**дахин материалжуулах**, **оновчлогч/загвар хуваах (өөрөөр хэлбэл ZeRO)**, **хост руу шилжүүлэх**, **градиент хуримтлуулах**). Бид эдгээрийн олон талаар энд хэлэлцэнэ.
 
-We hope by the end of these sections you should be able to choose among them yourself for new architectures or settings. [Section 6](applied-training) and [Section 8](applied-inference) are practical tutorials that apply these concepts to LLaMA-3, a popular open-source model.
+Эдгээр хэсгүүдийн төгсгөлд та шинэ архитектур эсвэл тохиргоонд аль нэгийг нь өөрөө сонгож чадна гэж найдаж байна. [6-р хэсэг](applied-training) болон [8-р хэсэг](applied-inference) нь эдгээр ойлголтыг LLaMA-3 дээр хэрэгжүүлсэн практик заавар юм. LLaMA-3 нь алдартай, нээлттэй эхийн model юм.
 
-Finally, [Section 9](profiling) and [Section 10](jax-stuff) look at how to implement some of these ideas in JAX and how to profile and debug your code when things go wrong. [Section 12](gpus) is a new section that dives into GPUs as well.
+Эцэст нь, [9-р хэсэг](profiling) болон [10-р хэсэг](jax-stuff) нь эдгээр санаануудыг JAX дээр хэрхэн хэрэгжүүлэх, мөн код буруу ажиллах үед хэрхэн profiling хийх, алдааг олох талаар үзнэ. [12-р хэсэг](gpus) нь шинэ хэсэг бөгөөд GPU-уудын талаар дэлгэрэнгүй тайлбарлана.
 
-Throughout we try to give you problems to work for yourself. Please feel no pressure to read all the sections or read them in order. And please leave feedback. For the time being, this is a draft and will continue to be revised. Thank you!
+Бид танд өөрөө ажиллах бодлогуудыг өгөхийг хичээдэг. Та бүх хэсгийг заавал унших эсвэл дарааллаар нь унших шаардлагагүй. Мөн санал хүсэлтээ үлдээгээрэй. Одоогоор энэ бол ноорог бөгөөд цаашид засварлагдана. Баярлалаа!
 
-*We'd like to acknowledge James Bradbury and Blake Hechtman who derived many of the ideas in this doc.*
+*Бид энэ баримт бичигт байгаа олон санааг гаргасан Жэймс Брэдбюри болон Блэйк Хектман нарт талархал илэрхийлье.*
 
-<h3 markdown=1 class="next-section">Without further ado, [here is Section 1](roofline) about TPU rooflines.</h3>
+<h3 markdown=1 class="next-section">Цааш нь удаан хүлээлгүй, [энэ бол 1-р хэсэг](roofline) TPU roofline-уудын тухай.</h3>
 
-## Links to Sections
+## Хэсгүүд рүү холбоосууд
 
-*This series is probably longer than it needs to be, but we hope that won't deter you. The first three chapters are preliminaries and can be skipped if familiar, although they introduce notation used later. The final three parts might be the most practically useful, since they explain how to work with real models.*
+*Энэ цуврал магадгүй хэрэгтэйгээсээ урт байж болох ч бид таныг айлгахгүй гэж найдаж байна. Эхний гурван бүлэг нь урьдчилсан мэдлэг бөгөөд хэрвээ та мэддэг бол алгасаж болно, гэхдээ дараа нь ашиглах тэмдэглэгээг танилцуулдаг. Сүүлийн гурван хэсэг нь хамгийн хэрэгтэй байж магадгүй, учир нь эдгээр нь бодит загваруудтай хэрхэн ажиллахыг тайлбарладаг.*
 
-**Part 1: Preliminaries**
+**Хэсэг 1: Урьдчилсан мэдлэг**
 
-* [**Chapter 1: A Brief Intro to Roofline Analysis**](roofline). Algorithms are bounded by three things: compute, communication, and memory. We can use these to approximate how fast our algorithms will run.
+* [**1-р бүлэг: Roofline шинжилгээний товч танилцуулга**](roofline). Алгоритмууд гурван зүйлээр хязгаарлагддаг: тооцоолол (compute), харилцаа (communication), санах ой (memory). Бид эдгээрийг ашиглан алгоритмууд маань хэр хурдан ажиллахыг ойролцоогоор тооцоолж болно.
 
-* [**Chapter 2: How to Think About TPUs**](tpus). How do TPUs work? How does that affect what models we can train and serve?
+* [**2-р бүлэг: TPU-ийг хэрхэн ойлгох вэ**](tpus). TPU хэрхэн ажилладаг вэ? Энэ нь бид ямар загваруудыг сургаж, ашиглаж болох вэ гэдэгт хэрхэн нөлөөлдөг вэ?
 
-* [**Chapter 3: Sharded Matrices and How to Multiply Them**](sharding). Here we explain model sharding and multi-TPU parallelism by way of our favorite operation: (sharded) matrix multiplications.
+* [**3-р бүлэг: Хуваагдсан матриц ба тэдгээрийг хэрхэн үржүүлэх вэ**](sharding). Энд бид загвар хуваах болон олон TPU зэрэгцээ ажиллуулахыг дуртай үйлдлээрээ буюу (хуваагдсан) матрицын үржвэрээр тайлбарлана.
 
-**Part 2: Transformers**
+**Хэсэг 2: Трансформерүүд**
 
-* [**Chapter 4: All the Transformer Math You Need to Know**](transformers). How many FLOPs does a Transformer use in its forward and backwards pass? Can you calculate the number of parameters? The size of its KV caches? We work through this math here.
+* [**4-р бүлэг: Трансформерийн математикийн мэдэх ёстой бүх зүйл**](transformers). Трансформер урд болон хойшоо дамжих үедээ хэдэн FLOPs ашигладаг вэ? Та параметрийн тоог тооцож чадах уу? KV кэшийн хэмжээг тооцож чадах уу? Бид энэ математикийг энд хамтдаа бодно.
 
-* [**Chapter 5: How to Parallelize a Transformer for Training**](training). FSDP. Megatron sharding. Pipeline parallelism. Given some number of chips, how do I train a model of a given size with a given batch size as efficiently as possible?
+* [**5-р бүлэг: Трансформерыг сургалтанд хэрхэн зэрэгцүүлэх вэ**](training). FSDP. Megatron sharding. Pipeline parallelism. Тодорхой тооны чип байгаа үед, тодорхой хэмжээтэй загвар, тодорхой batch size-тайгаар яаж хамгийн үр дүнтэйгээр сургах вэ?
 
-* [**Chapter 6: Training LLaMA 3 on TPUs**](applied-training). How would we train LLaMA 3 on TPUs? How long would it take? How much would it cost?
+* [**6-р бүлэг: LLaMA 3-ыг TPU дээр сургалт хийх**](applied-training). Бид LLaMA 3-ыг TPU дээр хэрхэн сургах вэ? Хэр удаан хугацаа шаардагдах вэ? Хэр их зардал гарах вэ?
 
-* [**Chapter 7: All About Transformer Inference**](inference). Once we've trained a model, we have to serve it. Inference adds a new consideration — latency — and changes up the memory landscape. We'll talk about how disaggregated serving works and how to think about KV caches.
+* [**7-р бүлэг: Трансформерийн Инференсийн тухай бүх зүйл**](inference). Бид загвараа сургасны дараа, үүнийг ашиглах хэрэгтэй болдог. Инференс нь шинэ зүйл нэмж авчирдаг — саатал (latency) — мөн санах ойн хэрэглээг өөрчилдөг. Бид салангид сервер (disaggregated serving) хэрхэн ажилладаг, мөн KV кэш (KV cache)-ийн талаар хэрхэн бодох талаар ярилцана.
 
-* [**Chapter 8: Serving LLaMA 3 on TPUs**](applied-inference). How much would it cost to serve LLaMA 3 on TPU v5e? What are the latency/throughput tradeoffs?
+* [**8-р бүлэг: LLaMA 3-г TPU дээр ажиллуулах**](applied-inference). LLaMA 3-г TPU v5e дээр ажиллуулахад хэр их зардал гарах вэ? Хүлээлгийн хугацаа/дамжуулалтын хурдны солилцоо ямар байх вэ?
 
-**Part 3: Practical Tutorials**
+**Хэсэг 3: Практик хичээлүүд**
 
-* [**Chapter 9: How to Profile TPU Code**](profiling). Real LLMs are never as simple as the theory above. Here we explain the JAX + XLA stack and how to use the JAX/TensorBoard profiler to debug and fix real issues.
+* [**9-р бүлэг: TPU кодыг хэрхэн профайл хийх вэ**](profiling). Жинхэнэ LLM-ууд дээрх онол шиг хэзээ ч энгийн биш байдаг. Энд бид JAX + XLA стекийг тайлбарлаж, JAX/TensorBoard профайлераар бодит асуудлыг хэрхэн шалгаж, засахыг үзүүлнэ.
 
-* [**Chapter 10: Programming TPUs in JAX**](jax-stuff). JAX provides a bunch of magical APIs for parallelizing computation, but you need to know how to use them. Fun examples and worked problems.
+* [**10-р бүлэг: JAX дээр TPU програмчлах**](jax-stuff). JAX нь тооцооллыг зэрэгцүүлэх олон ид шидийн API-уудыг өгдөг, гэхдээ та тэдгээрийг хэрхэн ашиглахыг мэдэх хэрэгтэй. Сонирхолтой жишээнүүд болон бодлогуудыг шийдсэн.
 
-**Part 4: Conclusions and Bonus Content**
+**4-р хэсэг: Дүгнэлт ба нэмэлт агуулга**
 
-* [**Chapter 11: Conclusions and Further Reading**](conclusion). Closing thoughts and further reading on TPUs and LLMs.
+* [**11-р бүлэг: Дүгнэлт ба цаашдын унших материал**](conclusion). TPU болон LLM-ийн талаархи төгсгөлийн бодол, цааш унших материал.
 
-* [**Chapter 12: How to Think About GPUs**](gpus). A bonus section about GPUs, how they work, how they're networked, and how their rooflines differ from TPUs.
+* [**12-р бүлэг: GPU-гийн талаар хэрхэн бодох вэ**](gpus). GPU-гийн тухай нэмэлт хэсэг, тэд хэрхэн ажилладаг, хэрхэн сүлжээнд холбогддог, мөн тэдний roofline нь TPU-гаас хэрхэн ялгаатай болох талаар.
 

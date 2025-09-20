@@ -1,34 +1,40 @@
+—
+Энэхүү орчуулга нь MIT лицензийн дагуу эх бүтээлээс хөрвүүлэв.
+Эх сурвалж: Austin et al., "How to Scale Your Model" (https://jax-ml.github.io/scaling-book/)
+Орч.: Mongolian (mn)
+—
+
 ---
 layout: page
-title: Sections
+title: Хэсгүүд
 nav: true
 nav_order: 8
 dropdown: true
 children:
-  - title: Part 0. Introduction
+  - title: 0-р хэсэг. Танилцуулга
     permalink: /index
-  - title: Part 1. Intro to Rooflines
+  - title: 1-р хэсэг. Roofline-ийн танилцуулга
     permalink: /roofline
-  - title: Part 2. All About TPUs
+  - title: 2-р хэсэг. TPU-уудын тухай
     permalink: /tpus
-  - title: Part 3. Sharded Matmuls
+  - title: 3-р хэсэг. Sharded Matmul-ууд
     permalink: /sharding
-  - title: Part 4. Transformers
+  - title: 4-р хэсэг. Трансформерүүд
     permalink: /transformers
-  - title: Part 5. Training
+  - title: 5-р хэсэг. Сургах
     permalink: /training
-  - title: Part 6. Training LLaMA
+  - title: 6-р хэсэг. LLaMA-г сургах
     permalink: /applied-training
-  - title: Part 7. Inference
+  - title: 7-р хэсэг. Инференс
     permalink: /inference
-  - title: Part 8. Serving LLaMA
+  - title: 8-р хэсэг. LLaMA-г ажиллуулах
     permalink: /applied-inference
-  - title: Part 9. Profiling
+  - title: 9-р хэсэг. Профайлинг
     permalink: /profiling
-  - title: Part 10. All About JAX
+  - title: 10-р хэсэг. JAX-ийн тухай
     permalink: /jax-stuff
-  - title: Part 11. Conclusions
+  - title: 11-р хэсэг. Дүгнэлтүүд
     permalink: /conclusion
-  - title: Part 12. GPUs
+  - title: 12-р хэсэг. GPU-ууд
     permalink: /gpus
 ---

@@ -1,75 +1,77 @@
+—
+Энэхүү орчуулга нь MIT лицензийн дагуу эх бүтээлээс хөрвүүлэв.
+Эх сурвалж: Austin et al., "How to Scale Your Model" (https://jax-ml.github.io/scaling-book/)
+Орч.: Mongolian (mn)
+—
+
 ---
 layout: distill
-title: "All the Transformer Math You Need to Know"
+title: "Трансформерийн Математикийн Бүх Зүйлс Та Мэдэх Хэрэгтэй"
 # permalink: /main/
-description: "Here we'll do a quick review of the Transformer architecture, specifically how to calculate FLOPs, bytes, and other quantities of interest."
+description: "Энд бид Трансформер архитектурын хурдан тоймыг хийнэ, ялангуяа FLOPs, байт болон бусад сонирхолтой хэмжигдэхүүнийг хэрхэн тооцоолохыг үзүүлнэ."
 date: 2025-02-04
 future: true
 htmlwidgets: true
 hidden: false
 
-section_number: 4
+хэсгийн_дугаар: 4
 
 previous_section_url: "../sharding"
-previous_section_name: "Part 3: Sharding"
+previous_section_name: "3-р хэсэг: Шардинг"
 
 next_section_url: ../training
-next_section_name: "Part 5: Training"
+next_section_name: "Хэсэг 5: Сургалт"
 
-giscus_comments: true
+giscus_comments: үнэн
 
-authors:
-  - name: Jacob Austin
+зохиогчид:
+  - нэр: Жейкоб Остин
     url: "https://www.jacobaustin.org/"
-    affiliations:
-      name: Google DeepMind
-  - name: Sholto Douglas
+    харьяалал:
+      нэр: Google DeepMind
+  - нэр: Шолто Дуглас
     url: "https://x.com/_sholtodouglas"
-  - name: Roy Frostig
+  - нэр: Рой Фростиг
     url: "https://cs.stanford.edu/~rfrostig/"
-  - name: Anselm Levskaya
+  - нэр: Ансельм Левская
     url: "https://anselmlevskaya.com/"
-  - name: Charlie Chen
+  - нэр: Чарли Чен
     url: "https://x.com/charliexychen"
-  - name: Sharad Vikram
+  - нэр: Шарад Викрам
     url: "https://sharadvikram.com/"
-  - name: Federico Lebron
+  - нэр: Федерико Леброн
     url: "https://fedelebron.com/"
-  - name: Peter Choy
+  - нэр: Питер Чой
     url: "https://x.com/pchoy95"
-  - name: Vinay Ramasesh
+  - нэр: Винай Рамасеш
     url: "https://x.com/vinayramasesh"
-  - name: Albert Webson
+  - нэр: Альберт Вебсон
     url: "https://representation.ai/"
-  - name: Reiner Pope<sup>*</sup>
+  - нэр: Рейнер Поп<sup>*</sup>
     url: https://x.com/reinerpope
 
-bibliography: main.bib
+ном зүй: main.bib
 
-# Add a table of contents to your post.
-#   - make sure that TOC names match the actual section names
-#     for hyperlinks within the post to work correctly.
-#   - please use this format rather than manually creating a markdown table of contents.
 toc:
-  - name: "Counting Dots"
+  - name: "Цэг тоолох"
   - subsections:
-    - name: "Forward and reverse FLOPs"
-  - name: "Transformer Accounting"
-  - name: "Global FLOPs and Params Calculation"
-  - name: "Miscellaneous Math"
+    - name: "Урагш болон буцах FLOPs"
+  - name: "Трансформер Тооцоолол"
+  - name: "Глобал FLOPs болон Params Тооцоолол"
+  - name: "Бусад Математик"
   - subsections:
-    - name: "Sparsity and Mixture-of-Experts"
-    - name: "Gradient checkpointing"
-    - name: "Key-Value (KV) caching"
-  - name: "What Should You Take Away from this Section?"
-  - name: "A Few Problems to Work"
-  - name: "Appendix"
+    - name: "Сарнилт ба Mixture-of-Experts"
+    - name: "Градиент хадгалах (checkpointing)"
+    - name: "Түлхүүр-Утга (KV) кэшлэх"
+  - name: "Энэ хэсгээс юу ойлгох ёстой вэ?"
+  - name: "Асуудлуудыг бодоорой"
+  - name: "Хавсралт"
   - subsections:
-    - name: "Appendix A: How does Flash Attention work?"
+    - name: "Хавсралт A: Flash Attention хэрхэн ажилладаг вэ?"
 
-# Below is an example of injecting additional post-specific styles.
-# This is used in the 'Layouts' section of this post.
-# If you use this post as a template, delete this _styles block.
+# Доор нэмэлт, зөвхөн энэ нийтлэлд зориулсан стиль оруулах жишээ байна.
+# Энэ нь энэ нийтлэлийн 'Layouts' хэсэгт ашиглагддаг.
+# Хэрвээ та энэ нийтлэлийг загвар болгон ашиглах бол энэ _styles блокийг устгаарай.
 _styles: >
   .fake-img {
     background: #bbb;
@@ -87,9 +89,9 @@ _styles: >
   }
 ---
 
-## Counting Dots
+## Цэг тоолох
 
-Let's start with vectors $$x$$,$$y$$ and matrices $$A$$,$$B$$ of the following shapes:
+Векторуудаас эхэлье $$x$$,$$y$$ and matrices $$A$$,$$B$$ of the following shapes:
 
 $$
 \def \red#1{\textcolor{red}{#1}}
@@ -460,4 +462,4 @@ S_{ij} \cdot_j dS_{ij} &= \sum_j \frac{e^{\tau q_i \cdot k_j}}{\sum_k e^{\tau q_
 &= dO_{id} \cdot_d O_{id}
 \end{align*}$$
 
-This replacement is crucial for being able to implement a sequence-block *local* calculation for the VJP, and enables further clever sharding schemes like ring attention.
+Энэ орлуулалт нь дарааллын блокийн *локал* тооцооллыг VJP-д хэрэгжүүлэхэд маш чухал бөгөөд үүний ачаар ring attention гэх мэт илүү ухаалаг хуваах аргуудыг ашиглах боломжтой болдог.

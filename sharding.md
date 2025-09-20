@@ -1,74 +1,80 @@
+—
+Энэхүү орчуулга нь MIT лицензийн дагуу эх бүтээлээс хөрвүүлэв.
+Эх сурвалж: Austin et al., "How to Scale Your Model" (https://jax-ml.github.io/scaling-book/)
+Орч.: Mongolian (mn)
+—
+
 ---
 layout: distill
-title: "Sharded Matrices and How to Multiply Them"
+title: "Шардингтай Матриц ба Тэдгээрийг Хэрхэн Үржүүлэх вэ"
 # permalink: /main/
-description: "When we train large ML models, we have to split (or “shard”) their parameters or inputs across many accelerators. Since LLMs are mostly made up of matrix multiplications, understanding this boils down to understanding how to multiply matrices when they're split across devices. We develop a simple theory of sharded matrix multiplication based on the cost of TPU communication primitives."
+description: "Бид том хэмжээний ML загвар сургах үед, бид тэдний параметр эсвэл оролтыг олон хурдатгалч дээр хуваах (эсвэл “шардинг” хийх) шаардлагатай болдог. LLM-ууд ихэвчлэн матриц үржвэрээс бүрддэг тул үүнийг ойлгох нь матрицуудыг төхөөрөмжүүд дээр хуваагдсан үед хэрхэн үржүүлэхийг ойлгоход оршино. Бид TPU-ийн харилцааны үндсэн үйлдлүүдийн зардал дээр тулгуурласан шардингтай матриц үржүүлэлтийн энгийн онолыг боловсруулна."
 date: 2025-02-04
 future: true
 htmlwidgets: true
 hidden: false
 
-section_number: 3
+хэсгийн_дугаар: 3
 
 previous_section_url: "../tpus"
-previous_section_name: "Part 2: TPUs"
+previous_section_name: "2-р хэсэг: TPU-ууд"
 
 next_section_url: ../transformers
-next_section_name: "Part 4: Transformer Math"
+next_section_name: "4-р хэсэг: Трансформерийн математикийн үндэс"
 
-giscus_comments: true
+giscus_comments: үнэн
 
 authors:
-  - name: Jacob Austin
+  - name: Жэйкоб Остин
     url: "https://www.jacobaustin.org/"
     affiliations:
       name: Google DeepMind
-  - name: Sholto Douglas
+  - name: Шолто Дуглас
     url: "https://x.com/_sholtodouglas"
-  - name: Roy Frostig
+  - name: Рой Фростиг
     url: "https://cs.stanford.edu/~rfrostig/"
-  - name: Anselm Levskaya
+  - name: Ансельм Левская
     url: "https://anselmlevskaya.com/"
-  - name: Charlie Chen
+  - name: Чарли Чен
     url: "https://x.com/charliexychen"
-  - name: Sharad Vikram
+  - name: Шарад Викрам
     url: "https://sharadvikram.com/"
-  - name: Federico Lebron
+  - name: Федерико Леброн
     url: "https://fedelebron.com/"
-  - name: Peter Choy
+  - name: Питер Чой
     url: "https://x.com/pchoy95"
-  - name: Vinay Ramasesh
+  - name: Винай Рамасеш
     url: "https://x.com/vinayramasesh"
-  - name: Albert Webson
+  - name: Альберт Вебсон
     url: "https://representation.ai/"
-  - name: Reiner Pope<sup>*</sup>
+  - name: Рейнер Попе<sup>*</sup>
     url: https://x.com/reinerpope
 
-# Add a table of contents to your post.
-#   - make sure that TOC names match the actual section names
-#     for hyperlinks within the post to work correctly.
-#   - please use this format rather than manually creating a markdown table of contents.
+# Өөрийн бичлэгт агуулгын жагсаалт нэмэх.
+#   - TOC (агуулгын жагсаалт) дахь нэрүүд нь хэсгийн нэрүүдтэй яг таарч байх ёстой
+#     ингэснээр бичлэг доторх холбоосууд зөв ажиллана.
+#   - Доорх форматыг хэрэглэнэ үү, markdown агуулгын жагсаалтыг гараар бүү үүсгээрэй.
 toc:
-  - name: "Partitioning Notation and Collective Operations"
+  - name: "Хуваарилалтын тэмдэглэгээ ба хамтын ажиллагааны үйлдлүүд"
   - subsections:
-    - name: "A unified notation for sharding"
-    - name: "How do we describe this in code?"
-  - name: "Computation With Sharded Arrays"
+    - name: "Шардинг-д зориулсан нэгэн төрлийн тэмдэглэгээ"
+    - name: "Бид үүнийг код дээр хэрхэн илэрхийлэх вэ?"
+  - name: "Шардинг хийсэн массивтай тооцоолол"
   - subsections:
-    - name: "Case 1: neither multiplicand has a sharded contracting dimension"
-    - name: "Case 2: one multiplicand has a sharded contracting dimension"
-    - name: "Case 3: both multiplicands have sharded contracting dimensions"
-    - name: "Case 4: both multiplicands have a non-contracting dimension sharded along the same axis"
-  - name: "A Deeper Dive into TPU Communication Primitives"
+    - name: "Тохиолдол 1: аль ч үржигдэхүүнд шардинг хийсэн гэрээт хэмжээ байхгүй"
+    - name: "Тохиолдол 2: нэг үржигдэхүүнд шардинг хийсэн гэрээт хэмжээ байна"
+    - name: "Тохиолдол 3: хоёр үржигдэхүүнд хоёуланд нь шардинг хийсэн гэрээт хэмжээ байна"
+    - name: "Тохиолдол 4: хоёр үржигдэхүүнд хоёуланд нь гэрээт бус хэмжээ нэг ижил тэнхлэгээр шардинг хийгдсэн"
+  - name: "TPU харилцааны үндсэн үйлдлүүдийг илүү дэлгэрэнгүй судлах нь"
   - subsections:
-    - name: "Our final communication primitive: the AllToAll"
-    - name: "More about the ReduceScatter"
-  - name: "What Have We Learned?"
-  - name: "Some Problems to Work"
+    - name: "Манай эцсийн харилцааны үндсэн үйлдэл: AllToAll"
+    - name: "ReduceScatter-ийн талаар илүү их"
+  - name: "Бид юу сурсан бэ?"
+  - name: "Ажиллах зарим бодлогууд"
 
-# Below is an example of injecting additional post-specific styles.
-# This is used in the 'Layouts' section of this post.
-# If you use this post as a template, delete this _styles block.
+# Доор нэмэлт постод зориулсан тусгай стиль хэрхэн оруулах жишээ байна.
+# Энэ нь энэ постын 'Layouts' хэсэгт ашиглагддаг.
+# Хэрвээ та энэ постыг загвар болгон ашиглах бол, энэ _styles блокийг устгаарай.
 _styles: >
   .fake-img {
     background: #bbb;
@@ -86,25 +92,25 @@ _styles: >
   }
 ---
 
-## Partitioning Notation and Collective Operations
+## Хуваарилалтын тэмдэглэгээ ба хамтын ажиллагааны үйлдлүүд
 
-When we train an LLM on ten thousand TPUs or GPUs, we're still doing abstractly the same computation as when we're training on one. The difference is that **our arrays don't fit in the HBM of a single TPU/GPU**, so we have to split them.<d-footnote>It's worth noting that we may also choose to parallelize for speed. Even if we could fit on a smaller number of chips, scaling to more simply gives us more FLOPs/s. During inference, for instance, we can sometimes fit on smaller topologies but choose to scale to larger ones in order to reduce latency. Likewise, during training we often scale to more chips to reduce the step time.</d-footnote> We call this "*sharding*” or "*partitioning*” our arrays. The art of scaling is figuring out how to shard our models so computation remains efficient.
+Бид LLM-ийг арван мянган TPU эсвэл GPU дээр сургаж байх үедээ, нэг дээр сургаж байгаатай яг адилхан тооцоолол хийж байна. Ялгаа нь **манай массивууд нэг TPU/GPU-ийн HBM-д багтахгүй** учраас бид тэдгээрийг хуваах хэрэгтэй болдог.<d-footnote>Мөн бид хурдыг нэмэгдүүлэхийн тулд параллель болгохыг сонгож болно гэдгийг тэмдэглэх нь зүйтэй. Хэрвээ бид бага хэмжээний чип дээр багтаж чадах байсан ч, илүү олон чип рүү шилжих нь илүү их FLOPs/секунд өгдөг. Жишээ нь, inference хийх үедээ бид заримдаа жижиг топологи дээр багтаж чадна, гэхдээ latency-г багасгахын тулд том топологи руу шилждэг. Үүнтэй адил, training хийх үедээ бид алхамын хугацааг багасгахын тулд ихэнхдээ илүү олон чип рүү шилждэг.</d-footnote> Үүнийг "*sharding*" эсвэл "*partitioning*" гэж нэрлэдэг. Scale хийх урлаг нь загваруудаа хэрхэн зөв хуваахыг олж мэдэх явдал бөгөөд ингэснээр тооцоолол үр дүнтэй хэвээр байна.
 
-Here's an example 2D array **A** sharded across 4 TPUs:
+Энд 2 хэмжээст массив **A**-г 4 TPU-д хуваасан жишээ байна:
 
-{% include figure.liquid path="assets/img/sharding-example.png" class="img-fluid" caption="<b>Figure:</b> an example array of shape <b>A</b>[I, J] gets sharded across 4 devices. Both dimensions are evenly sharded across 2 devices with a sharding <b>A</b>[I<sub>X</sub>, J<sub>Y</sub>]. Each TPU holds 1/4 of the total memory." %}
+{% include figure.liquid path="assets/img/sharding-example.png" class="img-fluid" caption="<b>Зураг:</b> <b>A</b>[I, J] хэлбэртэй массивыг 4 төхөөрөмж дээр хэрхэн хувааж байгааг харуулсан жишээ. Хоёр хэмжээсийг тус бүр 2 төхөөрөмж дээр жигд хуваасан бөгөөд хуваалт нь <b>A</b>[I<sub>X</sub>, J<sub>Y</sub>] байна. Тус бүрийн TPU нийт санах ойн 1/4-ийг агуулна." %}
 
-Note how the sharded array still has the same *global* or *logical shape* as unsharded array, say `(4, 128)`, but it also has a *device local shape*, like `(2, 64)`, which gives us the actual size in bytes that each TPU is holding (in the figure above, each TPU holds ¼ of the total array). Now we'll generalize this to arbitrary arrays.
+Анхаарна уу, шардлагдсан массив нь шардлагдаагүй массивтай ижил *глобал* эсвэл *логик хэлбэртэй* байна, жишээ нь `(4, 128)`, гэхдээ мөн *төхөөрөмжийн локал хэлбэртэй* байдаг, жишээ нь `(2, 64)`, энэ нь тус бүр TPU ямар хэмжээтэй байгааг (дээрх зурагт, тус бүр TPU нийт массивын ¼-ийг хадгалж байна) харуулна. Одоо бид үүнийг дурын массивд ерөнхийд нь хэрэглэж үзье.
 
-### A unified notation for sharding
+### Шардинг-д зориулсан нэгтгэсэн тэмдэглэгээ
 
-We use a variant of *named-axis notation* to describe *how* the tensor is sharded in blocks across the devices: we assume the existence of a 2D or 3D grid of devices called the **device mesh** where each axis has been given **mesh axis names** **e.g. X**, **Y, and Z.** We can then specify how the matrix data is laid out across the device mesh by describing how each named dimension of the array is partitioned across the physical mesh axes. We call this assignment a **sharding**.
+Бид *named-axis notation*-ийн нэг хувилбарыг ашиглаж, тэнцэрийг төхөөрөмжүүд дээр хэрхэн блокоор хуваахыг тайлбарладаг: бид төхөөрөмжүүдийн 2D эсвэл 3D тор байгаа гэж үздэг бөгөөд үүнийг **device mesh** гэж нэрлэдэг. Энэ торны тэнхлэг бүрд **mesh axis names** өгдөг, жишээ нь **X**, **Y**, болон **Z**. Дараа нь бид матрицын өгөгдлийг төхөөрөмжийн тор дээр хэрхэн байрлуулсныг тайлбарлаж болно. Үүний тулд массивын нэртэй хэмжээс бүрийг физик торны тэнхлэгүүд дээр хэрхэн хуваасан болохыг тодорхойлно. Энэ хуваарилалтыг бид **sharding** гэж нэрлэдэг.
 
-**Example (the diagram above)**: For the above diagram, we have:
-* **Mesh:** the device mesh above `Mesh(devices=((0, 1), (2, 3)), axis_names=(‘X', ‘Y'))`, which tells us we have 4 TPUs in a 2x2 grid, with axis names $X$ and $Y$.
-* **Sharding:** $A[I_X, J_Y]$, which tells us to shard the first axis, $I$, along the mesh axis $X$, and the second axis, $J$, along the mesh axis $Y$. This sharding tells us that each shard holds $1 / (\lvert X\rvert \cdot \lvert Y\rvert)$ of the array.
+**Жишээ (дээшээ байгаа зураг):** Дээрх зурагт бидэнд дараах зүйлс байна:
+* **Mesh:** дээрх төхөөрөмжийн mesh `Mesh(devices=((0, 1), (2, 3)), axis_names=(‘X', ‘Y'))`, энэ нь бидэнд 2x2 сүлжээнд 4 TPU байгаа гэдгийг хэлж байна, тэнхлэгийн нэрүүд нь $X$ болон $Y$.
+* **Sharding:** $A[I_X, J_Y]$, энэ нь бидэнд эхний тэнхлэг болох $I$-г mesh-ийн тэнхлэг $X$-аар, хоёр дахь тэнхлэг болох $J$-г mesh-ийн тэнхлэг $Y$-аар хуваахыг хэлж байна. Энэ sharding нь массивын $1 / (\lvert X\rvert \cdot \lvert Y\rvert)$ хэсгийг тус бүр shard-д хадгалж байгааг харуулж байна.
 
-Taken together, we know that the local shape of the array (the size of the shard that an individual device holds) is $(\lvert I\rvert / 2, \lvert J\rvert / 2)$, where $$\lvert I\rvert$$ is the size of A's first dimension and $$\lvert J\rvert$$ is the size of A's second dimension.
+Нийтэд нь авч үзвэл, бид массивын локал хэлбэр (тус бүр төхөөрөмж дээр хадгалагдаж байгаа хэсгийн хэмжээ) нь $(\lvert I\rvert / 2, \lvert J\rvert / 2)$ гэдгийг мэдэж байна, энд $$\lvert I\rvert$$ is the size of A's first dimension and $$\lvert J\rvert$$ is the size of A's second dimension.
 
 <b markdown=1 style="color: #048affff;">Pop Quiz [2D sharding across 1 axis]:</b> Consider an array `fp32[1024, 4096]` with sharding $A[I_{XY}, J]$ and mesh `{'X': 8, 'Y': 2}`. How much data is held by each device? How much time would it take to load this array from HBM on H100s (assuming `3.4e12` memory bandwidth per chip)?
 
@@ -665,10 +671,10 @@ Answer the following:
 
 (4) **Solution**:  The total number of scalars that any one link has to carry now reduces by a factor of 2, since in a bidirectional ring, each "sharded strip” can be sent two ways simultaneously.
 
-(5) **Solution**: In this case, we win a factor of 4 compared to the unidirectional case.  This is easiest to see by considering the fate of each of the size-(N2/D2) blocks in a single sharded strip, say the one which originates on device 0.  Instead of (as in the unidirectional case) sending one of these blocks a distance of D-1, another block a distance D - 2, etc. all the way to 1, we now divide the strip into blocks which move right or left, moving a maximum distance of floor(D/2).  So the corresponding sum now becomes $$D/2 + D/2 - 1 + D/2 - 2 + … = D/2 \cdot (D/2+1)/2$$, or $$D^2/8$$ in the limit of large $$D$$.  Compare this to $$D^2/2$$ in the unidirectional case, and we see that we've won a factor of 4.
+(5) **Solution**: In this case, we win a factor of 4 compared to the unidirectional case.  This is easiest to see by considering the fate of each of the size-(N2/D2) blocks in a single sharded strip, say the one which originates on device 0.  Instead of (as in the unidirectional case) sending one of these blocks a distance of D-1, another block a distance D - 2, etc. all the way to 1, we now divide the strip into blocks which move right or left, moving a maximum distance of floor(D/2).  So the corresponding sum now becomes $$D/2 + D/2 - 1 + D/2 - 2 + … = D/2 \cdot (D/2+1)/2$$, or $$D^2/8$$ in the limit of large $$D$$.  Compare this to $$D^2/2$$ нэг чиглэлтэй тохиолдолд, бид 4 дахин илүү үр дүнтэй болсон гэдгийг харж байна.
 
-(6) **Solution:** In a unidirectional ring, we saw that the AllToAll time was already twice as fast as the all-gather time; this comes from the fact that we don't need to send our full strip to every single device.  Then, when we added bidirectionality, we saw that it was a 4x win for AllToAll, and only a 2x win for all-gathers.  Putting these ratios together, we get our sought after factor of 4.
+(6) **Шийдэл:** Нэг чиглэлийн цагирагт AllToAll-ийн хугацаа all-gather-ийн хугацаанаас хоёр дахин хурдан байсныг бид харсан; энэ нь бид өөрсдийн бүх хэсгийг бүх төхөөрөмж рүү илгээх шаардлагагүйгээс болдог. Дараа нь, хоёр чиглэлтэй болгосноор AllToAll-д 4 дахин хурдан болсон, харин all-gather-д зөвхөн 2 дахин хурдан болсон. Эдгээр харьцааг нийлүүлбэл, бидний хайж байсан 4 гэсэн үржүүлэгч гарч ирнэ.
 
 {% enddetails %}
 
-<h3 markdown=1 class="next-section">That's it for Part 3! For Part 4 (about Transformer math), click [here](../transformers)!</h3>
+<h3 markdown=1 class="next-section">3-р хэсэг дууслаа! 4-р хэсэг (Transformer-ийн математикийн тухай) үзэх бол [энд](../transformers) дарна уу!</h3>

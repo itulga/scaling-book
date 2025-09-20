@@ -1,8 +1,14 @@
+—
+Энэхүү орчуулга нь MIT лицензийн дагуу эх бүтээлээс хөрвүүлэв.
+Эх сурвалж: Austin et al., "How to Scale Your Model" (https://jax-ml.github.io/scaling-book/)
+Орч.: Mongolian (mn)
+—
+
 ---
 layout: distill
-title: "Training LLaMA 3 on TPUs"
+title: "TPU дээр LLaMA 3-г сургах"
 # permalink: /main/
-description: "Let's take a close look at how we'd train LLaMA 3 models on TPU v5p using what we've learned in the previous section. How big are they? How expensive is training in different configurations? How are they sharded? Let's work through some back-of-the-envelope estimates for how the previous sections map onto real models."
+description: "Өмнөх хэсэгт сурсан зүйлээ ашиглан TPU v5p дээр LLaMA 3 загваруудыг хэрхэн сургахыг нарийвчлан харцгаая. Эдгээр загварууд хэр том вэ? Янз бүрийн тохиргоонд сургах нь хэр үнэтэй вэ? Эдгээрийг хэрхэн хуваадаг вэ? Өмнөх хэсгүүдийг бодит загвар дээр хэрхэн хэрэгжүүлэхийг энгийн тооцооллоор харцгаая."
 date: 2025-02-04
 future: true
 htmlwidgets: true
@@ -11,54 +17,54 @@ hidden: false
 section_number: 6
 
 previous_section_url: "../training"
-previous_section_name: "Part 5: Training"
+previous_section_name: "5-р хэсэг: Сургалт"
 
 next_section_url: ../inference
-next_section_name: "Part 7: Inference"
+next_section_name: "7-р хэсэг: Дүгнэлт"
 
-bibliography: main.bib
+ном зүй: main.bib
 
 giscus_comments: true
 
 authors:
-  - name: Jacob Austin
+  - name: Жейкоб Остин
     url: "https://www.jacobaustin.org/"
     affiliations:
       name: Google DeepMind
-  - name: Sholto Douglas
+  - name: Шолто Дуглас
     url: "https://x.com/_sholtodouglas"
-  - name: Roy Frostig
+  - name: Рой Фростиг
     url: "https://cs.stanford.edu/~rfrostig/"
-  - name: Anselm Levskaya
+  - name: Ансельм Левская
     url: "https://anselmlevskaya.com/"
-  - name: Charlie Chen
+  - name: Чарли Чен
     url: "https://x.com/charliexychen"
-  - name: Sharad Vikram
+  - name: Шарад Викрам
     url: "https://sharadvikram.com/"
-  - name: Federico Lebron
+  - name: Федерико Леброн
     url: "https://fedelebron.com/"
-  - name: Peter Choy
+  - name: Питер Чой
     url: "https://x.com/pchoy95"
-  - name: Vinay Ramasesh
+  - name: Винай Рамасеш
     url: "https://x.com/vinayramasesh"
-  - name: Albert Webson
+  - name: Альберт Вебсон
     url: "https://representation.ai/"
-  - name: Reiner Pope<sup>*</sup>
+  - name: Райнер Попе<sup>*</sup>
     url: https://x.com/reinerpope
 
-# Add a table of contents to your post.
-#   - make sure that TOC names match the actual section names
-#     for hyperlinks within the post to work correctly.
-#   - please use this format rather than manually creating a markdown table of contents.
+# Өөрийн бичлэгт агуулгын жагсаалт нэмэх.
+#   - Агуулгын жагсаалтын нэрүүд нь тухайн хэсгийн нэртэй яг ижил байх ёстой
+#     ингэснээр бичлэг доторх холбоосууд зөв ажиллах болно.
+#   - Гар аргаар markdown агуулгын жагсаалт хийхийн оронд энэ форматыг ашиглана уу.
 toc:
-  - name: "What does LLaMA 3 look like?"
-  - name: "Counting parameters and FLOPs"
-  - name: "How to shard LLaMA 3-70B for training"
-  - name: "Worked Problems"
+  - name: "LLaMA 3 ямар харагддаг вэ?"
+  - name: "Параметр ба FLOPs тоолох"
+  - name: "LLaMA 3-70B-г сургалтанд хэрхэн хуваах вэ"
+  - name: "Бодлогын жишээ"
 
-# Below is an example of injecting additional post-specific styles.
-# This is used in the 'Layouts' section of this post.
-# If you use this post as a template, delete this _styles block.
+# Доор нэмэлт постод зориулсан тусгай загвар (styles) хэрхэн оруулахыг харуулсан жишээ байна.
+# Энэ нь энэ постын 'Layouts' хэсэгт ашиглагддаг.
+# Хэрвээ та энэ постыг загвар (template) болгон ашиглах бол энэ _styles блокийг устгаарай.
 _styles: >
   .fake-img {
     background: #bbb;
@@ -76,13 +82,13 @@ _styles: >
   }
 ---
 
-_Our goal in this section is to apply results from the previous section to a very practical problem: training the LLaMA 3 family (herd) of models. Unlike the previous sections we want you to do a lot of this work yourself. For this reason, we've hidden the answers to each section so you can try to answer it first. Try grabbing a pen and doing by hand!_
+_Энэ хэсгийн зорилго бол өмнөх хэсгээс авсан үр дүнг маш практик асуудалд хэрэглэх явдал юм: LLaMA 3 загварын бүлгийг (herd) сургах. Өмнөх хэсгүүдээс ялгаатай нь энэ удаа бид ихэнх ажлыг өөрөө хийхийг хүсэж байна. Энэ шалтгааны улмаас бид хариултуудыг нуусан байгаа, ингэснээр та эхлээд өөрөө хариулахыг оролдоорой. Үзэг аваад гараар бодоод үзээрэй!_
 
-### What does LLaMA 3 look like?
+### LLaMA 3 ямар харагддаг вэ?
 
-The LLaMA-3 model family<d-cite key="llama3"></d-cite> includes 3 main models: LLaMA 3 8B, 70B, and 405B. We'll mostly focus on 70B, and leave 8B and 405B for you to explore in the problem section at the end. Here's the architecture for LLaMA 3-70B, taken from the LLaMA [HuggingFace page](https://huggingface.co/meta-llama/Meta-Llama-3-70B/blob/main/config.json).
+LLaMA-3 загварын гэр бүл<d-cite key="llama3"></d-cite> нь 3 үндсэн загвартай: LLaMA 3 8B, 70B, болон 405B. Бид голчлон 70B загварт анхаарна, харин 8B болон 405B загварыг та нар сүүлийн хэсгийн бодлогын хэсэгт өөрсдөө судална. Энд LLaMA 3-70B загварын архитектур байна. Энэ нь LLaMA-гийн [HuggingFace хуудаснаас](https://huggingface.co/meta-llama/Meta-Llama-3-70B/blob/main/config.json) авсан болно.
 
-| **hyperparam**              | **value** |
+| **hyperparam**              | **утга** |
 | --------------------------- | --------- |
 | $$n_\text{layers}$$ (L)     | 80        |
 | $$d_\text{model}$$ (D)      | 8,192     |
@@ -194,20 +200,20 @@ Let's stick to our setting from above and say we want to train LLaMA 3-70B with 
 
 $$X_{opt} = \sqrt{\frac{2BN}{F}} = \sqrt{\frac{2 \cdot 4.19e6 \cdot 8960}{28672}} = 1618$$
 
-Rounding to a reasonable multiple of 2, that gives us roughly 2048-way FSDP and 4-way tensor parallelism parallelism. That should work well!
+2-ын ойролцоо утгад ойртуулж тоймлон бодвол, бидэнд ойролцоогоор 2048 FSDP болон 4 tensor parallelism байна. Энэ нь сайн ажиллах ёстой!
 
 {% enddetails %}
 
-<p markdown=1 class="takeaway">**Takeaways**: We can train LLaMA-3 with a 4M token batch size on a full TPU v5p pod with a mixture of data parallelism (1024-way), sequence parallelism (2-way), and tensor parallelism (4-way) without being communication-bound. We will be comms-bound if we try to do pure FSDP or FSDP + sequence parallelism. The equations we've cooked up in the previous section are very practical.</p>
+<p markdown=1 class="takeaway">**Гол санаа**: Бид LLaMA-3 загварыг 4 сая токен бүхий batch size-тайгаар бүтэн TPU v5p pod дээр сургалт хийж чадна. Үүнд өгөгдлийн параллелизм (1024-удаа), дарааллын параллелизм (2-удаа), болон тэнцэрийн параллелизм (4-удаа) хослуулж хэрэглэнэ. Ингэснээр харилцааны (communication) асуудал үүсэхгүй. Хэрвээ зөвхөн FSDP эсвэл FSDP + дарааллын параллелизм хэрэглэвэл бид харилцааны асуудалтай болно. Өмнөх хэсэгт гаргасан томъёонууд маш хэрэгтэй, практик юм.</p>
 
-## Worked Problems
+## Ажилласан бодлогууд
 
-**Question 1 [Scaling LLaMA 70B to more chips]:** say we want to train LLaMA 3-70B on 4 pods with the same batch size. What parallelism scheme would we use? Would we be compute or communication bound? Roughly how long would it take to train? *Make sure to use the correct roofline bound.*
+**Асуулт 1 [LLaMA 70B-г олон чип дээр өргөжүүлэх]:** Бид LLaMA 3-70B-г 4 под дээр ижил batch size-тайгаар сургахыг хүсвэл ямар параллелизмын схем ашиглах вэ? Бид тооцоолол (compute) эсвэл харилцаа холбоо (communication)-нд хязгаарлагдах уу? Сургах хугацаа ойролцоогоор хэр удаан байх вэ? *Зөв roofline bound-ыг ашиглахаа мартуузай.*
 
-**Question 2 [LLaMA 405B]:**
+**Асуулт 2 [LLaMA 405B]:**
 
-(a) Using the LLaMA 3-405B [config](https://huggingface.co/meta-llama/Llama-3.1-405B/blob/main/config.json), write a table with all the key hyperparameters as above. How many total parameters does this model have? How many FLOPs per training step? How many FLOPs do we perform if we train for 15T tokens?
+(a) LLaMA 3-405B [config](https://huggingface.co/meta-llama/Llama-3.1-405B/blob/main/config.json)-ийг ашиглан, дээрхтэй адил бүх гол hyperparameter-уудыг агуулсан хүснэгт бичнэ үү. Энэ загвар нийт хэдэн параметртэй вэ? Нэг сургалтын алхамд хэдэн FLOP зарцуулдаг вэ? Хэрвээ бид 15T токен дээр сургах бол нийт хэдэн FLOP зарцуулах вэ?
 
-(b) Assume we want to train on 8 TPU v5p pods. What parallelism scheme would we use? How long would training take? Would be compute or comms bound?
+(б) Бид 8 TPU v5p pod дээр сургалт хийхийг хүсэж байна гэж үзье. Ямар параллелизмын схем ашиглах вэ? Сургалт хэр удаан үргэлжлэх вэ? Тооцоолол (compute) эсвэл харилцаа холбоо (comms) аль нь хязгаарлах вэ?
 
-<h3 markdown=1 class="next-section">That's all for Section 6. For Section 7, about Transformer inference, click [here](../inference).</h3>
+<h3 markdown=1 class="next-section">Энэ бол 6-р хэсгийн бүх зүйл. 7-р хэсэг буюу Transformer inference-ийн тухай бол [энд](../inference) дарна уу.</h3>

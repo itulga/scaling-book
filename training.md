@@ -1,8 +1,14 @@
+—
+Энэхүү орчуулга нь MIT лицензийн дагуу эх бүтээлээс хөрвүүлэв.
+Эх сурвалж: Austin et al., "How to Scale Your Model" (https://jax-ml.github.io/scaling-book/)
+Орч.: Mongolian (mn)
+—
+
 ---
 layout: distill
-title: "How to Parallelize a Transformer for Training"
+title: "Трансформерыг сургалтанд хэрхэн зэрэгцүүлэх вэ"
 # permalink: /main/
-description: "Here we discuss four main parallelism schemes used during LLM training: data parallelism, fully-sharded data parallelism (FSDP), tensor parallelism, and pipeline parallelism. For each, we calculate at what point we become bottlenecked by communication."
+description: "Энд бид LLM сургалтын үед ашиглагддаг дөрвөн үндсэн зэрэгцүүлэх аргыг авч үзнэ: өгөгдлийн зэрэгцүүлэлт (data parallelism), бүрэн хуваагдсан өгөгдлийн зэрэгцүүлэлт (fully-sharded data parallelism, FSDP), тензор зэрэгцүүлэлт (tensor parallelism), болон дамжуулах шугамын зэрэгцүүлэлт (pipeline parallelism). Бид тус бүрийн хувьд харилцаа холбооны ачаалал хэзээ үүсдэгийг тооцоолно."
 date: 2025-02-04
 future: true
 htmlwidgets: true
@@ -11,63 +17,63 @@ hidden: false
 section_number: 5
 
 previous_section_url: "../transformers"
-previous_section_name: "Part 4: Transformers"
+previous_section_name: "4-р хэсэг: Трансформерүүд"
 
 next_section_url: ../applied-training
-next_section_name: "Part 6: Training LLaMA"
+next_section_name: "6-р хэсэг: LLaMA-г сургах"
 
-bibliography: main.bib
+ном зүй: main.bib
 
-giscus_comments: true
+giscus_comments: үнэн
 
 authors:
-  - name: Jacob Austin
+  - name: Жэйкоб Остин
     url: "https://www.jacobaustin.org/"
     affiliations:
       name: Google DeepMind
-  - name: Sholto Douglas
+  - name: Шолто Дуглас
     url: "https://x.com/_sholtodouglas"
-  - name: Roy Frostig
+  - name: Рой Фростиг
     url: "https://cs.stanford.edu/~rfrostig/"
-  - name: Anselm Levskaya
+  - name: Ансельм Левская
     url: "https://anselmlevskaya.com/"
-  - name: Charlie Chen
+  - name: Чарли Чен
     url: "https://x.com/charliexychen"
-  - name: Sharad Vikram
+  - name: Шарад Викрам
     url: "https://sharadvikram.com/"
-  - name: Federico Lebron
+  - name: Федерико Леброн
     url: "https://fedelebron.com/"
-  - name: Peter Choy
+  - name: Питер Чой
     url: "https://x.com/pchoy95"
-  - name: Vinay Ramasesh
+  - name: Винай Рамасеш
     url: "https://x.com/vinayramasesh"
-  - name: Albert Webson
+  - name: Альберт Вебсон
     url: "https://representation.ai/"
-  - name: Reiner Pope<sup>*</sup>
+  - name: Райнер Попе<sup>*</sup>
     url: https://x.com/reinerpope
 
-# Add a table of contents to your post.
-#   - make sure that TOC names match the actual section names
-#     for hyperlinks within the post to work correctly.
-#   - please use this format rather than manually creating a markdown table of contents.
+# Өөрийн бичлэгт агуулгын жагсаалт нэмэх.
+#   - TOC (Агуулгын жагсаалт)-ийн нэрүүд нь хэсгийн нэрүүдтэй яг таарч байх ёстой,
+#     ингэснээр бичлэг доторх холбоосууд зөв ажиллана.
+#   - Доорх форматыг ашиглана уу, гараар markdown агуулгын жагсаалт үүсгэхээс зайлсхий.
 toc:
-  - name: "What Do We Mean By Scaling?"
+  - name: "Өргөжүүлэх гэж юу гэсэн үг вэ?"
   - subsections:
-    - name: "Data Parallelism"
-    - name: "Fully-Sharded Data Parallelism (FSDP)"
-    - name: "Tensor Parallelism"
-    - name: "Combining FSDP and Tensor Parallelism"
-    - name: "Pipelining"
-    - name: "Scaling Across Pods"
-  - name: "Takeaways from LLM Training on TPUs"
-  - name: "Some Problems to Work"
-  - name: "Appendix"
+    - name: "Өгөгдлийн параллелизм"
+    - name: "Бүрэн-Хуваарилагдсан Өгөгдлийн Параллелизм (FSDP)"
+    - name: "Тэнцэр Параллелизм"
+    - name: "FSDP ба Тэнцэр Параллелизмийг хослуулах"
+    - name: "Дамжуулах шугам (Pipelining)"
+    - name: "Pod-уудын хооронд өргөжүүлэх"
+  - name: "TPU дээр LLM сургалтын сургамжууд"
+  - name: "Ажиллах зарим бодлогууд"
+  - name: "Хавсралт"
   - subsections:
-    - name: "Appendix A: Deriving the backward pass comms"
+    - name: "Хавсралт A: Backward pass comms-ийг гаргах"
 
-# Below is an example of injecting additional post-specific styles.
-# This is used in the 'Layouts' section of this post.
-# If you use this post as a template, delete this _styles block.
+# Доор нэмэлт постод зориулсан тусгай стиль хэрхэн оруулах жишээ байна.
+# Энэ нь энэ постын 'Layouts' хэсэгт ашиглагддаг.
+# Хэрвээ та энэ постыг загвар болгон ашиглах бол энэ _styles блокийг устгаарай.
 _styles: >
   .fake-img {
     background: #bbb;
@@ -85,61 +91,61 @@ _styles: >
   }
 ---
 
-## What Do We Mean By Scaling?
+## Бид "Өргөтгөх" гэж Юу Гэж Хэлдэг Вэ?
 
-The goal of “model scaling” is to be able to increase the number of chips used for training or inference while achieving a proportional, linear increase in throughput (we call this *strong scaling*). While performance on a single chip depends on the trade-off between memory bandwidth and FLOPs, performance at the cluster level depends on hiding inter-chip communication by overlapping it with useful FLOPS. This is non-trivial, because increasing the number of chips increases the communication load while reducing the amount of per-device computation we can use to hide it. As we saw in [Section 3](../sharding), sharded matrix multiplications often require expensive AllGathers or ReduceScatters that can block the TPUs from doing useful work. The goal of this section is to find out when these become *too expensive.*
+“Загварын өргөтгөл” (model scaling)-ын зорилго нь сургалт (training) эсвэл таамаглал (inference) хийхэд ашиглагдах чипийн тоог нэмэгдүүлэх явдал юм. Ингэснээр дамжуулалтын хурд (throughput) нь шууд, шугаман (linear) байдлаар нэмэгдэх ёстой (үүнийг *хүчтэй өргөтгөл* буюу strong scaling гэж нэрлэдэг). Ганц чип дээрх гүйцэтгэл нь санах ойн зурвас (memory bandwidth) болон FLOPs-ийн хоорондын тэнцвэрээс хамаардаг бол, кластерт (cluster) олон чиптэй үед гүйцэтгэл нь чип хоорондын харилцааг (inter-chip communication) хэрэгтэй FLOPs-тай давхцуулж нуух (overlap) боломжтой эсэхээс хамаарна. Энэ нь амархан биш, учир нь чипийн тоо нэмэгдэхэд харилцааны ачаалал (communication load) ихэсдэг ба нэг бүрийн тооцооллыг (per-device computation) багасгадаг тул нуухад хэцүү болдог. [3-р хэсэгт](../sharding) үзсэнчлэн, хуваагдсан матриц үржвэрүүд (sharded matrix multiplications) ихэвчлэн үнэтэй AllGather эсвэл ReduceScatter үйлдэл шаарддаг бөгөөд энэ нь TPU-г хэрэгтэй ажил хийхээс нь саатуулж болдог. Энэ хэсгийн зорилго нь эдгээр үйлдлүүд *хэтэрхий үнэтэй* болох үеийг олох юм.
 
-In this section, we'll discuss four common parallelism schemes: (pure) **data parallelism, fully-sharded data parallelism** (FSDP / ZeRO sharding), **tensor parallelism** (also known as model parallelism), and (briefly) **pipeline parallelism**. For each, we'll show what communication cost we incur and at what point that cost starts to bottleneck our compute cost.<d-footnote>We'll focus on communication bounds — since while memory capacity constraints are important, they typically do not bound us when using rematerialization (activation checkpointing) and a very large number of chips during pre-training. We also do not discuss expert parallelism here for MoEs — which expands the design space substantially, only the base case of a dense Transformer.</d-footnote> For this section, you can focus solely on inter-chip communication costs, since as long as we have a large enough single-chip batch size, the transfer of data from HBM to MXU is already overlapped with computation.
+Энэ хэсэгт бид дөрвөн нийтлэг параллелизмын схемийг хэлэлцэнэ: (цэвэр) **өгөгдлийн параллелизм**, бүрэн хуваагдсан өгөгдлийн параллелизм (FSDP / ZeRO хуваалт), **тензор параллелизм** (өөрөөр хэлбэл загварын параллелизм), мөн (товчхон) **дамжуулах шугамын параллелизм**. Бид тус бүрт нь ямар харилцааны зардал гарч байгааг, тэр зардал тооцооллын зардлыг хаанаас эхлэн саатуулж эхэлдэгийг харуулах болно.<d-footnote>Бид харилцааны хязгаарт анхаарна — учир нь санах ойн багтаамжийн хязгаар чухал боловч, дахин материалжуулах (идэвхжүүлэлтийн шалгалтын цэг) болон сургалтын үед маш олон чип ашиглах үед ихэвчлэн биднийг хязгаарладаггүй. Мөн энд MoE-ийн хувьд эксперт параллелизмийг авч үзэхгүй — энэ нь загварын зохион байгуулалтын боломжийг ихээр тэлдэг, зөвхөн энгийн нягт Transformer-ийг авч үзнэ.</d-footnote> Энэ хэсэгт та зөвхөн чип хоорондын харилцааны зардалд анхаарч болно, учир нь хэрвээ нэг чип дээрх багцын хэмжээ хангалттай том байвал, HBM-ээс MXU руу өгөгдөл дамжуулах нь тооцоололтой давхар явагддаг.
 
-We'll use the following notation to simplify calculations throughout this section.
+Бид энэ хэсэгт тооцооллыг хялбарчлахын тулд дараах тэмдэглэгээг ашиглана.
 
-| Notation | Meaning (model parameters)                                             |
-| :------- | :--------------------------------------------------------------------- |
-| D        | **d**<sub>model</sub> ( the hidden dimension/residual stream dim)      |
-| F        | **d**<sub>ff</sub> (the feed-forward dimension)                        |
-| B        | Batch dimension (number of tokens in the batch; total, not per-device) |
-| T        | Sequence length                                                        |
-| L        | Number of layers in the model                                          |
+| Тэмдэглэгээ | Утга (загварын параметрүүд)                                         |
+| :--------- | :------------------------------------------------------------------- |
+| D          | **d**<sub>model</sub> (нуусан хэмжээ / үлдэгдэл урсгалын хэмжээ)    |
+| F          | **d**<sub>ff</sub> (feed-forward хэмжээ)                            |
+| B          | Batch хэмжээ (batch дахь токенуудын тоо; нийт, төхөөрөмж тус бүр биш) |
+| T          | Дарааллын урт                                                        |
+| L          | Загвар дахь давхаргын тоо                                            |
 
-| Notation | Meaning (hardware characteristic)                                                                 |
-| :------- | :------------------------------------------------------------------------------------------------ |
-| C        | FLOPS/s per chip                                                                                  |
-| W        | Network bandwidth (bidirectional, often subscripted as  e.g. $W_{\text{ici}}$ or $W_{\text{dcn}}$ |
-| X        | Number of chips along mesh axis X                                                                 |
-| Y        | Number of chips along an alternate mesh axis, labeled Y                                           |
-| Z        | Number of chips along a third mesh axis, labeled Z                                                |
+| Тэмдэглэгээ | Утга (техник хангамжийн шинж чанар)                                                         |
+| :--------- | :--------------------------------------------------------------------------------------------- |
+| C          | Нэг чипийн FLOPS/секунд                                                                        |
+| W          | Сүлжээний зурвасын өргөн (хоёр чиглэлтэй, ихэвчлэн доогуур индексээр бичигддэг, жишээ нь $W_{\text{ici}}$ эсвэл $W_{\text{dcn}}$) |
+| X          | Mesh тэнхлэг X дагуух чипийн тоо                                                                |
+| Y          | Өөр нэг mesh тэнхлэг Y дагуух чипийн тоо                                                        |
+| Z          | Гурав дахь mesh тэнхлэг Z дагуух чипийн тоо                                                     |
 
-For simplicity's sake, **we'll approximate a Transformer as a stack of MLP blocks** — attention is a comparatively small fraction of the FLOPs for larger models as we saw in [Section 4](../transformers). We will also ignore the gating matmul, leaving us with the following simple structure for each layer:
+Хялбар болгохын тулд, **бид Transformer-ийг MLP блокуудын давхарга гэж ойролцоолно** — том загваруудад attention нь FLOPs-ийн маш бага хэсэг байдаг, үүнийг бид [4-р хэсэгт](../transformers) харсан. Мөн бид gating matmul-ийг тооцохгүй, ингэснээр бидэнд давхарга бүрийн дараах энгийн бүтэц үлдэнэ:
 
-{% include figure.liquid path="assets/img/transformer-layer.png" class="img-fluid" caption="<b>Figure:</b> a simplified Transformer layer. We treat each FFW block as a stack of two matrices <b>W<sub>in</sub></b>: <code>bf16[D, F]</code> (up-projection) and <b>W<sub>out</sub></b>: <code>bf16[F, D]</code> (down-projection) with an input <b>In</b>: <code>bf16[B, D]</code>." %}
+{% include figure.liquid path="assets/img/transformer-layer.png" class="img-fluid" caption="<b>Зураг:</b> хялбаршуулсан Transformer давхарга. Бид FFW блок бүрийг хоёр matrix-ийн стек гэж үзнэ: <b>W<sub>in</sub></b>: <code>bf16[D, F]</code> (дээш проекц хийх) болон <b>W<sub>out</sub></b>: <code>bf16[F, D]</code> (доош проекц хийх) оролт <b>In</b>: <code>bf16[B, D]</code>." %}
 
-{% details Here's the full algorithm for our little Transformer with no parallelism. %}
+{% details Манай жижиг Transformer-ийн бүрэн алгоритм энд байна. Параллелизм байхгүй. %}
 
 <div markdown=1 class="algorithm">
 
-**Forward pass:** need to compute Loss[B]
+**Урагш дамжуулалт:** Loss[B]-г тооцоолох хэрэгтэй
 
 1.  Tmp[B, F] = In[B, D] *<sub>D</sub> W<sub>in</sub>[D, F]
 2.  Out[B, D] = Tmp[B, F] *<sub>F</sub> W<sub>out</sub>[F, D]
 3.  Loss[B] = ...
 
-**Backward pass:** need to compute dW<sub>out</sub>[F, D], dW<sub>in</sub>[D, F]
+**Буцах дамжуулалт:** dW<sub>out</sub>[F, D], dW<sub>in</sub>[D, F] -ийг тооцоолох хэрэгтэй
 
 1.  dOut[B, D] = ...
 2.  dW<sub>out</sub>[F, D] = Tmp[B, F] *<sub>B</sub> dOut[B, D]
 3.  dTmp[B, F] = dOut[B, D] *<sub>D</sub> W<sub>out</sub>[F, D]
 4.  dW<sub>in</sub>[D, F] = In[B, D] *<sub>B</sub> dTmp[B, F]
-5.  dIn[B, D] = dTmp[B, F] \*<sub>F</sub> W<sub>in</sub>[D, F] (*needed for previous layers*)
+5.  dIn[B, D] = dTmp[B, F] \*<sub>F</sub> W<sub>in</sub>[D, F] (*өмнөх давхаргуудад хэрэгтэй*)
 
 </div>
 
-We provide this for comparison to the algorithms with communication added.
+Бид үүнийг харьцуулах зорилгоор харилцаа нэмэгдсэн алгоритмуудтай хамт өгч байна.
 
 {% enddetails %}
 
-Here are the 4 parallelism schemes we will discuss. Each scheme can be thought of as uniquely defined by a sharding for **In**, **W<sub>in</sub>, W<sub>out</sub>, and Out** in the above diagram.
+Бид доорх 4 зэрэгцээжүүлэх схемийг хэлэлцэнэ. Тус бүрийн схемийг дээрх зурагт байгаа **In**, **W<sub>in</sub>**, **W<sub>out</sub>**, болон **Out**-ын шард хийх аргаар онцгой тодорхойлж болно.
 
-**1. Data parallelism:** *activations sharded along batch, parameters and optimizer state are replicated on each device. Communication only occurs during the backwards pass.*
+**1. Өгөгдлийн зэрэгцээжилт:** *идэвхжүүлэлтүүдийг багцын дагуу хэсэгчилж хуваана, параметр болон optimizer-ийн төлөвийг төхөөрөмж бүр дээр хуулбарлана. Харилцаа зөвхөн буцах алхам (backwards pass) дээр явагдана.*
 
 $$\text{In}[B_X, D] \cdot_D W_\text{in}[D, F] \cdot_F W_\text{out}[F, D] \rightarrow \text{Out}[B_X, D]$$
 
@@ -205,7 +211,7 @@ Note that the forward pass has no communication — **it's all in the backward p
 
 As in the table above, let $C$ = per-chip FLOPs, $W_{\text{ici}}$ = **bidirectional** network bandwidth, and $X$ = number of shards across which the batch is partitioned<d-footnote>We assume this partitioning is done over an ICI mesh, so the relevant network bandwidth is $W_\text{ici}$</d-footnote>.  Let's calculate the time required to perform the relevant matmuls, $$T_\text{math}$$, and the required communication time $$T_\text{comms}$$.  Since this parallelism scheme requires no communication in the forward pass, we only need to calculate these quantities for the backwards pass.
 
-*Communication time:*  From a previous section we know that the time required to perform an AllReduce in a 1D mesh depends only on the total bytes of the array being AllReduced and the ICI bandwidth $W_\text{ici}$; specifically the AllReduce time is $2 \cdot \text{total bytes} / W_\text{ici}$. Since we need to AllReduce for both $W_\text{in}$ and $W_\text{out}$, we have 2 AllReduces per layer.  Each AllReduce is for a weight matrix, i.e. an array of $DF$ parameters, or $2DF$ bytes. Putting this all together, the total time for the AllReduce in a single layer is
+*Communication time:*  From a previous section we know that the time required to perform an AllReduce in a 1D mesh depends only on the total bytes of the array being AllReduced and the ICI bandwidth $W_\text{ici}$; specifically the AllReduce time is $2 \cdot \text{нийт bytes} / W_\text{ici}$. Since we need to AllReduce for both $W_\text{in}$ and $W_\text{out}$, we have 2 AllReduces per layer.  Each AllReduce is for a weight matrix, i.e. an array of $DF$ parameters, or $2DF$ bytes. Putting this all together, the total time for the AllReduce in a single layer is
 
 $$\begin{align}
 T_\text{comms} &= \frac{2 \cdot 2 \cdot 2 \cdot D \cdot F}{W_\text{ici}}. \\
@@ -717,7 +723,7 @@ $$\frac{dL}{dA} = \frac{dL}{dY}\frac{dY}{dA} = X^T \left(\frac{dL}{dY}\right)$$
 
 $$\frac{dL}{dX} = \frac{dL}{dY}\frac{dY}{dX} = \left(\frac{dL}{dY}\right) A^T$$
 
-Using this, we get the following formulas (letting Tmp[B, F] stand for In[B, D] * W<sub>in</sub>[D, F]):
+Үүнийг ашигласнаар бид дараах томъёонуудыг гарган авна (Tmp[B, F] гэдэг нь In[B, D] * W<sub>in</sub>[D, F] гэсэн утгатай):
 
 <div markdown=1 class="algorithm">
 
@@ -728,4 +734,4 @@ Using this, we get the following formulas (letting Tmp[B, F] stand for In[B, D] 
 
 </div>
 
-Note that these formulas are mathematical statements, with no mention of sharding.  The job of the backwards pass is to compute these four quantities.  So to figure out the comms necessary, we just take the shardings of all the quantities which are to be matmulled in the four equations above (Tmp, dOut, W<sub>out</sub>, W<sub>in</sub>), which are specified by our parallelization scheme, and use the rules of sharded matmuls to figure out what comms we have to do.  Note that dOut is sharded in the same way as Out.
+Эдгээр томъёонууд нь математик илэрхийлэл бөгөөд sharding-ийн талаар дурдаагүй байна. Backwards pass-ын үүрэг нь эдгээр дөрвөн хэмжигдэхүүнийг тооцоолох юм. Тиймээс шаардлагатай comms-ийг олохын тулд бид дээрх дөрвөн тэгшитгэлд matmul хийх бүх хэмжигдэхүүнүүдийн (Tmp, dOut, W<sub>out</sub>, W<sub>in</sub>) sharding-ийг авч үзнэ. Эдгээрийг манай parallelization scheme тодорхойлсон байдаг бөгөөд sharded matmul-ийн дүрмийг ашиглан ямар comms хийх хэрэгтэйг олж мэднэ. dOut нь Out-тай ижил sharding-тай гэдгийг анхаарна уу.
